@@ -5,7 +5,7 @@ const LandingPage = () => {
   const auth = async () => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:5000/api/v1/user/request"
+        "http://127.0.0.1:5000/api/v1/user/gsignin"
       );
       const { url } = response.data;
       window.location.href = url; // Redirect to the Google authentication page
