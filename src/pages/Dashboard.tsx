@@ -7,27 +7,22 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const verifyToken = async () => {
+    const getTokenAndStoreData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/v1/user/verifyToken",
-          { withCredentials: true } // Set withCredentials to true
+          "http://localhost:5000/api/v1/user/oauth",
+          {
+            withCredentials: true, // Important: Set withCredentials to true to send cookies with the request
+          }
         );
-        if (response.status === 200) {
-          setIsLoading(false);
-          const token = response.headers["authorization"];
-          // Store or use the token as needed
-          console.log("Token:", token);
-        } else {
-          navigate("/"); // Redirect to login page if token verification fails
-        }
+        console.log(response); // Log the response to see if the cookie is received
       } catch (error) {
-        console.error("Error verifying token:", error);
-        navigate("/"); // Redirect to login page if an error occurs
+        console.error("Error getting token:", error);
       }
     };
 
-    verifyToken();
+    // Call the function to get the token and store data
+    getTokenAndStoreData();
   }, []);
 
   return (
