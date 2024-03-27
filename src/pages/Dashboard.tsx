@@ -9,19 +9,32 @@ const Dashboard = () => {
   useEffect(() => {
     const getTokenAndStoreData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/api/v1/user/oauth",
-          {
-            withCredentials: true, // Important: Set withCredentials to true to send cookies with the request
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Get the value of the 'token' parameter from the URL
+        const token = urlParams.get("token");
+
+        // If token is available, make a request to verifyTokenService endpoint
+        if (token) {
+          const response = await axios.get(
+            "http://localhost:5000/api/v1/user/verifyToken",
+            {
+              params: { token }, // Pass the token as a query parameter
+              // withCredentials: true, // You can uncomment this if needed
+            }
+          );
+          console.log(response.data); // Log the response data to see if the token is verified successfully
+          if (response.data && response.data.success) {
+            setIsLoading(false);
           }
-        );
-        console.log(response); // Log the response to see if the cookie is received
+        } else {
+          console.error("Token not found in URL");
+        }
       } catch (error) {
         console.error("Error getting token:", error);
       }
     };
 
-    // Call the function to get the token and store data
     getTokenAndStoreData();
   }, []);
 
