@@ -10,10 +10,10 @@ const useTokenVerification = () => {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/v1/user/verifyToken"
-          // {
-          //   params: { token },
-          // }
+          "http://localhost:5000/api/v1/user/verifyToken",
+          {
+            withCredentials: true, // Include cookies in the request
+          }
         );
         if (response.data && response.data.success) {
           setIsLoading(false);
@@ -21,10 +21,6 @@ const useTokenVerification = () => {
           console.log("Token verification unsuccessful");
           navigate("/login"); // Redirect to login page if token verify fails.
         }
-        // } else {
-        //   console.error("Token not found in URL");
-        //   navigate("/login"); // Redirect to login page if no token in url.
-        // }
       } catch (error) {
         console.error("Error verifying token:", error);
       }
