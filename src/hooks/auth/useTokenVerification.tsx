@@ -23,6 +23,7 @@ const useTokenVerification = () => {
         }
       } catch (error) {
         console.error("Error verifying token:", error);
+        navigate("/login");
       }
     };
 
