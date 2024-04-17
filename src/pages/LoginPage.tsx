@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import googlebtn from "../assets/With Text.svg";
 import axios from "axios";
 
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 const LoginPage = () => {
   useEffect(() => {
     const fetchData = async () => {
@@ -11,7 +13,7 @@ const LoginPage = () => {
       console.log(code);
       if (code) {
         const response = await axios.post(
-          `http://localhost:5000/api/v1/user/oauth?code=${code}`
+          `${backendURL}/api/v1/user/oauth?code=${code}`
         );
         console.log(response);
       }
@@ -22,7 +24,7 @@ const LoginPage = () => {
   const handleSignIn = async () => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:5000/api/v1/user/gsignin"
+        `${backendURL}/api/v1/user/gsignin`
       );
       const { url } = response.data;
       window.location.href = url; // Redirect to the Google authentication page
