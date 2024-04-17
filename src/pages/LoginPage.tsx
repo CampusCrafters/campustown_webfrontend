@@ -18,7 +18,7 @@ const LoginPage = () => {
   const handleSignIn = async () => {
     try {
       const response = await axios.post(
-        `${backendURL}/api/v1/user/gsignin`
+        `${backendURL}api/v1/user/gsignin`
       );
       const { url } = response.data;
       window.location.href = url; // Redirect to the Google authentication page
