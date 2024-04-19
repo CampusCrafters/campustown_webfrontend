@@ -14,7 +14,7 @@ const Dashboard = () => {
         <div className="flex">
           <SideBar
             buttons={["Explore Projects", "Projects Showcase", "Alumni Stories"]}
-            onButtonClick={(buttonLabel: string) => {
+            onButtonClick={() => {
               // Handle button click
             }}
           />
