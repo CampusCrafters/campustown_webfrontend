@@ -33,7 +33,7 @@ const LoginPage = () => {
   <p className="text-xl mb-8">{error === "" ? "Please sign in with your College Email ID" : "Please use your college Email Id"}</p>
   <button
     onClick={() => handleSignIn()}
-    className="flex items-center justify-center bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-900 text-white font-bold py-3 px-6 rounded-full text-lg"
+    className="flex items-center justify-center bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-900 text-black font-bold py-3 px-6 rounded-full text-lg"
   >
     <img src={googlebtn} alt="Google signin button" className="mr-2" />
     Sign in with Google
