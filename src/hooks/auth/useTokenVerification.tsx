@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 const useTokenVerification = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -10,7 +12,7 @@ const useTokenVerification = () => {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/v1/user/verifyToken",
+            `${backendURL}/api/v1/user/verifyToken`,
           {
             withCredentials: true, // Include cookies in the request
           }
