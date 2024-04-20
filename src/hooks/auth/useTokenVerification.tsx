@@ -12,7 +12,7 @@ const useTokenVerification = () => {
     const verifyToken = async () => {
       try {
         const response = await axios.get(
-            `${backendURL}/api/v1/user/verifyToken`,
+          `${backendURL}/api/v1/user/verifyToken`,
           {
             withCredentials: true, // Include cookies in the request
           }
