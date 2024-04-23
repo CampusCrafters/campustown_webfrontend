@@ -9,14 +9,19 @@ const useTokenVerification = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const delay = 1000; // 1 second delay
+
     const verifyToken = async () => {
       try {
+        await new Promise(resolve => setTimeout(resolve, delay)); // Introduce a delay of 1 second
+
         const response = await axios.get(
           `${backendURL}/api/v1/user/verifyToken`,
           {
             withCredentials: true, // Include cookies in the request
           }
         );
+
         if (response.data && response.data.success) {
           setIsLoading(false);
         } else {
