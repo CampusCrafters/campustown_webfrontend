@@ -9,7 +9,7 @@ const useTokenVerification = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const delay = 5000; // 1 second delay
+    const delay = 1000; // 1 second delay
 
     const verifyToken = async () => {
       try {
