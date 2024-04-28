@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import googlebtn from "../assets/With Text.svg";
 import axios from "axios";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -14,6 +16,30 @@ const LoginPage = () => {
       setError("Unauthorized email domain");
     }
   }, []);
+
+  useEffect(() => {
+    const verifyToken = async () => {
+      try {
+        const response = await axios.get(
+          `${backendURL}/api/v1/user/verifyToken`,
+          {
+            withCredentials: true, // Include cookies in the request
+          }
+        );
+
+        if (response.data && response.data.success) {
+        } else {
+          console.log("Token verification unsuccessful");
+          navigate("/dashboard"); // Redirect to login page if dashboard is verification pass.
+        }
+      } catch (error) {
+        console.error("Error verifying token:", error);
+        //navigate("/login");
+      }
+    };
+
+    verifyToken();
+  }, []);   
 
   const handleSignIn = async () => {
     try {
