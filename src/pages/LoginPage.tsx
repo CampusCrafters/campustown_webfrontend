@@ -18,29 +18,35 @@ const LoginPage = () => {
   }, []);
 
   useEffect(() => {
+    const delay = 2000; // 2 second delay
+  
     const verifyToken = async () => {
       try {
+        // Introduce a delay of 2 seconds before sending the request
+        await new Promise(resolve => setTimeout(resolve, delay));
+  
         const response = await axios.get(
           `${backendURL}/api/v1/user/verifyToken`,
           {
             withCredentials: true, // Include cookies in the request
           }
         );
-
+  
         if (response.data && response.data.success) {
+          // Token verification successful
         } else {
           console.log("Token verification unsuccessful");
-          navigate("/dashboard"); // Redirect to login page if dashboard is verification pass.
+          navigate("/dashboard"); // Redirect to dashboard if verification fails.
         }
       } catch (error) {
         console.error("Error verifying token:", error);
-        //navigate("/login");
+        // navigate("/login");
       }
     };
-
+  
     verifyToken();
-  }, []);   
-
+  }, []);
+  
   const handleSignIn = async () => {
     try {
       const response = await axios.post(`${backendURL}/api/v1/user/gsignin`);
