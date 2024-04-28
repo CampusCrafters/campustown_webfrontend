@@ -22,9 +22,6 @@ const LoginPage = () => {
   
     const verifyToken = async () => {
       try {
-        // Introduce a delay of 2 seconds before sending the request
-        await new Promise(resolve => setTimeout(resolve, delay));
-  
         const response = await axios.get(
           `${backendURL}/api/v1/user/verifyToken`,
           {
@@ -44,7 +41,14 @@ const LoginPage = () => {
       }
     };
   
+    // Initial call to verifyToken
     verifyToken();
+  
+    // Set interval to call verifyToken repeatedly
+    const intervalId = setInterval(verifyToken, delay);
+  
+    // Clean up interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
   
   const handleSignIn = async () => {
