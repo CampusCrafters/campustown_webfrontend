@@ -22,7 +22,7 @@ const LoginPage = () => {
   
     const verifyToken = async () => {
       try {
-        const response = await axios.get(
+        const response = await axios.post(
           `${backendURL}/api/v1/user/verifyToken`,
           {
             withCredentials: true, // Include cookies in the request
