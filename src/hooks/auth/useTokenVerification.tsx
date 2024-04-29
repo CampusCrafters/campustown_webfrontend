@@ -17,6 +17,7 @@ const useTokenVerification = () => {
 
         const response = await axios.post(
           `${backendURL}/api/v1/user/verifyToken`,
+          null, // No request data
           {
             withCredentials: true, // Include cookies in the request
           }

@@ -24,11 +24,12 @@ const LoginPage = () => {
       try {
         const response = await axios.post(
           `${backendURL}/api/v1/user/verifyToken`,
+          null, // No request data
           {
             withCredentials: true, // Include cookies in the request
           }
         );
-  
+    
         if (response.data && response.data.success) {
           // Token verification successful
         } else {
@@ -40,7 +41,7 @@ const LoginPage = () => {
         // navigate("/login");
       }
     };
-  
+      
     // Initial call to verifyToken
     verifyToken();
   
