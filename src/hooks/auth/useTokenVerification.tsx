@@ -15,8 +15,11 @@ const useTokenVerification = () => {
       try {
         await new Promise(resolve => setTimeout(resolve, delay)); // Introduce a delay of 1 second
 
-        // Retrieve token from local storage
-        const token = localStorage.getItem("jwt");
+        // Retrieve token from cookies
+        const token = document.cookie.replace(
+          /(?:(?:^|.*;\s*)jwt\s*\=\s*([^;]*).*$)|^.*$/,
+          "$1"
+        );
 
         // If token exists, send it in the request header
         if (token) {
@@ -38,7 +41,7 @@ const useTokenVerification = () => {
           }
         } else {
           console.log("No token found");
-          navigate("/login"); // Redirect to login page if token is not found in local storage
+          navigate("/login"); // Redirect to login page if token is not found in cookies
         }
       } catch (error) {
         console.error("Error verifying token:", error);
