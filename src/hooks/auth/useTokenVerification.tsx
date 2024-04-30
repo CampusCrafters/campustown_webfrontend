@@ -15,30 +15,20 @@ const useTokenVerification = () => {
       try {
         await new Promise(resolve => setTimeout(resolve, delay)); // Introduce a delay of 1 second
 
-        // Retrieve token from local storage
-        const token = localStorage.getItem("jwt");
-
         // If token exists, send it in the request header
-        if (token) {
-          const response = await axios.post(
-            `${backendURL}/api/v1/user/verifyToken`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          if (response.data && response.data.success) {
-            setIsLoading(false);
-          } else {
-            console.log("Token verification unsuccessful");
-            navigate("/login"); // Redirect to login page if token verify fails.
+        const response = await axios.post(
+          `${backendURL}/api/v1/user/verifyToken`,
+          {},
+          {
+            withCredentials: true,
           }
+        );
+
+        if (response.data && response.data.success) {
+          setIsLoading(false);
         } else {
-          console.log("No token found");
-          navigate("/login"); // Redirect to login page if token is not found in local storage
+          console.log("Token verification unsuccessful");
+          navigate("/login"); // Redirect to login page if token verify fails.
         }
       } catch (error) {
         console.error("Error verifying token:", error);
