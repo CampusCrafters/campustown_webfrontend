@@ -38,7 +38,7 @@ const useTokenVerification = () => {
     verifyToken();
   }, []);
 
-  return isLoading;
+  return isLoading; // Return the loading state
 };
 
 export default useTokenVerification;
