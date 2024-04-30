@@ -22,9 +22,8 @@ const LoginPage = () => {
   
     const verifyToken = async () => {
       try {
-        const response = await axios.post(
+        const response = await axios.get(
           `${backendURL}/api/v1/user/verifyToken`,
-          null, // No request data
           {
             withCredentials: true, // Include cookies in the request
           }

@@ -15,9 +15,8 @@ const useTokenVerification = () => {
       try {
         await new Promise(resolve => setTimeout(resolve, delay)); // Introduce a delay of 1 second
 
-        const response = await axios.post(
+        const response = await axios.get(
           `${backendURL}/api/v1/user/verifyToken`,
-          null, // No request data
           {
             withCredentials: true, // Include cookies in the request
           }
