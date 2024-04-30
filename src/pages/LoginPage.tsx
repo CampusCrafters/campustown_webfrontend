@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import googlebtn from "../assets/With Text.svg";
 import axios from "axios";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const LoginPage = () => {
-  const navigate = useNavigate();
+ // const navigate = useNavigate();
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -17,39 +17,39 @@ const LoginPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const delay = 2000; // 2 second delay
+  // useEffect(() => {
+  //   const delay = 2000; // 2 second delay
   
-    const verifyToken = async () => {
-      try {
-        const response = await axios.get(
-          `${backendURL}/api/v1/user/verifyToken`,
-          {
-            withCredentials: true, // Include cookies in the request
-          }
-        );
+  //   const verifyToken = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${backendURL}/api/v1/user/verifyToken`,
+  //         {
+  //           withCredentials: true, // Include cookies in the request
+  //         }
+  //       );
     
-        if (response.data && response.data.success) {
-          // Token verification successful
-        } else {
-          console.log("Token verification unsuccessful");
-          navigate("/dashboard"); // Redirect to dashboard if verification fails.
-        }
-      } catch (error) {
-        console.error("Error verifying token:", error);
-        // navigate("/login");
-      }
-    };
+  //       if (response.data && response.data.success) {
+  //         // Token verification successful
+  //       } else {
+  //         console.log("Token verification unsuccessful");
+  //         navigate("/dashboard"); // Redirect to dashboard if verification fails.
+  //       }
+  //     } catch (error) {
+  //       console.error("Error verifying token:", error);
+  //       // navigate("/login");
+  //     }
+  //   };
       
-    // Initial call to verifyToken
-    verifyToken();
+  //   // Initial call to verifyToken
+  //   verifyToken();
   
-    // Set interval to call verifyToken repeatedly
-    const intervalId = setInterval(verifyToken, delay);
+  //   // Set interval to call verifyToken repeatedly
+  //   const intervalId = setInterval(verifyToken, delay);
   
-    // Clean up interval on component unmount
-    return () => clearInterval(intervalId);
-  }, []);
+  //   // Clean up interval on component unmount
+  //   return () => clearInterval(intervalId);
+  // }, []);
   
   const handleSignIn = async () => {
     try {
