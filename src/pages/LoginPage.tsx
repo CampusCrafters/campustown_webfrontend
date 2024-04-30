@@ -6,7 +6,7 @@ import axios from "axios";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const LoginPage = () => {
- // const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -22,8 +22,9 @@ const LoginPage = () => {
   
   //   const verifyToken = async () => {
   //     try {
-  //       const response = await axios.get(
+  //       const response = await axios.post(
   //         `${backendURL}/api/v1/user/verifyToken`,
+  //         null, // No request data
   //         {
   //           withCredentials: true, // Include cookies in the request
   //         }
