@@ -9,13 +9,11 @@ const useTokenVerification = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const delay = 1000; // 1 second delay
+    const delay = 1000; 
 
     const verifyToken = async () => {
       try {
         await new Promise(resolve => setTimeout(resolve, delay)); // Introduce a delay of 1 second
-
-        // If token exists, send it in the request header
         const response = await axios.post(
           `${backendURL}/api/v1/user/verifyToken`,
           {},
@@ -28,7 +26,7 @@ const useTokenVerification = () => {
           setIsLoading(false);
         } else {
           console.log("Token verification unsuccessful");
-          navigate("/login"); // Redirect to login page if token verify fails.
+          navigate("/login"); 
         }
       } catch (error) {
         console.error("Error verifying token:", error);
@@ -39,7 +37,7 @@ const useTokenVerification = () => {
     verifyToken();
   }, []);
 
-  return isLoading; // Return the loading state
+  return isLoading; 
 };
 
 export default useTokenVerification;
