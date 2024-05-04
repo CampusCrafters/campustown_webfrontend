@@ -22,7 +22,7 @@ const useTokenVerification = () => {
           }
         );
 
-        if (response.data && response.data.success) {
+        if (response.data.decoded) {
           setIsLoading(false);
         } else {
           console.log("Token verification unsuccessful");
