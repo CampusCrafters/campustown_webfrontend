@@ -9,11 +9,11 @@ const useTokenVerification = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const delay = 1000; 
+   // const delay = 500; 
 
     const verifyToken = async () => {
       try {
-        await new Promise(resolve => setTimeout(resolve, delay)); // Introduce a delay of 1 second
+        await new Promise(resolve => setTimeout(resolve)); // Introduce a delay of 1 second
         const response = await axios.post(
           `${backendURL}/api/v1/user/verifyToken`,
           {},
