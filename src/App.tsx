@@ -4,6 +4,7 @@ import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
+import Resumedemo from "./pages/Resumedemo";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/profile" element={<ProfilePage />}></Route>
+        <Route path="/resume" element={<Resumedemo />}></Route>
       </Routes>
     </Router>
   );
