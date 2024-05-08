@@ -4,7 +4,7 @@ import axios from "axios";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-const useTokenVerification = () => {
+const useRedirectToDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -19,13 +19,14 @@ const useTokenVerification = () => {
         );
 
         if (response.data.decoded) {
-          setIsLoading(false);
+            navigate("/dashboard");
         } else {
           console.log("Token verification unsuccessful");
-          navigate("/login"); 
+          setIsLoading(false); 
         }
       } catch (error) {
         console.error("Error verifying token:", error);
+        setIsLoading(false);
         navigate("/login");
       }
     };
@@ -36,4 +37,4 @@ const useTokenVerification = () => {
   return isLoading; 
 };
 
-export default useTokenVerification;
+export default useRedirectToDashboard;
