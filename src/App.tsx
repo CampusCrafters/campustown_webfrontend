@@ -2,8 +2,8 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
-import LoginPage from "./pages/LoginPage";
-import ProfilePage from "./pages/ProfilePage";
+import LoginPage from "./pages/Login";
+import ProfilePage from "./pages/Profile";
 import Resumedemo from "./pages/Resumedemo";
 
 function App() {

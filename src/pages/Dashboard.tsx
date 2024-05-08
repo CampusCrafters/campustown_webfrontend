@@ -6,14 +6,19 @@ const Dashboard = () => {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && (
         <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
         </div>
-      ) : (
+      )}
+      {!isLoading && (
         <div className="flex">
           <SideBar
-            buttons={["Explore Projects", "Projects Showcase", "Alumni Stories"]}
+            buttons={[
+              "Explore Projects",
+              "Projects Showcase",
+              "Alumni Stories",
+            ]}
             onButtonClick={() => {
               // Handle button click
             }}
@@ -23,16 +28,28 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Placeholder cards */}
               <div className="bg-gray-800 p-6 rounded-lg">
-                <h2 className="text-2xl font-semibold mb-4 text-white">Project Title</h2>
-                <p className="text-lg text-gray-300">Project description goes here.</p>
+                <h2 className="text-2xl font-semibold mb-4 text-white">
+                  Project Title
+                </h2>
+                <p className="text-lg text-gray-300">
+                  Project description goes here.
+                </p>
               </div>
               <div className="bg-gray-800 p-6 rounded-lg">
-                <h2 className="text-2xl font-semibold mb-4 text-white">Project Title</h2>
-                <p className="text-lg text-gray-300">Project description goes here.</p>
+                <h2 className="text-2xl font-semibold mb-4 text-white">
+                  Project Title
+                </h2>
+                <p className="text-lg text-gray-300">
+                  Project description goes here.
+                </p>
               </div>
               <div className="bg-gray-800 p-6 rounded-lg">
-                <h2 className="text-2xl font-semibold mb-4 text-white">Project Title</h2>
-                <p className="text-lg text-gray-300">Project description goes here.</p>
+                <h2 className="text-2xl font-semibold mb-4 text-white">
+                  Project Title
+                </h2>
+                <p className="text-lg text-gray-300">
+                  Project description goes here.
+                </p>
               </div>
             </div>
           </div>
