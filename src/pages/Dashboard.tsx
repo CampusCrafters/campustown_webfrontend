@@ -1,4 +1,4 @@
-import SideBar from "../components/SideBar";
+import Layout from "../components/Layout";
 import useTokenVerification from "../hooks/auth/useTokenVerification";
 
 const Dashboard = () => {
@@ -12,48 +12,9 @@ const Dashboard = () => {
         </div>
       )}
       {!isLoading && (
-        <div className="flex">
-          <SideBar
-            buttons={[
-              "Explore Projects",
-              "Projects Showcase",
-              "Alumni Stories",
-            ]}
-            onButtonClick={() => {
-              // Handle button click
-            }}
-          />
-          <div className="flex-grow p-8">
-            <h1 className="text-4xl font-bold mb-8 text-white">Dashboard</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Placeholder cards */}
-              <div className="bg-gray-800 p-6 rounded-lg">
-                <h2 className="text-2xl font-semibold mb-4 text-white">
-                  Project Title
-                </h2>
-                <p className="text-lg text-gray-300">
-                  Project description goes here.
-                </p>
-              </div>
-              <div className="bg-gray-800 p-6 rounded-lg">
-                <h2 className="text-2xl font-semibold mb-4 text-white">
-                  Project Title
-                </h2>
-                <p className="text-lg text-gray-300">
-                  Project description goes here.
-                </p>
-              </div>
-              <div className="bg-gray-800 p-6 rounded-lg">
-                <h2 className="text-2xl font-semibold mb-4 text-white">
-                  Project Title
-                </h2>
-                <p className="text-lg text-gray-300">
-                  Project description goes here.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Layout>
+          <div className="max-w-full flex justify-center">Dashboard</div>
+        </Layout>
       )}
     </>
   );
