@@ -8,6 +8,9 @@ import Projects from "./pages/Projects";
 import Resumedemo from "./pages/Resumedemo";
 import useTokenVerification from "./hooks/auth/useTokenVerification";
 import { useEffect, useState } from "react";
+import CollegePage from "./pages/CollegePage";
+import WorkPage from "./pages/WorkPage";
+import EventsPage from "./pages/EventsPage";
 
 function App() {
   const { user, loading } = useTokenVerification();
@@ -24,15 +27,20 @@ function App() {
       </div>
     );
   }
-  
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={!user ? <LandingPage /> : <Navigate to="/projects"/>}></Route>
-        <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/projects"/>}></Route>
-        <Route path="/projects" element={user ? <Layout><Projects /></Layout>: <Navigate to="/login"/>}></Route>
-        <Route path="/profile" element={user ? <Layout><ProfilePage /></Layout> : <Navigate to="/login"/>}></Route>
-        <Route path="/resume" element={user ? <Layout><Resumedemo /></Layout> : <Navigate to="/login"/>}></Route>
+        <Route path="/" element={!user ? <LandingPage /> : <Navigate to="/projects" />}/>
+        <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/projects" />}/>
+        <Route path="/" element={user ? <Layout /> : <Navigate to="/login" />}>
+          <Route path="projects" element={<Projects />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="resume" element={<Resumedemo />} />
+          <Route path="college" element={<CollegePage />} />
+          <Route path="work" element={<WorkPage />} />
+          <Route path="events" element={<EventsPage />} />
+        </Route>
       </Routes>
     </Router>
   );
