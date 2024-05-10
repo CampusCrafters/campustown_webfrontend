@@ -7,10 +7,24 @@ import ProfilePage from "./pages/Profile";
 import Projects from "./pages/Projects";
 import Resumedemo from "./pages/Resumedemo";
 import useTokenVerification from "./hooks/auth/useTokenVerification";
+import { useEffect, useState } from "react";
 
 function App() {
-  const user = useTokenVerification();
+  const { user, loading } = useTokenVerification();
+  const [authLoading, setAuthLoading] = useState(true);
 
+  useEffect(() => {
+    setAuthLoading(loading);
+  }, [loading]);
+
+  if (authLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+  
   return (
     <Router>
       <Routes>

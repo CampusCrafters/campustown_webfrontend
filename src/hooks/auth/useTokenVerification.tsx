@@ -5,6 +5,7 @@ const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const useTokenVerification = () => {
   const [user, setUser] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -23,13 +24,15 @@ const useTokenVerification = () => {
         }
       } catch (error) {
         console.error("Error verifying token:", error);
+      } finally {
+        setLoading(false); // Set loading to false regardless of success or failure
       }
     };
 
     verifyToken();
   }, []);
 
-  return user; 
+  return { user, loading }; // Return both user and loading state
 };
 
 export default useTokenVerification;
