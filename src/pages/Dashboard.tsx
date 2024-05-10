@@ -4,7 +4,18 @@ const Dashboard = () => {
   return (
     <>
       <Layout>
-        <div className="max-w-full flex justify-center">Dashboard</div>
+        <div className="max-w-full flex justify-center overflow-auto">
+          {/* Content */}
+          <div className="flex flex-col items-center space-y-4">
+            {/* Insert your dashboard content here */}
+            {/* Example content */}
+            {Array.from({ length: 20 }, (_, i) => (
+              <div key={i} className="bg-gray-200 p-4 rounded-md">
+                Item {i + 1}
+              </div>
+            ))}
+          </div>
+        </div>
       </Layout>
     </>
   );
