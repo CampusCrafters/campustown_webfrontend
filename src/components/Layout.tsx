@@ -5,7 +5,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <TopBar />
-      <main className="flex-grow">{children}</main>
+      <div className="flex-growmax-w-full flex justify-center overflow-auto pt-[5rem]">{children}</div>
       <BottomBar />
     </div>
   );
