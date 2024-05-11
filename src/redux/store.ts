@@ -1,10 +1,11 @@
-// store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import projectsReducer from "./projectsSlice";
+import profileReducer from "./profileSlice";
 
 const store = configureStore({
   reducer: {
     projects: projectsReducer,
+    profile: profileReducer,
   },
 });
 
