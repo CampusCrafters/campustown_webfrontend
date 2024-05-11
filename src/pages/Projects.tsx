@@ -1,24 +1,23 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { fetchProjects } from "../redux/projectsActions";
 
 const Projects = () => {
-  const [projects, setProjects] = useState([]);
+  const dispatch = useDispatch();
+  const projects = useSelector((state: RootState) => state.projects.projects);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/v1/project/all')
-      .then(response => {
-        setProjects(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching projects:', error);
-      });
-  }, []);
+    dispatch(fetchProjects() as any); // Update the type of fetchProjects to be compatible with dispatch
+  }, [dispatch]);
+
+  const reversedProjects = [...projects].reverse(); // Reverse the order of the projects array
 
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4">Projects</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {projects.map((project: any) => (
+        {reversedProjects.map((project) => (
           <div key={project.project_id} className="bg-white rounded-lg shadow-lg p-6">
             <h3 className="text-lg font-semibold mb-2">{project.project_title}</h3>
             <p className="mb-2"><strong>Description:</strong> {project.description}</p>
@@ -33,6 +32,6 @@ const Projects = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Projects;

@@ -11,6 +11,8 @@ import Resumedemo from "./pages/Resumedemo";
 import CollegePage from "./pages/CollegePage";
 import WorkPage from "./pages/WorkPage";
 import EventsPage from "./pages/EventsPage";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 function App() {
   const { user, loading } = useTokenVerification();
@@ -29,6 +31,7 @@ function App() {
   }
 
   return (
+    <Provider store={store}>
     <Router>
       <Routes>
         <Route path="/" element={!user ? <LandingPage /> : <Navigate to="/projects" />}/>
@@ -43,6 +46,7 @@ function App() {
         </Route>
       </Routes>
     </Router>
+    </Provider>
   );
 }
 
