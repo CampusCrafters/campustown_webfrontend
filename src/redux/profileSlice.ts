@@ -31,7 +31,7 @@ interface Profile {
     pers_email: string | null;
     mobile: string | null;
     about: string | null;
-    git: string | null;
+    github: string | null;
     linkedin: string | null;
     skills: string[] | null;
     interests: string[] | null;
