@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: ProfileState = {
-    profile: [],
+    profile: null,
 };
 
 const profileSlice = createSlice({
     name: "profile",
     initialState,
     reducers: {
-        setProfile(state, action: PayloadAction<Profile[]>){
+        setProfile(state, action: PayloadAction<Profile>){
             state.profile = action.payload;
         }
     }
@@ -39,7 +39,7 @@ interface Profile {
 }
 
 interface ProfileState {
-    profile: Profile[];
+    profile: Profile | null;
 }
 
 
