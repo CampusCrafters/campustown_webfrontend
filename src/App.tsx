@@ -1,16 +1,18 @@
 import "./App.css";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import useTokenVerification from "./hooks/auth/useTokenVerification";
 import Layout from "./components/Layout";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/Login";
 import ProfilePage from "./pages/Profile";
 import Projects from "./pages/Projects";
 import Resumedemo from "./pages/Resumedemo";
-import useTokenVerification from "./hooks/auth/useTokenVerification";
-import { useEffect, useState } from "react";
 import CollegePage from "./pages/CollegePage";
 import WorkPage from "./pages/WorkPage";
 import EventsPage from "./pages/EventsPage";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 function App() {
   const { user, loading } = useTokenVerification();
@@ -29,6 +31,7 @@ function App() {
   }
 
   return (
+    <Provider store={store}>
     <Router>
       <Routes>
         <Route path="/" element={!user ? <LandingPage /> : <Navigate to="/projects" />}/>
@@ -43,6 +46,7 @@ function App() {
         </Route>
       </Routes>
     </Router>
+    </Provider>
   );
 }
 
