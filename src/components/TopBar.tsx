@@ -18,7 +18,7 @@ const TopBar = ({activeTab}: any) => {
   return (
     <nav className="fixed w-full bg-black text-white flex items-center justify-between px-4 py-3 rounded-b-lg">
       <img src={SearchIcon} className="cursor-pointer"></img>
-      <div>{activeTab}</div>
+      <div className="font-bold text-lg">{activeTab}</div>
       <Avatar
         className="cursor-pointer"
         onClick={() => {
