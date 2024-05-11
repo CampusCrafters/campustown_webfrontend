@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { fetchProfile } from "../redux/profileActions";
 import { RootState } from "../redux/store";
 
-const TopBar = () => {
+const TopBar = ({activeTab}: any) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const profile = useSelector((state: RootState) => state.profile.profile);
@@ -18,7 +18,7 @@ const TopBar = () => {
   return (
     <nav className="fixed w-full bg-black text-white flex items-center justify-between px-4 py-3 rounded-b-lg">
       <img src={SearchIcon} className="cursor-pointer"></img>
-      <div>TopBar</div>
+      <div>{activeTab}</div>
       <Avatar
         className="cursor-pointer"
         onClick={() => {
