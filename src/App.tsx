@@ -1,13 +1,13 @@
 import "./App.css";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import useTokenVerification from "./hooks/auth/useTokenVerification";
 import Layout from "./components/Layout";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/Login";
 import ProfilePage from "./pages/Profile";
 import Projects from "./pages/Projects";
 import Resumedemo from "./pages/Resumedemo";
-import useTokenVerification from "./hooks/auth/useTokenVerification";
-import { useEffect, useState } from "react";
 import CollegePage from "./pages/CollegePage";
 import WorkPage from "./pages/WorkPage";
 import EventsPage from "./pages/EventsPage";

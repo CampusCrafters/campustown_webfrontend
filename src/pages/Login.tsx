@@ -29,7 +29,7 @@ const LoginPage = () => {
     <>
       <div className="min-h-screen bg-black text-white flex flex-col justify-between">
         <div className="flex-grow flex items-center justify-center">
-          <div className="text-center flex flex-col justify-center items-center h-screen">
+          <div className="text-center flex flex-col justify-center items-center h-screen max-w-screen-sm mx-auto px-4">
             <h1 className="text-6xl font-bold mb-6">
               {error === ""
                 ? "Welcome to Campus Connect"
@@ -42,7 +42,7 @@ const LoginPage = () => {
             </p>
             <button
               onClick={() => handleSignIn()}
-              className="flex items-center justify-center bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-900 text-black font-bold py-3 px-6 rounded-full text-lg"
+              className="flex items-center justify-center bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-900 text-black font-bold py-2 px-4 rounded-full text-base md:text-lg" // Updated button styles
             >
               <img
                 src={googlebtn}
