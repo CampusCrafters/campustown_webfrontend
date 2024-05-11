@@ -2,6 +2,7 @@ import { RootState } from "../redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProfile } from "../redux/profileActions";
 import { useEffect } from "react";
+import default_pfp from '../assets/images/default-pfp.jpg';
 
 const ProfileComponent = () => {
   const dispatch = useDispatch();
@@ -14,14 +15,25 @@ const ProfileComponent = () => {
   return (
     <div className="container mx-auto py-8">
       {profile.map((profileData, index: number) => (
-        <div key={index} className="bg-white rounded-lg shadow-lg p-8 mb-8">
-          {profileData.profile_picture && (
-            <img
-              src={profileData.profile_picture}
-              alt="Profile Picture"
-              className="h-16 w-16 rounded-full mr-4"
-            />
-          )}
+        <div key={index} className="bg-white p-8 mb-8">
+          <div className="flex items-center">
+            {profileData.profile_picture ? (
+              <img
+                src={profileData.profile_picture}
+                alt="Profile Picture"
+                className="h-16 w-16 rounded-full mr-4"
+              />
+            ) : (
+              <img
+                src={default_pfp}
+                alt="Profile Picture"
+                className="h-16 w-16 rounded-full mr-4"
+              />
+            )}
+            <button className="bg-blue-500 hover:bg-blue-700 text-white px-4 rounded">
+              Add
+            </button>
+          </div>
           <div>
             <h1 className="text-3xl font-semibold">{profileData.name}</h1>
             <p className="text-gray-600">{profileData.email}</p>
