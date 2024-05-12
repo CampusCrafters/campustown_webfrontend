@@ -27,7 +27,7 @@ const Projects = () => {
 
   return (
     <div className="px-4">
-      <Tabs defaultValue="account" className="w-full">
+      <Tabs defaultValue="all-projects" className="w-full">
         <TabsList>
           <TabsTrigger value="all-projects">All Projects</TabsTrigger>
           <TabsTrigger value="my-projects">My Projects</TabsTrigger>
