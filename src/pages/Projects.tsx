@@ -13,6 +13,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Projects = () => {
   const dispatch = useDispatch();
@@ -26,8 +27,13 @@ const Projects = () => {
 
   return (
     <div className="px-4">
-      <h2 className="text-5xl font-bold mb-4">Projects</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <Tabs defaultValue="account" className="w-full">
+        <TabsList>
+          <TabsTrigger value="all-projects">All Projects</TabsTrigger>
+          <TabsTrigger value="my-projects">My Projects</TabsTrigger>
+        </TabsList>
+        <TabsContent value="all-projects">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {reversedProjects.map((project) => (
           <div
             key={project.project_id}
@@ -78,7 +84,8 @@ const Projects = () => {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be removed from history. Your profile details will be used to apply for this project.
+                    This action cannot be removed from history. Your profile
+                    details will be used to apply for this project.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -90,6 +97,10 @@ const Projects = () => {
           </div>
         ))}
       </div>
+        </TabsContent>
+        <TabsContent value="password">Change your password here.</TabsContent>
+      </Tabs>
+
     </div>
   );
 };
