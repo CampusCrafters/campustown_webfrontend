@@ -1,6 +1,5 @@
 import { To, useNavigate } from "react-router-dom";
 import ProjectIcon from "../assets/icons/ProjectIcon.svg";
-import WorkIcon from "../assets/icons/WorkIcon.svg";
 import CalenderIcon from "../assets/icons/CalenderIcon.svg";
 import AddIcon from "../assets/icons/AddIcon.svg";
 import FolderIcon from '../assets/icons/FolderIcon.svg';
@@ -40,7 +39,7 @@ const BottomBar = ({ activeTab, onTabClick }: { activeTab: string, onTabClick: (
           }`}
           onClick={() => handleTabClick("/myApplications", "My Applications")}
         >
-          <img src={WorkIcon} className="w-6 h-6" alt="Folder Icon" />
+          <img src={FolderIcon} className="w-6 h-6" alt="Folder Icon" />
           <span>My applications</span>
         </div>
         <div
