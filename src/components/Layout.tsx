@@ -8,7 +8,7 @@ const Layout = () => {
   return (
     <div>
       <TopBar activeTab={activeTab}/>
-      <div className="flex-grow max-w-full flex justify-center overflow-auto pt-[5rem]">
+      <div className="flex-grow max-w-full flex justify-center overflow-auto py-[5rem]">
         <Outlet />
       </div>
       <BottomBar activeTab={activeTab}
