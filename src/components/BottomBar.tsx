@@ -1,8 +1,9 @@
 import { To, useNavigate } from "react-router-dom";
 import ProjectIcon from "../assets/icons/ProjectIcon.svg";
-import CollegeIcon from "../assets/icons/CollegeIcon.svg";
 import WorkIcon from "../assets/icons/WorkIcon.svg";
 import CalenderIcon from "../assets/icons/CalenderIcon.svg";
+import AddIcon from "../assets/icons/AddIcon.svg";
+import FolderIcon from '../assets/icons/FolderIcon.svg';
 
 const BottomBar = ({ activeTab, onTabClick }: { activeTab: string, onTabClick: (tabName: string) => void }) => {
   const navigate = useNavigate();
@@ -26,21 +27,21 @@ const BottomBar = ({ activeTab, onTabClick }: { activeTab: string, onTabClick: (
         </div>
         <div
           className={`flex flex-col items-center cursor-pointer ${
-            activeTab === "College" ? "text-blue-500" : ""
+            activeTab === "Post a Project" ? "text-blue-500" : ""
           }`}
-          onClick={() => handleTabClick("/college", "College")}
+          onClick={() => handleTabClick("/postProject", "Post a Project")}
         >
-          <img src={CollegeIcon} className="w-6 h-6" alt="College Icon" />
-          <span>College</span>
+          <img src={AddIcon} className="w-6 h-6" alt="Add Icon" />
+          <span>Post a Project</span>
         </div>
         <div
           className={`flex flex-col items-center cursor-pointer ${
-            activeTab === "Work" ? "text-blue-500" : ""
+            activeTab === "My Applications" ? "text-blue-500" : ""
           }`}
-          onClick={() => handleTabClick("/work", "Work")}
+          onClick={() => handleTabClick("/myApplications", "My Applications")}
         >
-          <img src={WorkIcon} className="w-6 h-6" alt="Work Icon" />
-          <span>Work</span>
+          <img src={WorkIcon} className="w-6 h-6" alt="Folder Icon" />
+          <span>My applications</span>
         </div>
         <div
           className={`flex flex-col items-center cursor-pointer ${
