@@ -9,6 +9,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import ViewMoreIcon from "@/assets/icons/ViewMoreIcon.svg";
 import { useState } from "react";
 
@@ -44,9 +49,7 @@ const ProjectCard = ({ project }: any) => {
             <div
               key={role}
               className={`rounded-lg p-2 text-center cursor-pointer ${
-                selectedRole === role
-                  ? "bg-blue-400"
-                  : "bg-gray-200"
+                selectedRole === role ? "bg-blue-400" : "bg-gray-200"
               }`}
               onClick={() =>
                 setSelectedRole((prevRole) => (prevRole === role ? null : role))
@@ -64,35 +67,44 @@ const ProjectCard = ({ project }: any) => {
         </a>
       </p>
       <div className="flex items-center justify-between">
-        <AlertDialog>
-          <AlertDialogTrigger
-            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 ${
-              selectedRole === null ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            disabled={selectedRole === null}
-          >
-            Apply with Profile
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be removed from history. Your profile details
-                will be used to apply for this project.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() =>
-                  handleApplication(project.project_id, selectedRole)
-                }
-              >
-                Apply
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        {!selectedRole && (
+          <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 opacity-50 cursor-not-allowed">
+            <HoverCard>
+              <HoverCardTrigger>Apply with Profile</HoverCardTrigger>
+              <HoverCardContent>
+                Select a role to apply
+              </HoverCardContent>
+            </HoverCard>
+          </div>
+        )}
+        {selectedRole && (
+          <AlertDialog>
+            <AlertDialogTrigger
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+            >
+              Apply with Profile
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be removed from history. Your profile
+                  details will be used to apply for this project.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={() =>
+                    handleApplication(project.project_id, selectedRole)
+                  }
+                >
+                  Apply
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
         <div className="flex items-center cursor-pointer">
           <span className="mr-2">View more</span>
           <img src={ViewMoreIcon} alt="View More" />

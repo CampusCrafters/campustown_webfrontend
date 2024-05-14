@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { fetchProjects } from "../redux/projectsActions";
@@ -7,7 +7,6 @@ import ProjectCard from "@/components/ProjectCard";
 
 const Projects = () => {
   const dispatch = useDispatch();
-  const [selectedProject, setSelectedProject] = useState(null); 
 
   const { projects } = useSelector((state: RootState) => state.projects);
   useEffect(() => {
