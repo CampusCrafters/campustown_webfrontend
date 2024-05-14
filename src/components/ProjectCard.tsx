@@ -14,16 +14,31 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { useToast } from "@/components/ui/use-toast"
 import ViewMoreIcon from "@/assets/icons/ViewMoreIcon.svg";
 import { useState } from "react";
+import { applyProject } from "../redux/projectsActions";
 
 const ProjectCard = ({ project }: any) => {
+  const { toast } = useToast()
   const formattedStartDate = new Date(project.start_date).toLocaleDateString();
   const formattedEndDate = new Date(project.end_date).toLocaleDateString();
   const [selectedRole, setSelectedRole] = useState(null);
 
-  const handleApplication = (project_id: number, role: any) => {
-    console.log("Application submitted");
+  const handleApplication = async (project_id: number, project_title: string, role: any) => {
+    try {
+      const res = await applyProject(project_id, role);
+      toast({
+        title: `${res}`,
+        description: `${role} role for ${project_title} project.`,
+      });
+    } catch (error) {
+      console.error("Error applying for the project:", error);
+      toast({
+        title: "Error applying for the project",
+        description: "An error occurred while applying for the project. Please try again later.",
+      });
+    }
   };
 
   return (
@@ -96,7 +111,7 @@ const ProjectCard = ({ project }: any) => {
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() =>
-                    handleApplication(project.project_id, selectedRole)
+                    handleApplication(project.project_id, project.project_title, selectedRole)
                   }
                 >
                   Apply
