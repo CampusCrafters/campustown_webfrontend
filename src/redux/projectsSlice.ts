@@ -24,7 +24,7 @@ interface Project {
   domain: string;
   status: string;
   start_date: string;
-  end_date: string;     
+  end_date: string;
   required_roles: string[];
   link: string;
 }
