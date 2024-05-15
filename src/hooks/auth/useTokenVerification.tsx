@@ -1,43 +1,38 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const useTokenVerification = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+  const [user, setUser] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-   // const delay = 500; 
-
     const verifyToken = async () => {
       try {
-        await new Promise(resolve => setTimeout(resolve)); // Introduce a delay of 1 second
-        const response = await axios.post(
+        const response = await axios.get(
           `${backendURL}/api/v1/user/verifyToken`,
-          {},
           {
             withCredentials: true,
           }
         );
 
         if (response.data.decoded) {
-          setIsLoading(false);
+          setUser(true);
         } else {
           console.log("Token verification unsuccessful");
-          navigate("/login"); 
         }
       } catch (error) {
         console.error("Error verifying token:", error);
-        navigate("/login");
+      } finally {
+        setLoading(false); // Set loading to false regardless of success or failure
       }
     };
 
     verifyToken();
   }, []);
 
-  return isLoading; 
+  return { user, loading }; // Return both user and loading state
 };
 
 export default useTokenVerification;
