@@ -6,7 +6,7 @@ const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 export const fetchApplications = () => async (dispatch: Dispatch<Action<any>>) => {
     try {
-        const response = await axios.get(`${backendURL}/api/v1/user/myApplications`);
+        const response = await axios.get(`${backendURL}/api/v1/user/myApplications`, { withCredentials: true });
         dispatch(setApplications(response.data));
     } catch (error) {
         console.error("Error fetching applications:", error);
