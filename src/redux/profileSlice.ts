@@ -18,7 +18,7 @@ export const {setProfile} = profileSlice.actions;
 export default profileSlice.reducer;
 
 interface Profile {
-    user_id: string;
+    user_id: number;
     profile_picture: string | null;
     resume: string | null;
     name: string;

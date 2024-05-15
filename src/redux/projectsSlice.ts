@@ -19,6 +19,7 @@ export default projectsSlice.reducer;
 
 interface Project {
   project_id: number;
+  host_id: number;
   project_title: string;
   description: string;
   domain: string;
