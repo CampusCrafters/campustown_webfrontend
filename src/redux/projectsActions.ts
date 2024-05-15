@@ -1,6 +1,6 @@
 import { Dispatch, Action } from "redux";
 import axios from "axios";
-import { setProjects } from "./projectsSlice";
+import { setProjects, setMyProjects } from "./projectsSlice";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -10,6 +10,17 @@ export const fetchProjects = () => async (dispatch: Dispatch<Action<any>>) => {
     dispatch(setProjects(response.data));
   } catch (error) {
     console.error("Error fetching projects:", error);
+  }
+};
+
+export const fetchMyProjects = () => async (dispatch: Dispatch<Action<any>>) => {
+  try {
+    const response = await axios.get(`${backendURL}/api/v1/project/myProjects`, {
+      withCredentials: true,
+    });
+    dispatch(setMyProjects(response.data));
+  } catch (error) {
+    console.error("Error fetching my projects:", error);
   }
 };
 
