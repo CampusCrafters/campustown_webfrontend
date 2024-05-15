@@ -13,3 +13,12 @@ export const fetchApplications = () => async (dispatch: Dispatch<Action<any>>) =
     }
 };
 
+export const deleteApplication = (applicationId: number) => async (dispatch: Dispatch<Action<any>>) => {
+    try {
+        await axios.delete(`${backendURL}/api/v1/project/deleteApplication`, { data: { application_id: applicationId }, withCredentials: true });
+        dispatch(fetchApplications() as any);
+    } catch (error) {
+        console.error("Error deleting application:", error);
+    }
+}
+

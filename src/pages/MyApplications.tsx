@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { fetchApplications } from "../redux/applicationActions";
+import { deleteApplication, fetchApplications } from "../redux/applicationActions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,8 +13,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useToast } from "@/components/ui/use-toast"
 
 const MyApplications = () => {
+  const { toast } = useToast()
   const dispatch = useDispatch();
   const { applications } = useSelector(
     (state: RootState) => state.applications
@@ -23,14 +25,19 @@ const MyApplications = () => {
     dispatch(fetchApplications() as any);
   }, [dispatch]);
 
-  const handleEdit = (applicationId: string) => {
-    // Handle edit action
-    console.log(`Editing application with ID: ${applicationId}`);
-  };
-
-  const handleDelete = (applicationId: string) => {
-    // Handle delete action
-    console.log(`Deleting application with ID: ${applicationId}`);
+  const handleDelete = async (applicationId: number) => {
+    try{
+      await dispatch(deleteApplication(applicationId) as any);
+      toast({
+        title: "Application deleted successfully",
+        description: "You can no longer view this application.",
+      });
+    } catch{
+      toast({
+        title: "Error deleting application",
+        description: "An error occurred while deleting the application. Please try again later.",
+      });
+    }
   };
 
   return (
@@ -96,7 +103,7 @@ const MyApplications = () => {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction>Yes</AlertDialogAction>
+                      <AlertDialogAction onClick={() => handleDelete(application.application_id)}>Yes</AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
