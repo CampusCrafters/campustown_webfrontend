@@ -40,6 +40,8 @@ const MyApplications = () => {
     }
   };
 
+  const reversedApplications = [...applications].reverse();
+
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
@@ -66,7 +68,7 @@ const MyApplications = () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {applications.map((application) => (
+          {reversedApplications.map((application) => (
             <tr key={application.application_id}>
               <td className="px-6 py-4 whitespace-nowrap">
                 {application.project_title}
