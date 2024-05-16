@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { deleteApplication, fetchApplications } from "../redux/applicationActions";
+import {
+  deleteApplication,
+  fetchApplications,
+} from "../redux/applicationActions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,10 +16,25 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useToast } from "@/components/ui/use-toast"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
 
 const MyApplications = () => {
-  const { toast } = useToast()
+  const { toast } = useToast();
   const dispatch = useDispatch();
   const { applications } = useSelector(
     (state: RootState) => state.applications
@@ -26,16 +44,17 @@ const MyApplications = () => {
   }, [dispatch]);
 
   const handleDelete = async (applicationId: number) => {
-    try{
+    try {
       await dispatch(deleteApplication(applicationId) as any);
       toast({
         title: "Application deleted successfully",
         description: "You can no longer view this application.",
       });
-    } catch{
+    } catch {
       toast({
         title: "Error deleting application",
-        description: "An error occurred while deleting the application. Please try again later.",
+        description:
+          "An error occurred while deleting the application. Please try again later.",
       });
     }
   };
@@ -86,9 +105,34 @@ const MyApplications = () => {
                 {new Date(application.reviewed_on).toLocaleString()}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <button className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-full">
-                  Edit
-                </button>
+                <Sheet>
+                  <SheetTrigger className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-full">
+                    Edit
+                  </SheetTrigger>
+                  <SheetContent>
+                    <SheetHeader>
+                      <SheetTitle>Edit Application</SheetTitle>
+                      <SheetDescription>
+                        You can change the role you've applied for but note that
+                        your application will be marked as edited.
+                      </SheetDescription>
+                      <p>Project: {application.project_title}</p>
+                      <p>Applied role: {application.role_name}</p>
+                      <br></br>
+                      <label>Select a new role</label>
+                      <Select>
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="New Role" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="light">Light</SelectItem>
+                          <SelectItem value="dark">Dark</SelectItem>
+                          <SelectItem value="system">System</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </SheetHeader>
+                  </SheetContent>
+                </Sheet>
                 <AlertDialog>
                   <AlertDialogTrigger className="mr-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded-full">
                     Delete
@@ -105,7 +149,11 @@ const MyApplications = () => {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction onClick={() => handleDelete(application.application_id)}>Yes</AlertDialogAction>
+                      <AlertDialogAction
+                        onClick={() => handleDelete(application.application_id)}
+                      >
+                        Yes
+                      </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
