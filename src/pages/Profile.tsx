@@ -41,24 +41,30 @@ const ProfileComponent = () => {
       </div>
     );
   }
+  const filteredProfile = profile ? { ...profile } : null;
+  delete filteredProfile?.user_id;
+  delete filteredProfile?.profile_picture;
+  delete filteredProfile?.name;
+  delete filteredProfile?.email;
+  delete filteredProfile?.batch;
+  delete filteredProfile?.branch;
+  delete filteredProfile?.rollnumber;
 
   return (
     <div className="container mx-auto py-8">
-      <div className="bg-white p-8 mb-8">
-        <div className="flex items-center">
-          {profile.profile_picture ? (
-            <img
-              src={profile.profile_picture}
-              alt="Profile Picture"
-              className="h-16 w-16 rounded-full mr-4"
-            />
-          ) : (
-            <img
-              src={default_pfp}
-              alt="Profile Picture"
-              className="h-16 w-16 rounded-full mr-4"
-            />
-          )}
+      <div className="bg-white p-8 mb-8 rounded-lg shadow-md">
+        <div className="flex items-center mb-6">
+          <img
+            src={profile?.profile_picture || default_pfp}
+            alt="Profile Picture"
+            className="h-24 w-24 rounded-full mr-6 border-4 border-white shadow-lg"
+          />
+          <div>
+            <h1 className="text-3xl font-semibold">{profile?.name || "Name"}</h1>
+            <p className="text-gray-600">{profile?.email || "Email"}</p>
+          </div>
+        </div>
+        <div className="flex items-center mb-6">
           <input
             type="file"
             accept=".jpeg, .jpg, .png"
@@ -67,101 +73,37 @@ const ProfileComponent = () => {
           />
           <button
             onClick={handleUpload}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-2xl mr-2"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-lg mr-2"
           >
             Upload
           </button>
           <button
             onClick={handleDelete}
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-2xl"
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded-lg"
           >
             Delete
           </button>
         </div>
-        <div>
-          <h1 className="text-3xl font-semibold">{profile.name}</h1>
-          <p className="text-gray-600">{profile.email}</p>
-        </div>
-        <div className="mt-4">
-          <p>
-            <strong>Roll Number:</strong> {profile.rollnumber}
-          </p>
-          <p>
-            <strong>Batch:</strong> {profile.batch}
-          </p>
-          <p>
-            <strong>Branch:</strong> {profile.branch}
-          </p>
-          {profile.dob && (
-            <p>
-              <strong>Date of Birth:</strong> {profile.dob.toDateString()}
-            </p>
-          )}
-          {profile.location && (
-            <p>
-              <strong>Location:</strong> {profile.location}
-            </p>
-          )}
-          {profile.pers_email && (
-            <p>
-              <strong>Personal Email:</strong> {profile.pers_email}
-            </p>
-          )}
-          {profile.mobile && (
-            <p>
-              <strong>Mobile:</strong> {profile.mobile}
-            </p>
-          )}
-          {profile.about && (
-            <div>
-              <h2 className="text-xl font-semibold mb-2">About</h2>
-              <p className="text-gray-700">{profile.about}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {Object.entries(filteredProfile || {}).map(([key, value]) => (
+            <div key={key} className="border border-gray-200 p-4 rounded-lg shadow-md">
+              <h3 className="text-lg font-semibold mb-2">{key}</h3>
+              {Array.isArray(value) ? (
+                <ul>
+                  {value.map((item, index) => (
+                    <li key={index} className="text-gray-700">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-700">{value}</p>
+              )}
             </div>
-          )}
-          {profile.github && (
-            <p>
-              <strong>GitHub:</strong> {profile.github}
-            </p>
-          )}
-          {profile.linkedin && (
-            <p>
-              <strong>LinkedIn:</strong> {profile.linkedin}
-            </p>
-          )}
-          {profile.skills && (
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Skills</h2>
-              <ul>
-                {profile.skills.map((skill, index) => (
-                  <li key={index}>{skill}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {profile.interests && (
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Interests</h2>
-              <ul>
-                {profile.interests.map((interest, index) => (
-                  <li key={index}>{interest}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {profile.learning && (
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Learning</h2>
-              <ul>
-                {profile.learning.map((learning, index) => (
-                  <li key={index}>{learning}</li>
-                ))}
-              </ul>
-            </div>
-          )}
+          ))}
         </div>
       </div>
     </div>
   );
 };
-
 export default ProfileComponent;

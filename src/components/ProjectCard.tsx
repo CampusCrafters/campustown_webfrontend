@@ -14,18 +14,23 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { useToast } from "@/components/ui/use-toast"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useToast } from "@/components/ui/use-toast";
 import ViewMoreIcon from "@/assets/icons/ViewMoreIcon.svg";
 import { useState } from "react";
 import { applyProject } from "../redux/projectsActions";
 
 const ProjectCard = ({ project }: any) => {
-  const { toast } = useToast()
+  const { toast } = useToast();
   const formattedStartDate = new Date(project.start_date).toLocaleDateString();
   const formattedEndDate = new Date(project.end_date).toLocaleDateString();
   const [selectedRole, setSelectedRole] = useState(null);
 
-  const handleApplication = async (project_id: number, project_title: string, role: any) => {
+  const handleApplication = async (
+    project_id: number,
+    project_title: string,
+    role: any
+  ) => {
     try {
       const res = await applyProject(project_id, role);
       toast({
@@ -36,14 +41,24 @@ const ProjectCard = ({ project }: any) => {
       console.error("Error applying for the project:", error);
       toast({
         title: "Error applying for the project",
-        description: "An error occurred while applying for the project. Please try again later.",
+        description:
+          "An error occurred while applying for the project. Please try again later.",
       });
     }
   };
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
-      <h3 className="text-3xl font-semibold mb-2">{project.project_title}</h3>
+      <div className="flex gap-2">
+        <Avatar className="cursor-pointer">
+          {project.profile_picture ? (
+            <AvatarImage src={project.profile_picture} />
+          ) : (
+            <AvatarFallback>CC</AvatarFallback>
+          )}
+        </Avatar>
+        <h3 className="text-3xl font-semibold mb-2">{project.project_title}</h3>
+      </div>
       <p className="text-sm mb-2">{project.description}</p>
       <p className="mb-2">
         <strong>Host:</strong> {project.name}
@@ -89,17 +104,13 @@ const ProjectCard = ({ project }: any) => {
           <div className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 opacity-50 cursor-not-allowed">
             <HoverCard>
               <HoverCardTrigger>Apply with Profile</HoverCardTrigger>
-              <HoverCardContent>
-                Select a role to apply
-              </HoverCardContent>
+              <HoverCardContent>Select a role to apply</HoverCardContent>
             </HoverCard>
           </div>
         )}
         {selectedRole && (
           <AlertDialog>
-            <AlertDialogTrigger
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-            >
+            <AlertDialogTrigger className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
               Apply with Profile
             </AlertDialogTrigger>
             <AlertDialogContent>
@@ -114,7 +125,11 @@ const ProjectCard = ({ project }: any) => {
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={() =>
-                    handleApplication(project.project_id, project.project_title, selectedRole)
+                    handleApplication(
+                      project.project_id,
+                      project.project_title,
+                      selectedRole
+                    )
                   }
                 >
                   Apply
