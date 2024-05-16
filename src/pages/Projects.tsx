@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { fetchProjects } from "../redux/projectsActions";
+import { fetchMyProjects, fetchProjects } from "../redux/projectsActions";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProjectCard from "@/components/ProjectCard";
 
@@ -13,6 +13,7 @@ const Projects = () => {
   );
   useEffect(() => {
     dispatch(fetchProjects() as any);
+    dispatch(fetchMyProjects() as any);
   }, [dispatch]);
 
   const reversedProjects = [...projects].reverse();
@@ -35,7 +36,7 @@ const Projects = () => {
         <TabsContent value="my-projects" className="mt-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {reversedMyProjects.map((project) => (
-              <ProjectCard key={project.project_id} project={project} />
+              <ProjectCard key={`my-${project.project_id}`} project={project} />
             ))}
           </div>
         </TabsContent>
