@@ -19,6 +19,11 @@ const ProfileComponent = () => {
 
   const handleUpload = () => {
     if (file) {
+      const allowedFileTypes = ["image/jpeg", "image/png"];
+      if (!allowedFileTypes.includes((file as File).type)) {
+        alert("Invalid file type. Please upload a JPEG or PNG image.");
+        return;
+      }
       const formData = new FormData();
       formData.append("image", file);
       dispatch(uploadProfilePicture(file) as any);
@@ -56,6 +61,7 @@ const ProfileComponent = () => {
           )}
           <input
             type="file"
+            accept=".jpeg, .jpg, .png"
             onChange={handleFileChange}
             className="border border-gray-300 rounded py-1 px-2 mr-2"
           />

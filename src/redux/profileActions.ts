@@ -17,7 +17,7 @@ export const uploadProfilePicture = (file: File) => async (dispatch: Dispatch<Ac
     try {
         const formData = new FormData();
         formData.append("image", file);
-        await axios.post(`${backendURL}/api/v1/user/uploadProfilePicture`, formData, { withCredentials: true });
+        await axios.post(`${backendURL}/api/v1/user/addProfilePicture`, formData, { withCredentials: true });
         dispatch(fetchProfile() as any);
     } catch (error) {
         console.error("Error uploading profile picture:", error);
