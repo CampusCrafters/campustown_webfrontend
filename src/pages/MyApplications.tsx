@@ -4,6 +4,7 @@ import { RootState } from "../redux/store";
 import {
   deleteApplication,
   fetchApplications,
+  fetchRoles,
 } from "../redux/applicationActions";
 import {
   AlertDialog,
@@ -36,7 +37,7 @@ import { useToast } from "@/components/ui/use-toast";
 const MyApplications = () => {
   const { toast } = useToast();
   const dispatch = useDispatch();
-  const { applications } = useSelector(
+  const { applications, required_roles } = useSelector(
     (state: RootState) => state.applications
   );
   useEffect(() => {
@@ -58,6 +59,14 @@ const MyApplications = () => {
       });
     }
   };
+
+  const getRoles = async (project_id: number) => {
+    try{
+      await dispatch(fetchRoles(project_id) as any);
+    } catch (err){
+      console.error("Error fetching roles:", err);
+    }
+  }
 
   const reversedApplications = [...applications].reverse();
 
@@ -106,7 +115,7 @@ const MyApplications = () => {
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <Sheet>
-                  <SheetTrigger className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-full">
+                  <SheetTrigger onClick={() => getRoles(application.project_id)} className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-full">
                     Edit
                   </SheetTrigger>
                   <SheetContent>
@@ -125,9 +134,11 @@ const MyApplications = () => {
                           <SelectValue placeholder="New Role" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="light">Light</SelectItem>
-                          <SelectItem value="dark">Dark</SelectItem>
-                          <SelectItem value="system">System</SelectItem>
+                          {required_roles.map((role) => (
+                            <SelectItem key={role} value={role}>
+                              {role}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </SheetHeader>
