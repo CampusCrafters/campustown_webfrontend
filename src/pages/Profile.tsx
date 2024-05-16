@@ -1,16 +1,33 @@
 import { RootState } from "../redux/store";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProfile } from "../redux/profileActions";
-import { useEffect } from "react";
+import { fetchProfile, uploadProfilePicture, deleteProfilePicture } from "../redux/profileActions";
+import { useEffect, useState } from "react";
 import default_pfp from "../assets/images/default-pfp.jpg";
 
 const ProfileComponent = () => {
+  const [file, setFile] = useState(null);
   const dispatch = useDispatch();
   const profile = useSelector((state: RootState) => state.profile.profile);
 
   useEffect(() => {
     dispatch(fetchProfile() as any);
   }, [dispatch]);
+
+  const handleFileChange = (e: any) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleUpload = () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("image", file);
+      dispatch(uploadProfilePicture(file) as any);
+    }
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteProfilePicture() as any);
+  };
 
   if (!profile) {
     return (
@@ -37,8 +54,22 @@ const ProfileComponent = () => {
               className="h-16 w-16 rounded-full mr-4"
             />
           )}
-          <button className="bg-blue-500 hover:bg-blue-700 text-white px-4 rounded">
-            Add
+          <input
+            type="file"
+            onChange={handleFileChange}
+            className="border border-gray-300 rounded py-1 px-2 mr-2"
+          />
+          <button
+            onClick={handleUpload}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-2xl mr-2"
+          >
+            Upload
+          </button>
+          <button
+            onClick={handleDelete}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded-2xl"
+          >
+            Delete
           </button>
         </div>
         <div>
