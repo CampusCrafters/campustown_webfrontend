@@ -24,6 +24,15 @@ export const fetchRoles = (project_id: number) => async (dispatch: Dispatch<Acti
     }
 }
 
+export const editApplication = (project_id: number, role: string, newRole: string) => async (dispatch: Dispatch<Action<any>>) => {
+    try {
+        await axios.put(`${backendURL}/api/v1/project/editApplication`, { project_id, role, newRole }, { withCredentials: true });
+        dispatch(fetchApplications() as any);
+    } catch (error) {
+        console.error("Error editing application:", error);
+    }
+}
+
 export const deleteApplication = (applicationId: number) => async (dispatch: Dispatch<Action<any>>) => {
     try {
         await axios.delete(`${backendURL}/api/v1/project/deleteApplication`, { data: { application_id: applicationId }, withCredentials: true });

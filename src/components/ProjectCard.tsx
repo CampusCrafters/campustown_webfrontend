@@ -46,6 +46,9 @@ const ProjectCard = ({ project }: any) => {
       <h3 className="text-3xl font-semibold mb-2">{project.project_title}</h3>
       <p className="text-sm mb-2">{project.description}</p>
       <p className="mb-2">
+        <strong>Host:</strong> {project.name}
+      </p>
+      <p className="mb-2">
         <strong>Domain:</strong> {project.domain}
       </p>
       <p className="mb-2">
