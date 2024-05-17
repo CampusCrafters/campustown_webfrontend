@@ -1,24 +1,28 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: ProfileState = {
-    profile: [],
+    profile: null,
+    userProfile: null,
 };
 
 const profileSlice = createSlice({
     name: "profile",
     initialState,
     reducers: {
-        setProfile(state, action: PayloadAction<Profile[]>){
+        setProfile(state, action: PayloadAction<Profile>){
             state.profile = action.payload;
+        },
+        setUserProfile(state, action: PayloadAction<Profile>){
+            state.userProfile = action.payload;
         }
     }
 });
 
-export const {setProfile} = profileSlice.actions;
+export const {setProfile, setUserProfile} = profileSlice.actions;
 export default profileSlice.reducer;
 
 interface Profile {
-    user_id: string;
+    user_id: number;
     profile_picture: string | null;
     resume: string | null;
     name: string;
@@ -31,7 +35,7 @@ interface Profile {
     pers_email: string | null;
     mobile: string | null;
     about: string | null;
-    git: string | null;
+    github: string | null;
     linkedin: string | null;
     skills: string[] | null;
     interests: string[] | null;
@@ -39,7 +43,8 @@ interface Profile {
 }
 
 interface ProfileState {
-    profile: Profile[];
+    profile: Profile | null;
+    userProfile: Profile | null;
 }
 
 

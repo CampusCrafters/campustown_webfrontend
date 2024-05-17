@@ -1,15 +1,25 @@
+import { useState } from "react";
 import BottomBar from "./BottomBar";
 import TopBar from "./TopBar";
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Layout = () => {
+  const [activeTab, setActiveTab] = useState("Projects");
   return (
-    <div>
-      <TopBar />
-      <div className="flex-growmax-w-full flex justify-center overflow-auto pt-[5rem]">
+    <div className="flex flex-col h-screen">
+      <TopBar activeTab={activeTab} />
+      <div className="py-[5rem]">
+      <ScrollArea className="h-[75vh] w-full rounded-md border p-4">
         <Outlet />
+      </ScrollArea>
+
+
       </div>
-      <BottomBar />
+      <BottomBar
+        activeTab={activeTab}
+        onTabClick={(tabName) => setActiveTab(tabName)}
+      />
     </div>
   );
 };
