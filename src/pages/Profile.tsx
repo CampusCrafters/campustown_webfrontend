@@ -1,6 +1,10 @@
 import { RootState } from "../redux/store";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProfile, uploadProfilePicture, deleteProfilePicture } from "../redux/profileActions";
+import {
+  fetchProfile,
+  uploadProfilePicture,
+  deleteProfilePicture,
+} from "../redux/profileActions";
 import { useEffect, useState } from "react";
 import default_pfp from "../assets/images/default-pfp.jpg";
 
@@ -41,8 +45,10 @@ const ProfileComponent = () => {
       </div>
     );
   }
-  
-  const filteredProfile: { [key: string]: any } | null = profile ? { ...profile } : null;
+
+  const filteredProfile: { [key: string]: any } | null = profile
+    ? { ...profile }
+    : null;
   if (filteredProfile) {
     delete filteredProfile.user_id;
     delete filteredProfile.profile_picture;
@@ -52,7 +58,7 @@ const ProfileComponent = () => {
     delete filteredProfile.branch;
     delete filteredProfile.rollnumber;
   }
-  
+
   return (
     <div className="container mx-auto py-8">
       <div className="bg-white p-8 mb-8 rounded-lg shadow-md">
@@ -63,8 +69,18 @@ const ProfileComponent = () => {
             className="h-24 w-24 rounded-full mr-6 border-4 border-white shadow-lg"
           />
           <div>
-            <h1 className="text-3xl font-semibold">{profile?.name || "Name"}</h1>
+            <h1 className="text-3xl font-semibold">
+              {profile?.name || "Name"}
+            </h1>
             <p className="text-gray-600">{profile?.email || "Email"}</p>
+            <div className="flex gap-2">
+              <div className="inline-block rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white px-4 text-sm font-semibold shadow-md">
+                {profile?.batch || "Batch"}
+              </div>
+              <div className="inline-block rounded-full bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white px-4 text-sm font-semibold shadow-md">
+                {profile?.branch || "Branch"}
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex items-center mb-6">
@@ -89,7 +105,10 @@ const ProfileComponent = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {Object.entries(filteredProfile || {}).map(([key, value]) => (
-            <div key={key} className="border border-gray-200 p-4 rounded-lg shadow-md">
+            <div
+              key={key}
+              className="border border-gray-200 p-4 rounded-lg shadow-md"
+            >
               <h3 className="text-lg font-semibold mb-2">{key}</h3>
               {Array.isArray(value) ? (
                 <ul>

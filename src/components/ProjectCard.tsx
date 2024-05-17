@@ -72,7 +72,9 @@ const ProjectCard = ({ project }: any) => {
     }
   };
 
-  const filteredProfile: { [key: string]: any } | null = userProfile ? { ...userProfile } : null;
+  const filteredProfile: { [key: string]: any } | null = userProfile
+    ? { ...userProfile }
+    : null;
   if (filteredProfile) {
     delete filteredProfile.user_id;
     delete filteredProfile.profile_picture;
@@ -117,6 +119,14 @@ const ProjectCard = ({ project }: any) => {
                     <p className="text-gray-600">
                       {userProfile?.email || "Email"}
                     </p>
+                    <div className="flex gap-2">
+                      <div className="inline-block rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white px-4 text-sm font-semibold shadow-md">
+                        {userProfile?.batch || "Batch"}
+                      </div>
+                      <div className="inline-block rounded-full bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white px-4 text-sm font-semibold shadow-md">
+                        {userProfile?.branch || "Branch"}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </SheetTitle>
