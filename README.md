@@ -13,6 +13,7 @@
    ```
    npm install
    ```
+3. Create a `.env` file in the root folder and paste the necessary keys.
 
 ## Usage
 
