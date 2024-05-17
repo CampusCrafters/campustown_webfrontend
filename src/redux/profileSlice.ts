@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: ProfileState = {
     profile: null,
+    userProfile: null,
 };
 
 const profileSlice = createSlice({
@@ -10,11 +11,14 @@ const profileSlice = createSlice({
     reducers: {
         setProfile(state, action: PayloadAction<Profile>){
             state.profile = action.payload;
+        },
+        setUserProfile(state, action: PayloadAction<Profile>){
+            state.userProfile = action.payload;
         }
     }
 });
 
-export const {setProfile} = profileSlice.actions;
+export const {setProfile, setUserProfile} = profileSlice.actions;
 export default profileSlice.reducer;
 
 interface Profile {
@@ -40,6 +44,7 @@ interface Profile {
 
 interface ProfileState {
     profile: Profile | null;
+    userProfile: Profile | null;
 }
 
 

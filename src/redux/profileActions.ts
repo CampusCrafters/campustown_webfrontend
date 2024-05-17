@@ -1,6 +1,6 @@
 import { Dispatch, Action } from "redux";
 import axios from "axios";
-import { setProfile } from './profileSlice';
+import { setProfile, setUserProfile } from './profileSlice';
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -10,6 +10,15 @@ export const fetchProfile = () => async (dispatch: Dispatch<Action<any>>) => {
         dispatch(setProfile(response.data));
     } catch (error) {
         console.error("Error fetching profile:", error);
+    }
+}
+
+export const fetchUserProfile = (user_id: number) => async (dispatch: Dispatch<Action<any>>) => {
+    try {
+        const response = await axios.get(`${backendURL}/api/v1/user/profile/:${user_id}`, { withCredentials: true });
+        dispatch(setUserProfile(response.data));
+    } catch (error) {
+        console.error("Error fetching user profile:", error);
     }
 }
 

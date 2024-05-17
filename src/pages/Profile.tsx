@@ -41,15 +41,18 @@ const ProfileComponent = () => {
       </div>
     );
   }
-  const filteredProfile = profile ? { ...profile } : null;
-  delete filteredProfile?.user_id;
-  delete filteredProfile?.profile_picture;
-  delete filteredProfile?.name;
-  delete filteredProfile?.email;
-  delete filteredProfile?.batch;
-  delete filteredProfile?.branch;
-  delete filteredProfile?.rollnumber;
-
+  
+  const filteredProfile: { [key: string]: any } | null = profile ? { ...profile } : null;
+  if (filteredProfile) {
+    delete filteredProfile.user_id;
+    delete filteredProfile.profile_picture;
+    delete filteredProfile.name;
+    delete filteredProfile.email;
+    delete filteredProfile.batch;
+    delete filteredProfile.branch;
+    delete filteredProfile.rollnumber;
+  }
+  
   return (
     <div className="container mx-auto py-8">
       <div className="bg-white p-8 mb-8 rounded-lg shadow-md">

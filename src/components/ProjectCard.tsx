@@ -14,13 +14,30 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import default_pfp from "../assets/images/default-pfp.jpg";
 import { useToast } from "@/components/ui/use-toast";
 import ViewMoreIcon from "@/assets/icons/ViewMoreIcon.svg";
 import { useState } from "react";
 import { applyProject } from "../redux/projectsActions";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { fetchUserProfile } from "@/redux/profileActions";
 
 const ProjectCard = ({ project }: any) => {
+  const dispatch = useDispatch();
+  const userProfile = useSelector(
+    (state: RootState) => state.profile.userProfile
+  );
+
   const { toast } = useToast();
   const formattedStartDate = new Date(project.start_date).toLocaleDateString();
   const formattedEndDate = new Date(project.end_date).toLocaleDateString();
@@ -47,16 +64,89 @@ const ProjectCard = ({ project }: any) => {
     }
   };
 
+  const getUserProfile = async (user_id: number) => {
+    try {
+      await dispatch(fetchUserProfile(user_id) as any);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
+
+  const filteredProfile: { [key: string]: any } | null = userProfile ? { ...userProfile } : null;
+  if (filteredProfile) {
+    delete filteredProfile.user_id;
+    delete filteredProfile.profile_picture;
+    delete filteredProfile.name;
+    delete filteredProfile.email;
+    delete filteredProfile.batch;
+    delete filteredProfile.branch;
+    delete filteredProfile.rollnumber;
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
       <div className="flex gap-2">
-        <Avatar className="cursor-pointer">
-          {project.profile_picture ? (
-            <AvatarImage src={project.profile_picture} />
-          ) : (
-            <AvatarFallback>CC</AvatarFallback>
-          )}
-        </Avatar>
+        <Sheet>
+          <SheetTrigger>
+            <Avatar className="cursor-pointer">
+              {project.profile_picture ? (
+                <AvatarImage
+                  src={project.profile_picture}
+                  onClick={() => getUserProfile(project.host_id)}
+                />
+              ) : (
+                <AvatarFallback onClick={() => getUserProfile(project.host_id)}>
+                  CC
+                </AvatarFallback>
+              )}
+            </Avatar>
+          </SheetTrigger>
+          <SheetContent side={"bottom"} className="w-full h-[80vh]">
+            <SheetHeader>
+              <SheetTitle>
+                <div className="flex items-center mb-6">
+                  <img
+                    src={userProfile?.profile_picture || default_pfp}
+                    alt="Profile Picture"
+                    className="h-24 w-24 rounded-full mr-6 border-4 border-white shadow-lg"
+                  />
+                  <div>
+                    <h1 className="text-3xl font-semibold">
+                      {userProfile?.name || "Name"}
+                    </h1>
+                    <p className="text-gray-600">
+                      {userProfile?.email || "Email"}
+                    </p>
+                  </div>
+                </div>
+              </SheetTitle>
+              <SheetDescription>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {Object.entries(filteredProfile || {}).map(([key, value]) => (
+                    <div
+                      key={key}
+                      className="border border-gray-200 p-4 rounded-lg shadow-md"
+                    >
+                      <h3 className="text-lg font-semibold mb-2">{key}</h3>
+                      {Array.isArray(value) ? (
+                        <ul>
+                          {value.map((item, index) => (
+                            <li key={index} className="text-gray-700">
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-gray-700">{value}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+
         <h3 className="text-3xl font-semibold mb-2">{project.project_title}</h3>
       </div>
       <p className="text-sm mb-2">{project.description}</p>
