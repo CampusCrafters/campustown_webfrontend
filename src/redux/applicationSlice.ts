@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: ApplicationState = {
     applications: [],
+    required_roles: [],
 };
 
 const applicationSlice = createSlice({
@@ -11,10 +12,13 @@ const applicationSlice = createSlice({
         setApplications(state, action: PayloadAction<Application[]>) {
             state.applications = action.payload;
         },
+        setRequiredRoles(state, action: PayloadAction<RequiredRoles[]>) {
+            state.required_roles = action.payload;
+        },
     },
 });
 
-export const { setApplications } = applicationSlice.actions;
+export const { setApplications, setRequiredRoles } = applicationSlice.actions;
 export default applicationSlice.reducer;
 
 interface Application {
@@ -29,6 +33,11 @@ interface Application {
     project_title: string;
 }
 
+interface RequiredRoles {
+    required_roles: string[];
+}
+
 interface ApplicationState {
     applications: Application[];
+    required_roles: RequiredRoles[];
 }

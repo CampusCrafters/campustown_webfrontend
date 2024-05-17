@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import {
+  editApplication,
   deleteApplication,
   fetchApplications,
+  fetchRoles,
 } from "../redux/applicationActions";
 import {
   AlertDialog,
@@ -24,19 +26,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 
 const MyApplications = () => {
   const { toast } = useToast();
   const dispatch = useDispatch();
-  const { applications } = useSelector(
+  const { applications, required_roles } = useSelector(
     (state: RootState) => state.applications
   );
   useEffect(() => {
@@ -50,13 +45,46 @@ const MyApplications = () => {
         title: "Application deleted successfully",
         description: "You can no longer view this application.",
       });
-    } catch {
+    } catch(err) {
+      console.error("Error deleting application:", err);
       toast({
         title: "Error deleting application",
         description:
           "An error occurred while deleting the application. Please try again later.",
       });
     }
+  };
+
+  const handleSubmit = async (project_id: number, role: string, selectedOption: string) => {
+    //Edit Application
+    try{
+      await dispatch(editApplication(project_id, role, selectedOption) as any);
+      toast({
+        title: "Application edited successfully",
+        description: "You can now view the edited application.",
+      });
+    } catch(err) {
+      console.error("Error editing application:", err);
+      toast({
+        title: "Error editing application",
+        description:
+          "An error occurred while editing the application. Please try again later.",
+      });
+    }
+  };
+
+  const getRoles = async (project_id: number) => {
+    try {
+      await dispatch(fetchRoles(project_id) as any);
+    } catch (err) {
+      console.error("Error fetching roles:", err);
+    }
+  };
+
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleSelectChange = (event: any) => {
+    setSelectedOption(event.target.value);
   };
 
   const reversedApplications = [...applications].reverse();
@@ -106,7 +134,10 @@ const MyApplications = () => {
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <Sheet>
-                  <SheetTrigger className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-full">
+                  <SheetTrigger
+                    onClick={() => getRoles(application.project_id)}
+                    className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-full"
+                  >
                     Edit
                   </SheetTrigger>
                   <SheetContent>
@@ -119,17 +150,44 @@ const MyApplications = () => {
                       <p>Project: {application.project_title}</p>
                       <p>Applied role: {application.role_name}</p>
                       <br></br>
-                      <label>Select a new role</label>
-                      <Select>
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="New Role" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="light">Light</SelectItem>
-                          <SelectItem value="dark">Dark</SelectItem>
-                          <SelectItem value="system">System</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Select a new role
+                      </label>
+                      <div className="relative">
+                        <select
+                          id="newrole"
+                          value={selectedOption}
+                          onChange={handleSelectChange}
+                          className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:border-gray-500 focus:ring"
+                        >
+                          <option value="">New Role</option>
+                          {required_roles.map((role) => (
+                            <option key={role.toString()} value={role.toString()}>
+                              {role.toString()}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <AlertDialog>
+                        <AlertDialogTrigger
+                          className="bg-blue-500 hover:bg-blue-700 text-white
+                          font-bold py-1 px-4 mt-3 rounded-2xl
+                          focus:outline-none focus:shadow-outline"
+                        >
+                          Submit
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => handleSubmit(application.project_id, application.role_name, selectedOption)}>
+                              Yes
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </SheetHeader>
                   </SheetContent>
                 </Sheet>
