@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: SearchState = {
-    searchQuery: null
+    searchQuery: ""
 };
 
 const searchSlice = createSlice({
@@ -19,6 +19,6 @@ export default searchSlice.reducer;
 
 
 interface SearchState {
-    searchQuery: string | null;
+    searchQuery: string;
 }
 
