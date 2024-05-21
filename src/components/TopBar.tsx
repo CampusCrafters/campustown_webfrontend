@@ -29,6 +29,10 @@ const TopBar = () => {
   useEffect(() => {
     dispatch(fetchProfile() as any);
   }, [dispatch]);
+  
+  useEffect(() => {
+    dispatch(setSearchQuery(''));
+  }, [location.pathname, dispatch]);
 
   const handleLogout = () => {
     Cookies.remove("jwt");
