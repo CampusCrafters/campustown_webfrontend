@@ -2,9 +2,23 @@ import { To, useNavigate } from "react-router-dom";
 import ProjectIcon from "../assets/icons/ProjectIcon.svg";
 import CalenderIcon from "../assets/icons/CalenderIcon.svg";
 import AddIcon from "../assets/icons/AddIcon.svg";
-import FolderIcon from '../assets/icons/FolderIcon.svg';
+import FolderIcon from "../assets/icons/FolderIcon.svg";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-const BottomBar = ({ activeTab, onTabClick }: { activeTab: string, onTabClick: (tabName: string) => void }) => {
+const BottomBar = ({
+  activeTab,
+  onTabClick,
+}: {
+  activeTab: string;
+  onTabClick: (tabName: string) => void;
+}) => {
   const navigate = useNavigate();
 
   const handleTabClick = (path: To, tabName: string) => {
@@ -24,15 +38,30 @@ const BottomBar = ({ activeTab, onTabClick }: { activeTab: string, onTabClick: (
           <img src={ProjectIcon} className="w-6 h-6" alt="Project Icon" />
           <span>Projects</span>
         </div>
-        <div
-          className={`flex flex-col items-center cursor-pointer ${
-            activeTab === "Post a Project" ? "text-blue-500" : ""
-          }`}
-          onClick={() => handleTabClick("/postProject", "Post a Project")}
-        >
-          <img src={AddIcon} className="w-6 h-6" alt="Add Icon" />
-          <span>Post a Project</span>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <div
+              className={`flex flex-col items-center cursor-pointer ${
+                activeTab === "Post a Project" ? "text-blue-500" : ""
+              }`}
+            >
+              <img src={AddIcon} className="w-6 h-6" alt="Add Icon" />
+              <span>Post a Project</span>
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => handleTabClick("/postProject", "Post a Project")}
+            >
+              Project
+            </DropdownMenuItem>
+            <DropdownMenuItem>Internship</DropdownMenuItem>
+            <DropdownMenuItem>Startup Idea</DropdownMenuItem>
+            <DropdownMenuItem>Event</DropdownMenuItem>
+            <DropdownMenuItem>Workshop</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <div
           className={`flex flex-col items-center cursor-pointer ${
             activeTab === "My Applications" ? "text-blue-500" : ""
