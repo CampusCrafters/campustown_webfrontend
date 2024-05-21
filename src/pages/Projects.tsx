@@ -11,12 +11,17 @@ const Projects = () => {
   const { projects, myProjects } = useSelector(
     (state: RootState) => state.projects
   );
+  const { searchQuery } = useSelector((state: RootState) => state.search);
+
   useEffect(() => {
     dispatch(fetchProjects() as any);
     dispatch(fetchMyProjects() as any);
   }, [dispatch]);
 
   const reversedProjects = [...projects].reverse();
+  const filteredProjects = projects.filter((project) => {
+    return searchQuery ? project.project_title.toLowerCase().includes(searchQuery.toLowerCase()) : reversedProjects;
+  });
   const reversedMyProjects = [...myProjects].reverse();
 
   return (
@@ -28,7 +33,7 @@ const Projects = () => {
         </TabsList>
         <TabsContent value="all-projects" className="mt-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {reversedProjects.map((project) => (
+            {filteredProjects.map((project) => (
               <ProjectCard key={project.project_id} project={project} />
             ))}
           </div>
