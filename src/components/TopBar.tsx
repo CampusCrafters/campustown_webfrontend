@@ -45,13 +45,23 @@ const TopBar = () => {
 
   return (
     <nav className="fixed w-full bg-black text-white flex items-center justify-between px-4 py-3 rounded-b-lg">
-      <div className="flex gap-2">
-        <img src={SearchIcon} className="cursor-pointer" onClick={() => setClicked(!clicked)}></img>
-        <input onChange={(e) => handleSearch(e)} type="text" className={`${clicked ? 'block' : 'hidden'} text-black px-3 py-2 rounded-2xl w-96`}></input>
+      <div className="flex gap-2 items-center">
+        <img
+          src={SearchIcon}
+          className="cursor-pointer"
+          onClick={() => setClicked(!clicked)}
+        />
+        <input
+          onChange={handleSearch}
+          type="text"
+          className={`${
+            clicked ? 'opacity-100 w-96' : 'opacity-0 w-0'
+          } text-black px-3 py-2 rounded-2xl transition-all duration-300 ease-in-out`}
+        />
       </div>
-      <div className="font-bold text-lg">{activeTab}</div>  
+      <div className="font-bold text-lg">{activeTab}</div>
       <DropdownMenu>
-        <DropdownMenuTrigger> 
+        <DropdownMenuTrigger>
           <Avatar className="cursor-pointer">
             {profile && profile.profile_picture ? (
               <AvatarImage src={profile.profile_picture} />
