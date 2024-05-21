@@ -59,6 +59,9 @@ const BottomBar = ({
             <DropdownMenuItem>Startup Idea</DropdownMenuItem>
             <DropdownMenuItem>Event</DropdownMenuItem>
             <DropdownMenuItem>Workshop</DropdownMenuItem>
+            <DropdownMenuItem>Hackathon</DropdownMenuItem>
+            <DropdownMenuItem>Contest</DropdownMenuItem>
+            <DropdownMenuItem>CTF</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
         <div
