@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "../assets/icons/SearchIcon.svg";
+import BellIcon from "../assets/icons/BellIcon.svg";
+import ChatIcon from "../assets/icons/ChatIcon.svg";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -29,9 +31,9 @@ const TopBar = () => {
   useEffect(() => {
     dispatch(fetchProfile() as any);
   }, [dispatch]);
-  
+
   useEffect(() => {
-    dispatch(setSearchQuery(''));
+    dispatch(setSearchQuery(""));
   }, [location.pathname, dispatch]);
 
   const handleLogout = () => {
@@ -39,9 +41,9 @@ const TopBar = () => {
     window.location.href = "/";
   };
 
-  const handleSearch = (e: any) => { 
+  const handleSearch = (e: any) => {
     dispatch(setSearchQuery(e.target.value));
-  }
+  };
 
   return (
     <nav className="fixed w-full bg-black text-white flex items-center justify-between px-4 py-3 rounded-b-lg">
@@ -55,34 +57,44 @@ const TopBar = () => {
           onChange={handleSearch}
           type="text"
           className={`${
-            clicked ? 'opacity-100 w-96' : 'opacity-0 w-0'
+            clicked ? "opacity-100 w-96" : "opacity-0 w-0"
           } text-black px-3 py-2 rounded-2xl transition-all duration-300 ease-in-out`}
         />
       </div>
       <div className="font-bold text-lg">{activeTab}</div>
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Avatar className="cursor-pointer">
-            {profile && profile.profile_picture ? (
-              <AvatarImage src={profile.profile_picture} />
-            ) : (
-              <AvatarFallback>CN</AvatarFallback>
-            )}
-          </Avatar>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => {
-              navigate("/profile");
-            }}
-          >
-            View Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div className="flex gap-5">
+        <img
+          src={ChatIcon}
+          onClick={() => {
+            navigate("/chat");
+          }}
+          className="cursor-pointer"
+        ></img>
+        <img src={BellIcon} className="cursor-pointer"></img>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Avatar className="cursor-pointer">
+              {profile && profile.profile_picture ? (
+                <AvatarImage src={profile.profile_picture} />
+              ) : (
+                <AvatarFallback>CN</AvatarFallback>
+              )}
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => {
+                navigate("/profile");
+              }}
+            >
+              View Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </nav>
   );
 };

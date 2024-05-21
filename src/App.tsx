@@ -19,6 +19,7 @@ import store from "./redux/store";
 import PostProject from "./pages/PostProject";
 import MyApplications from "./pages/MyApplications";
 import { Toaster } from "@/components/ui/toaster";
+import ChatPage from "./pages/ChatPage";
 
 function App() {
   const { user, loading } = useTokenVerification();
@@ -55,6 +56,7 @@ function App() {
           >
             <Route path="projects" element={<Projects />} />
             <Route path="profile" element={<ProfilePage />} />
+            <Route path="chat" element={<ChatPage />} />
             <Route path="resume" element={<Resumedemo />} />
             <Route path="postProject" element={<PostProject />} />
             <Route path="myApplications" element={<MyApplications />} />
