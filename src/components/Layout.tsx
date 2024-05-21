@@ -10,7 +10,7 @@ const Layout = () => {
     <div className="flex flex-col h-screen">
       <TopBar />
       <div className="py-[5rem]">
-        <ScrollArea className="h-[75vh] w-full rounded-md border p-4">
+        <ScrollArea className="h-[79vh] w-full rounded-md border p-4">
           <Outlet />
         </ScrollArea>
       </div>
