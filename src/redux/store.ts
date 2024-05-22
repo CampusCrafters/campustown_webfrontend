@@ -3,6 +3,7 @@ import projectsReducer from "./projectsSlice";
 import profileReducer from "./profileSlice";
 import applicationsReducer from './applicationSlice'
 import searchReducer from "./searchSlice";
+import usersReducer from "./usersSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     profile: profileReducer,
     applications: applicationsReducer,
     search: searchReducer,
+    users: usersReducer,
   },
 });
 
