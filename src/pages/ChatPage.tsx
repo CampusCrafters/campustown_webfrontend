@@ -15,6 +15,10 @@ const ChatPage = () => {
     dispatch(fetchAllUsers() as any);
   }, [dispatch]);
 
+  const filteredUsers = users.filter(user => {
+    return user.name.toLowerCase().includes(searchQuery.toLowerCase());
+  })
+
   return (
     <div className="flex gap-5">
       <ScrollArea className="h-[100vh] w-[20%] rounded-md border p-4">
@@ -25,7 +29,7 @@ const ChatPage = () => {
           onChange={e => setSearchQuery(e.target.value)}
           className="w-full mb-4 px-3 py-2 rounded-md border"
         />
-        {users.map (user => ( 
+        {filteredUsers.map (user => ( 
           <ContactCard key={user.user_id} user={user} />
         ))}
       </ScrollArea>
