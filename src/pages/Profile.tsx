@@ -7,6 +7,20 @@ import {
 } from "../redux/profileActions";
 import { useEffect, useState } from "react";
 import default_pfp from "../assets/images/default-pfp.jpg";
+import EditIcon from "../assets/icons/EditIcon.svg";
+import DeleteIcon from "../assets/icons/DeleteIcon.svg";
+import CloseIcon from "../assets/icons/CloseIcon.svg";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const ProfileComponent = () => {
   const [file, setFile] = useState(null);
@@ -63,11 +77,61 @@ const ProfileComponent = () => {
     <div className="container mx-auto py-8">
       <div className="bg-white p-8 mb-8 rounded-lg shadow-md">
         <div className="flex items-center mb-6">
-          <img
-            src={profile?.profile_picture || default_pfp}
-            alt="Profile Picture"
-            className="h-24 w-24 rounded-full mr-6 border-4 border-white shadow-lg"
-          />
+          <AlertDialog>
+            <AlertDialogTrigger>
+              <img
+                src={profile?.profile_picture || default_pfp}
+                alt="Profile Picture"
+                className="h-64 w-64 rounded-full mr-6 border-4 border-white shadow-lg"
+              />
+            </AlertDialogTrigger>
+            <AlertDialogContent className="h-[72%] w-full bg-light-black border-none">
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-white">
+                  {profile.name}
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  <img
+                    src={profile?.profile_picture || default_pfp}
+                    alt="Profile Picture"
+                    className="h-70 w-70 rounded-full mr-6 border-4 border-white shadow-lg"
+                  />
+                  <div className="flex items-center mb-6">
+                    <input
+                      type="file"
+                      accept=".jpeg, .jpg, .png"
+                      onChange={handleFileChange}
+                      className="border border-gray-300 rounded py-1 px-2 mr-2"
+                    />
+                    <button
+                      onClick={handleUpload}
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-lg mr-2"
+                    >
+                      Upload
+                    </button>
+                    <button
+                      onClick={handleDelete}
+                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded-lg"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter className="flex justify-between items-center">
+                <AlertDialogCancel>
+                  <img src={CloseIcon}></img>
+                </AlertDialogCancel>
+                <AlertDialogAction>
+                  <img src={EditIcon}></img>
+                </AlertDialogAction>
+                <AlertDialogAction>
+                  <img src={DeleteIcon}></img>
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
           <div>
             <h1 className="text-3xl font-semibold">
               {profile?.name || "Name"}
@@ -82,26 +146,6 @@ const ProfileComponent = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex items-center mb-6">
-          <input
-            type="file"
-            accept=".jpeg, .jpg, .png"
-            onChange={handleFileChange}
-            className="border border-gray-300 rounded py-1 px-2 mr-2"
-          />
-          <button
-            onClick={handleUpload}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-lg mr-2"
-          >
-            Upload
-          </button>
-          <button
-            onClick={handleDelete}
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded-lg"
-          >
-            Delete
-          </button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {Object.entries(filteredProfile || {}).map(([key, value]) => (

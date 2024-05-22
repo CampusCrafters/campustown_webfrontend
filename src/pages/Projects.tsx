@@ -11,12 +11,17 @@ const Projects = () => {
   const { projects, myProjects } = useSelector(
     (state: RootState) => state.projects
   );
+  const { searchQuery } = useSelector((state: RootState) => state.search);
+
   useEffect(() => {
     dispatch(fetchProjects() as any);
     dispatch(fetchMyProjects() as any);
   }, [dispatch]);
 
-  const reversedProjects = [...projects].reverse();
+  const filteredProjects = projects.filter((project) => {
+    return project.project_title.toLowerCase().includes(searchQuery.toLowerCase());
+  } );
+  const reversedProjects = [...filteredProjects].reverse();
   const reversedMyProjects = [...myProjects].reverse();
 
   return (

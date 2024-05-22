@@ -15,6 +15,7 @@ const ProjectForm = () => {
     status: "",
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   //function to confirm all the fields are filled
   const validateForm = () => {
@@ -59,6 +60,7 @@ const ProjectForm = () => {
   };
 
   const handleConfirmSubmit = async () => {
+    setIsSubmitting(true);
     try {
       const res = await postProject(formData);
       toast({
@@ -83,6 +85,7 @@ const ProjectForm = () => {
     setTimeout(() => {
       window.location.reload();
     }, 2000);
+    setIsSubmitting(false);
   };
 
   const handleCloseModal = () => {
@@ -239,6 +242,7 @@ const ProjectForm = () => {
               <button
                 className="bg-black hover:bg-slate-700 text-white font-semibold px-4 py-2 rounded"
                 onClick={handleConfirmSubmit}
+                disabled={isSubmitting}
               >
                 Submit
               </button>

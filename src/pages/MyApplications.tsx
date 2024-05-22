@@ -34,6 +34,8 @@ const MyApplications = () => {
   const { applications, required_roles } = useSelector(
     (state: RootState) => state.applications
   );
+  const { searchQuery } = useSelector((state: RootState) => state.search);
+
   useEffect(() => {
     dispatch(fetchApplications() as any);
   }, [dispatch]);
@@ -45,7 +47,7 @@ const MyApplications = () => {
         title: "Application deleted successfully",
         description: "You can no longer view this application.",
       });
-    } catch(err) {
+    } catch (err) {
       console.error("Error deleting application:", err);
       toast({
         title: "Error deleting application",
@@ -55,15 +57,19 @@ const MyApplications = () => {
     }
   };
 
-  const handleSubmit = async (project_id: number, role: string, selectedOption: string) => {
+  const handleSubmit = async (
+    project_id: number,
+    role: string,
+    selectedOption: string
+  ) => {
     //Edit Application
-    try{
+    try {
       await dispatch(editApplication(project_id, role, selectedOption) as any);
       toast({
         title: "Application edited successfully",
         description: "You can now view the edited application.",
       });
-    } catch(err) {
+    } catch (err) {
       console.error("Error editing application:", err);
       toast({
         title: "Error editing application",
@@ -88,6 +94,13 @@ const MyApplications = () => {
   };
 
   const reversedApplications = [...applications].reverse();
+  const filteredApplications = applications.filter((application) => {
+    return searchQuery
+      ? application.project_title
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      : reversedApplications;
+  });
 
   return (
     <div className="overflow-x-auto">
@@ -115,7 +128,7 @@ const MyApplications = () => {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {reversedApplications.map((application) => (
+          {filteredApplications.map((application) => (
             <tr key={application.application_id}>
               <td className="px-6 py-4 whitespace-nowrap">
                 {application.project_title}
@@ -162,7 +175,10 @@ const MyApplications = () => {
                         >
                           <option value="">New Role</option>
                           {required_roles.map((role) => (
-                            <option key={role.toString()} value={role.toString()}>
+                            <option
+                              key={role.toString()}
+                              value={role.toString()}
+                            >
                               {role.toString()}
                             </option>
                           ))}
@@ -182,7 +198,15 @@ const MyApplications = () => {
                           </AlertDialogHeader>
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={() => handleSubmit(application.project_id, application.role_name, selectedOption)}>
+                            <AlertDialogAction
+                              onClick={() =>
+                                handleSubmit(
+                                  application.project_id,
+                                  application.role_name,
+                                  selectedOption
+                                )
+                              }
+                            >
                               Yes
                             </AlertDialogAction>
                           </AlertDialogFooter>

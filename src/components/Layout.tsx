@@ -8,13 +8,11 @@ const Layout = () => {
   const [activeTab, setActiveTab] = useState("Projects");
   return (
     <div className="flex flex-col h-screen">
-      <TopBar activeTab={activeTab} />
+      <TopBar />
       <div className="py-[5rem]">
-      <ScrollArea className="h-[75vh] w-full rounded-md border p-4">
-        <Outlet />
-      </ScrollArea>
-
-
+        <ScrollArea className="h-[79vh] w-full rounded-md border p-4">
+          <Outlet />
+        </ScrollArea>
       </div>
       <BottomBar
         activeTab={activeTab}
