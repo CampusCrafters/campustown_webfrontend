@@ -20,6 +20,7 @@ import PostProject from "./pages/PostProject";
 import MyApplications from "./pages/MyApplications";
 import { Toaster } from "@/components/ui/toaster";
 import ChatPage from "./pages/ChatPage";
+import ManageProjects from "./pages/ManageProjects";
 
 function App() {
   const { user, loading } = useTokenVerification();
@@ -61,6 +62,7 @@ function App() {
             <Route path="postProject" element={<PostProject />} />
             <Route path="myApplications" element={<MyApplications />} />
             <Route path="events" element={<EventsPage />} />
+            <Route path="Manageproject" element={<ManageProjects />} />
           </Route>
         </Routes>
       </Router>
