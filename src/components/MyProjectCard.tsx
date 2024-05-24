@@ -97,7 +97,7 @@ const MyProjectsCard = ({ project }: any) => {
         <div className="flex gap-4">
           <button
             onClick={() => handleManageProject()}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
+            className="bg-black  text-white font-bold py-2 px-4 rounded mt-4"
           >
             Manage Project
           </button>

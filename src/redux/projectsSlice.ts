@@ -1,27 +1,29 @@
+// projectsSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Project {
   project_id: number;
-  host_id: number;
-  host_name: string;
   project_title: string;
   description: string;
   domain: string;
   status: string;
   start_date: string;
   end_date: string;
-  required_roles: string[];
   link: string;
+  required_roles: string[];
+  members: { user_id: number; role: string }[];
 }
 
 interface ProjectsState {
   projects: Project[];
   myProjects: Project[];
+  projectDetails: Project | null; // Add projectDetails to the state
 }
 
 const initialState: ProjectsState = {
   projects: [],
   myProjects: [],
+  projectDetails: null, // Initialize projectDetails
 };
 
 const projectsSlice = createSlice({
@@ -34,17 +36,12 @@ const projectsSlice = createSlice({
     setMyProjects(state, action: PayloadAction<Project[]>) {
       state.myProjects = action.payload;
     },
-    deleteProjectSuccess(state, action: PayloadAction<number>) {
-      state.projects = state.projects.filter(
-        (project) => project.project_id !== action.payload
-      );
-      state.myProjects = state.myProjects.filter(
-        (project) => project.project_id !== action.payload
-      );
+    setProjectDetails(state, action: PayloadAction<Project>) {
+      state.projectDetails = action.payload;
     },
   },
 });
 
-export const { setProjects, setMyProjects, deleteProjectSuccess } =
+export const { setProjects, setMyProjects, setProjectDetails } =
   projectsSlice.actions;
 export default projectsSlice.reducer;
