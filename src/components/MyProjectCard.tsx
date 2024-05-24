@@ -89,7 +89,7 @@ const MyProjectsCard = ({ project }: any) => {
         {project.members && project.members.length > 0 ? (
           project.members.map((member: any, index: number) => (
             <span key={member.user_id} className="mr-2">
-              {userProfiles[member.user_id] || member.user_id}
+              {userProfiles[member.user_id] || "Loading Members..."}
 
               {index !== project.members.length - 1 && ", "}
             </span>
