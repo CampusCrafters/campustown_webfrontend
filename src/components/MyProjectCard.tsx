@@ -14,6 +14,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { deleteProject } from "../redux/projectsActions";
+import { fetchUserProfile } from "../redux/profileActions";
+import { useEffect, useState } from "react";
 
 const MyProjectsCard = ({ project }: any) => {
   const dispatch = useDispatch();
@@ -21,10 +23,37 @@ const MyProjectsCard = ({ project }: any) => {
   const navigate = useNavigate(); // Get the navigate function
   const formattedStartDate = new Date(project.start_date).toLocaleDateString();
   const formattedEndDate = new Date(project.end_date).toLocaleDateString();
+  const [userProfiles, setUserProfiles] = useState<{ [key: number]: any }>({});
 
   const handleManageProject = async () => {
     navigate("/manageproject?project_id=" + project.project_id); // Navigate to the manageproject page
   };
+
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      if (project?.members) {
+        const profiles: { [key: number]: any } = {};
+        for (const member of project.members) {
+          try {
+            const response = await dispatch(
+              fetchUserProfile(member.user_id) as any
+            );
+
+            profiles[member.user_id] = response.name;
+          } catch (error) {
+            console.error("Error fetching user profile:", error);
+          }
+        }
+        setUserProfiles(profiles);
+        console.log("Profiles:", profiles);
+        console.log("UserProfiles:", userProfiles);
+      }
+    };
+
+    if (project) {
+      fetchProfiles();
+    }
+  }, [dispatch, project, userProfiles]);
 
   const handleDelete = async (project_id: number) => {
     try {
@@ -58,9 +87,11 @@ const MyProjectsCard = ({ project }: any) => {
       <p className="mb-2">
         <strong>Members: </strong>
         {project.members && project.members.length > 0 ? (
-          project.members.map((member: any) => (
+          project.members.map((member: any, index: number) => (
             <span key={member.user_id} className="mr-2">
-              {member.user_id}
+              {userProfiles[member.user_id] || member.user_id}
+
+              {index !== project.members.length - 1 && ", "}
             </span>
           ))
         ) : (

@@ -245,35 +245,41 @@ function ManageProject() {
           }}
         >
           <span className="font-bold">Project Members:</span>
-          <table
-            style={{ width: "100%", borderCollapse: "collapse" }}
-            className="mb-3"
-          >
-            <thead>
-              <tr>
-                <th style={{ border: "1px solid black", padding: "8px" }}>
-                  Username
-                </th>
+          {projectDetails.members && projectDetails.members.length > 0 ? (
+            <div>
+              <span className="font-bold">Project Members:</span>
+              <table
+                style={{ width: "100%", borderCollapse: "collapse" }}
+                className="mb-3"
+              >
+                <thead>
+                  <tr>
+                    <th style={{ border: "1px solid black", padding: "8px" }}>
+                      Username
+                    </th>
+                    <th style={{ border: "1px solid black", padding: "8px" }}>
+                      Role
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {projectDetails.members.map((member: any, index: any) => (
+                    <tr key={index}>
+                      <td style={{ border: "1px solid black", padding: "8px" }}>
+                        {userProfiles[member.user_id] || "Loading..."}
+                      </td>
+                      <td style={{ border: "1px solid black", padding: "8px" }}>
+                        {member.role}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div>No members currently working on this project</div>
+          )}
 
-                <th style={{ border: "1px solid black", padding: "8px" }}>
-                  Role
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {projectDetails.members?.map((member: any, index: any) => (
-                <tr key={index}>
-                  <td style={{ border: "1px solid black", padding: "8px" }}>
-                    {userProfiles[member.user_id] || "Loading..."}
-                  </td>
-
-                  <td style={{ border: "1px solid black", padding: "8px" }}>
-                    {member.role}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
           <div style={{ marginBottom: "20px" }}>
             <label>
               <span className="font-bold">Project Title:</span>
