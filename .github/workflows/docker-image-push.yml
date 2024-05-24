@@ -40,5 +40,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: vijayvenkatj/campusconnect-frontend:latest
           build-args: |
-            VITE_BACKEND_URL: http://localhost:5000
+            "VITE_BACKEND_URL: http://localhost:5000"
 
