@@ -45,7 +45,7 @@ const BottomBar = ({
               }`}
             >
               <img src={AddIcon} className="w-6 h-6" alt="Add Icon" />
-              <span>Post Aything</span>
+              <span>Post</span>
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
