@@ -1,6 +1,7 @@
-import { Dispatch, Action } from "redux";
+// projectsActions.ts
+import { Dispatch } from "redux";
 import axios from "axios";
-import { setProjects, setMyProjects } from "./projectsSlice";
+import { setProjects, setMyProjects, setProjectDetails } from "./projectsSlice";
 import {
   DELETE_PROJECT_REQUEST,
   DELETE_PROJECT_SUCCESS,
@@ -9,7 +10,7 @@ import {
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-export const fetchProjects = () => async (dispatch: Dispatch<Action<any>>) => {
+export const fetchProjects = () => async (dispatch: Dispatch) => {
   try {
     const response = await axios.get(`${backendURL}/api/v1/project/all`);
     dispatch(setProjects(response.data));
@@ -18,18 +19,33 @@ export const fetchProjects = () => async (dispatch: Dispatch<Action<any>>) => {
   }
 };
 
-export const fetchMyProjects =
-  () => async (dispatch: Dispatch<Action<any>>) => {
+export const fetchMyProjects = () => async (dispatch: Dispatch) => {
+  try {
+    const response = await axios.get(
+      `${backendURL}/api/v1/project/myProjects`,
+      {
+        withCredentials: true,
+      }
+    );
+    dispatch(setMyProjects(response.data));
+  } catch (error) {
+    console.error("Error fetching my projects:", error);
+  }
+};
+
+export const getProjectWithId =
+  (project_id: number) => async (dispatch: Dispatch) => {
     try {
-      const response = await axios.get(
-        `${backendURL}/api/v1/project/myProjects`,
+      const res = await axios.get(
+        `${backendURL}/api/v1/project/${project_id}`,
         {
           withCredentials: true,
         }
       );
-      dispatch(setMyProjects(response.data));
-    } catch (error) {
-      console.error("Error fetching my projects:", error);
+      dispatch(setProjectDetails(res.data));
+    } catch (err: any) {
+      console.error("Error fetching project with id:", err);
+      return err.response;
     }
   };
 
@@ -51,7 +67,9 @@ export const postProject = async (project: any) => {
     const res = await axios.post(
       `${backendURL}/api/v1/project/postProject`,
       project,
-      { withCredentials: true }
+      {
+        withCredentials: true,
+      }
     );
     return res;
   } catch (err: any) {
@@ -59,7 +77,9 @@ export const postProject = async (project: any) => {
   }
 };
 
-export const editProject = async (project: any) => {
+export const editProject = (project: any) => async (dispatch: Dispatch) => {
+  console.log("project", project);
+  console.log("project_id", project.project_id);
   try {
     const res = await axios.put(
       `${backendURL}/api/v1/project/editProject?project_id=${project.project_id}`,
@@ -67,17 +87,6 @@ export const editProject = async (project: any) => {
       { withCredentials: true }
     );
     return res;
-  } catch (err: any) {
-    return err.response;
-  }
-};
-
-export const getProjectWithId = async (project_id: number) => {
-  try {
-    const res = await axios.get(`${backendURL}/api/v1/project/${project_id}`, {
-      withCredentials: true,
-    });
-    return res.data;
   } catch (err: any) {
     return err.response;
   }
@@ -97,17 +106,18 @@ const deleteProjectFailure = (error: string) => ({
   payload: error,
 });
 
-export const deleteProject = (project_id: number) => {
-  return async (dispatch: Dispatch) => {
+export const deleteProject =
+  (project_id: number) => async (dispatch: Dispatch) => {
+    dispatch(deleteProjectRequest());
     try {
       await axios.delete(
         `${backendURL}/api/v1/project/deleteProject?project_id=${project_id}`,
         { withCredentials: true }
       );
       dispatch(deleteProjectSuccess(project_id));
+      dispatch(fetchMyProjects() as any);
     } catch (error: any) {
+      dispatch(deleteProjectFailure(error.message));
       console.error("Error deleting project:", error);
-      throw error;
     }
   };
-};
