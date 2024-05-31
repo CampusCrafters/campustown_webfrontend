@@ -17,19 +17,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {
-  deleteApplication,
-  editApplication,
-  fetchAplForProject,
+  fetchAplicants,
+  rejectApplicant,
+  acceptApplicant,
+  shortlistApplicant,
 } from "../redux/applicationActions";
-import { fetchRoles } from "../redux/applicationActions";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 
 interface FormValues {
   project_title: string;
@@ -51,12 +43,15 @@ function ManageProject() {
   const projectDetails = useSelector(
     (state: RootState) => state.projects.projectDetails
   );
-  const { applications, required_roles } = useSelector(
-    (state: RootState) => state.applications
+  const applications = useSelector(
+    (state: RootState) => state.applications.applications
   );
   const { searchQuery } = useSelector((state: RootState) => state.search);
 
   const [editMode, setEditMode] = useState(false);
+
+  const [selectedAction, setSelectedAction] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const [userProfiles, setUserProfiles] = useState<{ [key: number]: any }>({});
   const [formValues, setFormValues] = useState<FormValues>({
@@ -101,6 +96,14 @@ function ManageProject() {
   }, [dispatch, projectId]);
 
   useEffect(() => {
+    if (projectID) {
+      const applicants = dispatch(fetchAplicants(projectID) as any);
+      if (applicants) {
+      }
+    }
+  }, [dispatch, projectID]);
+
+  useEffect(() => {
     const fetchProfiles = async () => {
       if (projectDetails?.members) {
         const profiles: { [key: number]: any } = {};
@@ -116,8 +119,6 @@ function ManageProject() {
           }
         }
         setUserProfiles(profiles);
-        console.log("Profiles:", profiles);
-        console.log("UserProfiles:", userProfiles);
       }
     };
 
@@ -137,7 +138,6 @@ function ManageProject() {
   };
 
   const handleSubmit = async (project_id: number, formValues: FormValues) => {
-    console.log("Submitting form:", formValues);
     try {
       const action = editProject({ project_id, projectInfo: formValues }); // Create action
       const resultAction = await dispatch(action); // Dispatch action and wait for it to resolve
@@ -159,72 +159,88 @@ function ManageProject() {
   const handleEdit = () => {
     setEditMode(true);
   };
-
-  useEffect(() => {
-    dispatch(fetchAplForProject(projectID) as any);
-  }, [dispatch]);
-
-  const handleDelete = async (applicationId: number) => {
+  const handleReject = async (applicant: any) => {
     try {
-      await dispatch(deleteApplication(applicationId) as any);
+      console.log("Rejecting applicant:", applicant);
+      // Send a POST request to the backend with the applicant information
+      dispatch(rejectApplicant(applicant, projectID) as any);
+      // Optionally, you can update the UI or perform other actions after successful rejection
       toast({
-        title: "Application deleted successfully",
-        description: "You can no longer view this application.",
+        title: "Applicant rejected successfully",
       });
-    } catch (err) {
-      console.error("Error deleting application:", err);
+    } catch (error) {
       toast({
-        title: "Error deleting application",
+        title: "Error rejecting applicant",
         description:
-          "An error occurred while deleting the application. Please try again later.",
+          "An error occurred while rejecting the applicant. Please try again later.",
       });
     }
   };
 
-  const handleSubmitApl = async (
-    project_id: number,
-    role: string,
-    selectedOption: string
-  ) => {
-    //Edit Application
+  const handleSelectApplicant = async (applicant: any) => {
     try {
-      await dispatch(editApplication(project_id, role, selectedOption) as any);
+      console.log("Selecting applicant:", applicant);
+      // Send a POST request to the backend with the applicant information
+      dispatch(acceptApplicant(applicant, projectID) as any);
+      // Optionally, you can update the UI or perform other actions after successful selection
       toast({
-        title: "Application edited successfully",
-        description: "You can now view the edited application.",
+        title: "Applicant selected successfully",
       });
-    } catch (err) {
-      console.error("Error editing application:", err);
+    } catch (error) {
       toast({
-        title: "Error editing application",
+        title: "Error selecting applicant",
         description:
-          "An error occurred while editing the application. Please try again later.",
+          "An error occurred while selecting the applicant. Please try again later.",
       });
     }
   };
 
-  const getRoles = async (project_id: number) => {
+  const handleShortlist = async (applicant: any) => {
     try {
-      await dispatch(fetchRoles(project_id) as any);
-    } catch (err) {
-      console.error("Error fetching roles:", err);
+      console.log("Shortlisting applicant:", applicant);
+      // Send a POST request to the backend with the applicant information
+      dispatch(shortlistApplicant(applicant, projectID) as any);
+      // Optionally, you can update the UI or perform other actions after successful shortlisting
+      toast({
+        title: "Applicant shortlisted successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error shortlisting applicant",
+        description:
+          "An error occurred while shortlisting the applicant. Please try again later.",
+      });
     }
   };
 
-  const [selectedOption, setSelectedOption] = useState("");
+  const handleActionSelect = (action: string, applicant: any) => {
+    // Perform different actions based on the selected action
+    switch (action) {
+      case "Select":
+        // Handle select action
+        handleSelectApplicant(applicant);
+        break;
+      case "Shortlist":
+        // Handle shortlist action
+        handleShortlist(applicant);
+        break;
+      case "Reject":
+        // Handle reject action
+        handleReject(applicant);
+        break;
+      default:
+        break;
+    }
 
-  const handleSelectChange = (event: any) => {
-    setSelectedOption(event.target.value);
+    // Toggle dropdown visibility
+    if (selectedAction === action) {
+      setIsDropdownOpen(!isDropdownOpen);
+      setSelectedAction("");
+    } else {
+      setSelectedAction(action);
+      setIsDropdownOpen(true);
+    }
   };
-
-  const reversedApplications = [...applications].reverse();
-  const filteredApplications = applications.filter((application) => {
-    return searchQuery
-      ? application.project_title
-          .toLowerCase()
-          .includes(searchQuery.toLowerCase())
-      : reversedApplications;
-  });
 
   return (
     <div
@@ -244,7 +260,6 @@ function ManageProject() {
             boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)",
           }}
         >
-          <span className="font-bold">Project Members:</span>
           {projectDetails.members && projectDetails.members.length > 0 ? (
             <div>
               <span className="font-bold">Project Members:</span>
@@ -408,11 +423,12 @@ function ManageProject() {
               />
             </label>
           </div>
+
           <div>
             {editMode ? (
               <div>
                 <AlertDialog>
-                  <AlertDialogTrigger className="bg-black  text-white font-bold py-2 px-4 rounded mr-2">
+                  <AlertDialogTrigger className="bg-black text-white font-bold py-2 px-4 rounded mr-2">
                     Save Changes
                   </AlertDialogTrigger>
                   <AlertDialogContent>
@@ -448,155 +464,145 @@ function ManageProject() {
               </button>
             )}
           </div>
+
+          <div>
+            <h2 className="font-bold mt-5">Applications Recieved:</h2>
+            {applications && applications.length > 0 ? (
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Applicant Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Applied for
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Applied On
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {applications.map((application: any, index: any) => (
+                    <tr
+                      key={index}
+                      className={`${
+                        application.status === "Rejected"
+                          ? "bg-red-100"
+                          : application.status === "Accepted"
+                          ? "bg-green-100"
+                          : application.status === "Shortlisted"
+                          ? "bg-slate-300"
+                          : ""
+                      }`}
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {application.applicant_name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {application.role_name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {application.status}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {new Date(application.applied_on).toLocaleDateString()}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {application.status == "Pending" && (
+                          <div className="relative">
+                            <button
+                              onClick={() => handleActionSelect(application)}
+                              type="button"
+                              className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+                              id="options-menu"
+                              aria-haspopup="true"
+                              aria-expanded="true"
+                            >
+                              {selectedAction === application
+                                ? "Collapse"
+                                : "Expand"}
+                              <svg
+                                className="-mr-1 ml-2 h-5 w-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
+                                {/* Icon */}
+                              </svg>
+                            </button>
+
+                            {/* Dropdown menu */}
+                            {isDropdownOpen &&
+                              selectedAction === application && (
+                                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                                  <div
+                                    className="py-1"
+                                    role="menu"
+                                    aria-orientation="vertical"
+                                    aria-labelledby="options-menu"
+                                  >
+                                    <button
+                                      onClick={() =>
+                                        handleActionSelect(
+                                          "Select",
+                                          application
+                                        )
+                                      }
+                                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                      role="menuitem"
+                                    >
+                                      Select
+                                    </button>
+                                    <button
+                                      onClick={() =>
+                                        handleActionSelect(
+                                          "Shortlist",
+                                          application
+                                        )
+                                      }
+                                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                      role="menuitem"
+                                    >
+                                      Shortlist
+                                    </button>
+                                    <button
+                                      onClick={() =>
+                                        handleActionSelect(
+                                          "Reject",
+                                          application
+                                        )
+                                      }
+                                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                      role="menuitem"
+                                    >
+                                      Reject
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div>No applicants currently for this project</div>
+            )}
+          </div>
         </div>
       ) : (
         <div>Loading Project Details...</div>
       )}
-
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Project Title
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Role
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Applied On
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Reviewed On
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {filteredApplications.map((application) => (
-              <tr key={application.application_id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {application.project_title}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {application.role_name}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {application.status}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {new Date(application.applied_on).toLocaleString()}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {new Date(application.reviewed_on).toLocaleString()}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <Sheet>
-                    <SheetTrigger
-                      onClick={() => getRoles(application.project_id)}
-                      className="mr-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-full"
-                    >
-                      Edit
-                    </SheetTrigger>
-                    <SheetContent>
-                      <SheetHeader>
-                        <SheetTitle>Edit Application</SheetTitle>
-                        <SheetDescription>
-                          You can change the role you've applied for but note
-                          that your application will be marked as edited.
-                        </SheetDescription>
-                        <p>Project: {application.project_title}</p>
-                        <p>Applied role: {application.role_name}</p>
-                        <br></br>
-                        <label className="block text-gray-700 text-sm font-bold mb-2">
-                          Select a new role
-                        </label>
-                        <div className="relative">
-                          <select
-                            id="newrole"
-                            value={selectedOption}
-                            onChange={handleSelectChange}
-                            className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:border-gray-500 focus:ring"
-                          >
-                            <option value="">New Role</option>
-                            {required_roles.map((role) => (
-                              <option
-                                key={role.toString()}
-                                value={role.toString()}
-                              >
-                                {role.toString()}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <AlertDialog>
-                          <AlertDialogTrigger
-                            className="bg-blue-500 hover:bg-blue-700 text-white
-                          font-bold py-1 px-4 mt-3 rounded-2xl
-                          focus:outline-none focus:shadow-outline"
-                          >
-                            Submit
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction
-                                onClick={() =>
-                                  handleSubmitApl(
-                                    application.project_id,
-                                    application.role_name,
-                                    selectedOption
-                                  )
-                                }
-                              >
-                                Yes
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                      </SheetHeader>
-                    </SheetContent>
-                  </Sheet>
-                  <AlertDialog>
-                    <AlertDialogTrigger className="mr-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded-full">
-                      Reject Application
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Are you absolutely sure?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone. This will permanently
-                          delete your application.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() =>
-                            handleDelete(application.application_id)
-                          }
-                        >
-                          Yes
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
     </div>
   );
 }

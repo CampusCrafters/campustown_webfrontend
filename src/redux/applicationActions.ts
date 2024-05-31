@@ -1,6 +1,11 @@
 import { Dispatch, Action } from "redux";
 import axios from "axios";
-import { setApplications, setRequiredRoles } from "./applicationSlice";
+import {
+  setApplications,
+  setRequiredRoles,
+  setApplicants,
+} from "./applicationSlice";
+import { Applicant } from "./applicantTypes";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -60,15 +65,88 @@ export const deleteApplication =
     }
   };
 
-export const fetchAplForProject =
+export const fetchAplicants =
   (project_id: number) => async (dispatch: Dispatch<Action<any>>) => {
     try {
       const response = await axios.get(
-        `${backendURL}/api/v1/project/projectApplicants`,
-        { params: { project_id }, withCredentials: true }
+        `${backendURL}/api/v1/project/projectApplicants?project_id=${project_id}`,
+        { withCredentials: true }
       );
+      console.log("response.data", response.data);
+      dispatch(setApplicants(response.data));
       return response.data;
     } catch (error) {
       console.error("Error fetching applicants:", error);
+    }
+  };
+
+export const rejectApplicant =
+  (applicant: Applicant, project_id: number) =>
+  async (dispatch: Dispatch<Action<any>>) => {
+    console.log("applicant", applicant);
+    const { user_id, role_name } = applicant;
+    console.log("application_id", user_id, "role_name", role_name);
+    try {
+      await axios.put(
+        `${backendURL}/api/v1/project/rejectApplicant`,
+        {
+          user_id,
+          role_name,
+          project_id,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(fetchAplicants(project_id) as any);
+    } catch (error) {
+      console.error("Error rejecting applicant:", error);
+      // Display a user-friendly error message to the user
+    }
+  };
+
+export const acceptApplicant =
+  (applicant: Applicant, project_id: number) =>
+  async (dispatch: Dispatch<Action<any>>) => {
+    const { user_id, role_name } = applicant;
+    try {
+      await axios.post(
+        `${backendURL}/api/v1/project/acceptApplicant`,
+        {
+          user_id,
+          role_name,
+          project_id,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(fetchAplicants(project_id) as any);
+    } catch (error) {
+      console.error("Error accepting applicant:", error);
+      // Display a user-friendly error message to the user
+    }
+  };
+
+export const shortlistApplicant =
+  (applicant: Applicant, project_id: number) =>
+  async (dispatch: Dispatch<Action<any>>) => {
+    const { user_id, role_name } = applicant;
+    try {
+      await axios.put(
+        `${backendURL}/api/v1/project/shortlistApplicant`,
+        {
+          user_id,
+          role_name,
+          project_id,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(fetchAplicants(project_id) as any);
+    } catch (error) {
+      console.error("Error shortlisting applicant:", error);
+      // Display a user-friendly error message to the user
     }
   };
