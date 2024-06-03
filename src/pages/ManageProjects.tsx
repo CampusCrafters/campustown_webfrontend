@@ -46,7 +46,6 @@ function ManageProject() {
   const applications = useSelector(
     (state: RootState) => state.applications.applications
   );
-  const { searchQuery } = useSelector((state: RootState) => state.search);
 
   const [editMode, setEditMode] = useState(false);
 
@@ -139,9 +138,8 @@ function ManageProject() {
 
   const handleSubmit = async (project_id: number, formValues: FormValues) => {
     try {
-      const action = editProject({ project_id, projectInfo: formValues }); // Create action
-      const resultAction = await dispatch(action); // Dispatch action and wait for it to resolve
-      const projectInfo = resultAction.payload; // Access payload from the resolved action if needed
+      await dispatch(editProject({ project_id, projectInfo: formValues })); // Create action
+
       toast({
         title: "Project edited successfully",
       });
@@ -518,7 +516,9 @@ function ManageProject() {
                         {application.status == "Pending" && (
                           <div className="relative">
                             <button
-                              onClick={() => handleActionSelect(application)}
+                              onClick={() =>
+                                handleActionSelect("", application)
+                              }
                               type="button"
                               className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
                               id="options-menu"

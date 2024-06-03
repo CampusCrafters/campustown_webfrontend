@@ -4,7 +4,6 @@ import profileReducer from "./profileSlice";
 import applicationsReducer from "./applicationSlice";
 import searchReducer from "./searchSlice";
 import usersReducer from "./usersSlice";
-import thunk from "redux-thunk";
 
 const store = configureStore({
   reducer: {

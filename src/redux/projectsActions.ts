@@ -77,9 +77,7 @@ export const postProject = async (project: any) => {
   }
 };
 
-export const editProject = (project: any) => async (dispatch: Dispatch) => {
-  console.log("project", project);
-  console.log("project_id", project.project_id);
+export const editProject = (project: any) => async () => {
   try {
     const res = await axios.put(
       `${backendURL}/api/v1/project/editProject?project_id=${project.project_id}`,
