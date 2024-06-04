@@ -22,7 +22,7 @@ import { Toaster } from "@/components/ui/toaster";
 import ChatPage from "./pages/ChatPage";
 import ManageProjects from "./pages/ManageProjects";
 
-//comment
+//comment1
 function App() {
   const { user, loading } = useTokenVerification();
   const [authLoading, setAuthLoading] = useState(true);
