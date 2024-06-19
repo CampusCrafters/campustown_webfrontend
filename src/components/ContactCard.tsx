@@ -1,6 +1,6 @@
-const ContactCard = ({ user }: any) => {
+const ContactCard = ({ user, onClick }: any) => {
   return (
-    <div className="contact-card flex items-center p-3 border-b transition duration-300 ease-in-out hover:bg-gray-100">
+    <div onClick={onClick} className="cursor-pointer contact-card flex items-center p-3 border-b transition duration-300 ease-in-out hover:bg-gray-100">
       <img className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center mr-3" src={user.profile_picture}>
       </img>
       <div>
