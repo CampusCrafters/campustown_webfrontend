@@ -7,6 +7,7 @@ import { fetchAllUsers } from "@/redux/usersActions";
 import axios from "axios";
 
 const ChatPage = () => {
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
   const dispatch = useDispatch();
   const users = useSelector((state: RootState) => state.users.users);
   const [searchQuery, setSearchQuery] = useState("");
@@ -27,7 +28,7 @@ const ChatPage = () => {
   const handleSelect = async (contactName: string) => {
     setSelectedUser(contactName);
     const selectedUserConversations = await axios.get(
-      `http://localhost:3000/chat/:${contactName}`,
+      `${backendURL}/chat/:${contactName}`,
       {
         withCredentials: true,
       }
