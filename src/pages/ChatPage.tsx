@@ -7,34 +7,107 @@ import { fetchAllUsers } from "@/redux/usersActions";
 import axios from "axios";
 
 const ChatPage = () => {
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const chat_server_http = import.meta.env.VITE_CHATSERVER_HTTP_URL;
   const dispatch = useDispatch();
   const users = useSelector((state: RootState) => state.users.users);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
   const [newMessage, setNewMessage] = useState("");
-  const [selectedUserConversations, setSelectedUserConversations] = useState(
-    []
-  );
+  const [selectedUserConversations, setSelectedUserConversations] = useState<
+    conversation[]
+  >([]);
+  const [socket, setSocket] = useState<null | WebSocket>(null);
 
   useEffect(() => {
     dispatch(fetchAllUsers() as any);
   }, [dispatch]);
 
+  useEffect(() => {
+    const token = document.cookie.split("=")[1];
+    console.log(token);
+    const socket = new WebSocket(`ws://localhost:8080?token=${token}`);
+    socket.onopen = () => {
+      console.log("Connected to web-socket server");
+      setSocket(socket);
+    };
+    socket.onclose = () => {
+      console.log("Disconnected from web-socket server");
+    };
+
+    return () => {
+      socket.close();
+    };
+  }, []);
+
+  const handleSend = async () => {
+    if (newMessage === "") {
+      alert("Message cannot be empty");
+      return;
+    }
+    if (!socket) {
+      alert("Socket not connected");
+      return;
+    }
+  
+    const message = {
+      to: selectedUser,
+      message: newMessage,
+    };
+    
+    // Capture the current timestamp before clearing newMessage
+    const timestamp = new Date().toISOString();
+    
+    socket.send(JSON.stringify(message));
+    
+    setNewMessage("");
+    
+    setSelectedUserConversations([
+      ...selectedUserConversations,
+      {
+        from: "me",
+        to: selectedUser,
+        message: newMessage,
+        timestamp: timestamp, // Use the captured timestamp
+      },
+    ]);
+  };
+  
   const filteredUsers = users.filter((user) => {
     return user.name.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
+  const handleOnChange = (e: any) => {
+    e.preventDefault();
+    setNewMessage(e.target.value);
+  }
+
   const handleSelect = async (contactName: string) => {
     setSelectedUser(contactName);
+    
     const selectedUserConversations = await axios.get(
-      `${backendURL}/chat/:${contactName}`,
+      `${chat_server_http}/chat/:${contactName}`,
       {
         withCredentials: true,
       }
     );
     console.log(selectedUserConversations);
     setSelectedUserConversations(selectedUserConversations.data);
+
+    if (socket) {
+      socket.onmessage = (message) => {
+        const data = JSON.parse(message.data);
+        setSelectedUserConversations((prevConversations) => [
+          ...prevConversations,
+          {
+            from: data.from,
+            to: data.to,
+            message: data.message,
+            timestamp: data.timestamp,
+          },
+        ]);
+      };
+    }
+
   };
 
   interface conversation {
@@ -42,6 +115,10 @@ const ChatPage = () => {
     to: string;
     message: string;
     timestamp: string;
+  }
+
+  if (!socket) {
+    return <div>Connecting to the web-socket server...</div>;
   }
 
   return (
@@ -74,27 +151,30 @@ const ChatPage = () => {
                 <p className="text-center font-bold text-lg mb-4">
                   {selectedUser}
                 </p>
-                {selectedUserConversations &&
-                selectedUserConversations.length > 0 ? (
-                  selectedUserConversations.map(
+                {(selectedUserConversations || []).length > 0 ? (
+                  (selectedUserConversations || []).map(
                     (conversation: conversation, index) => (
                       <div
                         key={index}
-                        className="mb-4 p-3 rounded-lg border bg-white shadow-sm"
+                        className={`mb-4 p-3 rounded-lg border shadow-sm max-w-[70%] ${
+                          conversation.from === selectedUser
+                            ? "bg-white self-start text-left"
+                            : "bg-blue-100 self-end text-right"
+                        }`}
                       >
-                        <p className="text-sm text-gray-500">
-                          From:
-                          <span className="font-medium">
-                            {conversation.from}
-                          </span>
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          To:
-                          <span className="font-medium">{conversation.to}</span>
-                        </p>
                         <p className="text-base my-2">{conversation.message}</p>
                         <p className="text-xs text-gray-400">
-                          {conversation.timestamp}
+                          {new Date(conversation.timestamp).toLocaleString(
+                            "en-US",
+                            {
+                              month: "long",
+                              day: "numeric",
+                              hour: "numeric",
+                              minute: "numeric",
+                              second: "numeric",
+                              hour12: true,
+                            }
+                          )}
                         </p>
                       </div>
                     )
@@ -113,15 +193,18 @@ const ChatPage = () => {
                 type="text"
                 placeholder="Type a message"
                 value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
+                onChange={(e) => handleOnChange(e)}
                 className="flex-grow px-4 py-2 rounded-md border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <button className="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600">
+              <button
+                onClick={handleSend}
+                className="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600"
+              >
                 Send
               </button>
             </div>
           )}
-        </div>{" "}
+        </div>
       </ScrollArea>
     </div>
   );
