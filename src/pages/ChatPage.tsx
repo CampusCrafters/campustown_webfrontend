@@ -48,42 +48,36 @@ const ChatPage = () => {
       alert("Socket not connected");
       return;
     }
-  
+
     const message = {
       to: selectedUser,
       message: newMessage,
     };
-    
+
     // Capture the current timestamp before clearing newMessage
     const timestamp = new Date().toISOString();
-    
-    socket.send(JSON.stringify(message));
-    
+
+    socket.send(JSON.stringify(message)); // Convert message object to JSON string before sending
+
     setNewMessage("");
-    
+
+    const newConversation = {
+      from: "me",
+      to: selectedUser,
+      message: newMessage,
+      timestamp: timestamp, // Use the captured timestamp
+    };
+    console.log(newConversation);
+
     setSelectedUserConversations([
       ...selectedUserConversations,
-      {
-        from: "me",
-        to: selectedUser,
-        message: newMessage,
-        timestamp: timestamp, // Use the captured timestamp
-      },
+      newConversation,
     ]);
   };
-  
-  const filteredUsers = users.filter((user) => {
-    return user.name.toLowerCase().includes(searchQuery.toLowerCase());
-  });
-
-  const handleOnChange = (e: any) => {
-    e.preventDefault();
-    setNewMessage(e.target.value);
-  }
 
   const handleSelect = async (contactName: string) => {
     setSelectedUser(contactName);
-    
+
     const selectedUserConversations = await axios.get(
       `${chat_server_http}/chat/:${contactName}`,
       {
@@ -96,18 +90,22 @@ const ChatPage = () => {
     if (socket) {
       socket.onmessage = (message) => {
         const data = JSON.parse(message.data);
+        console.log(data);
+
+        const newConversation = {
+          from: data.from,
+          to: data.to,
+          message: data.message,
+          timestamp: data.timestamp,
+        };
+        console.log(newConversation);
+
         setSelectedUserConversations((prevConversations) => [
           ...prevConversations,
-          {
-            from: data.from,
-            to: data.to,
-            message: data.message,
-            timestamp: data.timestamp,
-          },
+          newConversation,
         ]);
       };
     }
-
   };
 
   interface conversation {
@@ -116,6 +114,15 @@ const ChatPage = () => {
     message: string;
     timestamp: string;
   }
+
+  const filteredUsers = users.filter((user) => {
+    return user.name.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
+  const handleOnChange = (e: any) => {
+    e.preventDefault();
+    setNewMessage(e.target.value);
+  };
 
   if (!socket) {
     return <div>Connecting to the web-socket server...</div>;
