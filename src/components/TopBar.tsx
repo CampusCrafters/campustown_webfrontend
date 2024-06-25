@@ -43,10 +43,11 @@ const TopBar = () => {
   }, [location.pathname, dispatch]);
 
   const handleLogout = () => {
-    Cookies.remove("jwt");
+    Cookies.remove("jwt", { path: "/" }); // Specify the path if it was set while creating the cookie
+    // Clear any user state in Redux
+    dispatch({ type: "CLEAR_USER_STATE" });
     window.location.href = "/";
   };
-
   const handleSearch = (e: any) => {
     dispatch(setSearchQuery(e.target.value));
   };
