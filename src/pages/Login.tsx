@@ -33,7 +33,7 @@ const LoginPage = () => {
           <div className="text-center flex flex-col justify-center items-center h-screen max-w-screen-sm mx-auto px-4">
             <h1 className="text-6xl font-bold mb-6">
               {error === ""
-                ? "Welcome to Campus Connect"
+                ? "Welcome to CampusTown"
                 : "Unauthorized Email"}
             </h1>
             <p className="text-xl mb-8">
@@ -55,7 +55,7 @@ const LoginPage = () => {
           </div>
         </div>
         <footer className="text-center text-gray-500 text-sm py-4">
-          <p>&copy; 2024 Campus Connect. All rights reserved.</p>
+          <p>&copy; 2024 CampusTown. All rights reserved.</p>
         </footer>
       </div>
     </>
