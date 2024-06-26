@@ -11,7 +11,7 @@ const LandingPage = () => {
     <div className="min-h-screen bg-black text-white flex flex-col justify-between">
       <div className="container mx-auto flex flex-col items-center justify-center px-4">
         <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 text-gradient">Welcome to Campus Connect</h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 text-gradient">Welcome to CampusTown</h1>
           <p className="text-lg md:text-2xl mb-4 md:mb-8">Where Collaboration Thrives</p>
           <p className="text-base md:text-lg mb-8">Join us to connect, collaborate, and create!</p>
           <button
@@ -23,7 +23,7 @@ const LandingPage = () => {
         </div>
       </div>
       <footer className="text-center text-gray-500 text-sm py-4">
-        <p>&copy; 2024 Campus Connect. All rights reserved.</p>
+        <p>&copy; 2024 CampusTown. All rights reserved.</p>
       </footer>
     </div>
   );
