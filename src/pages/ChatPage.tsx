@@ -8,6 +8,7 @@ import axios from "axios";
 
 const ChatPage = () => {
   const chat_server_http = import.meta.env.VITE_CHATSERVER_HTTP_URL;
+  const chat_server_ws = import.meta.env.VITE_CHATSERVER_WS_URL;
   const dispatch = useDispatch();
   const users = useSelector((state: RootState) => state.users.users);
   const [searchQuery, setSearchQuery] = useState("");
@@ -25,7 +26,7 @@ const ChatPage = () => {
   useEffect(() => {
     const token = document.cookie.split("=")[1];
     console.log(token);
-    const socket = new WebSocket(`ws://localhost:8080?token=${token}`);
+    const socket = new WebSocket(`${chat_server_ws}?token=${token}`);
     socket.onopen = () => {
       console.log("Connected to web-socket server");
       setSocket(socket);
