@@ -24,7 +24,14 @@ const ChatPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const token = document.cookie.split("=")[1];
+    const getCookie = (name: string) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop()?.split(';').shift(); // Add null check using '?'
+      return null;
+    };
+    const token = getCookie("jwt");
+    console.log(token);    
     console.log(token);
     const socket = new WebSocket(`${chat_server_ws}?token=${token}`);
     socket.onopen = () => {
