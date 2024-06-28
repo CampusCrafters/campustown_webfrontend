@@ -11,7 +11,7 @@ import Layout from "./components/Layout";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/Login";
 import ProfilePage from "./pages/Profile";
-import Projects from "./pages/Projects";
+import Projects from "./pages/home/explore-all/Projects";
 import Resumedemo from "./pages/Resumedemo";
 import EventsPage from "./pages/EventsPage";
 import { Provider } from "react-redux";
@@ -21,6 +21,7 @@ import MyApplications from "./pages/MyApplications";
 import { Toaster } from "@/components/ui/toaster";
 import ChatPage from "./pages/ChatPage";
 import ManageProjects from "./pages/ManageProjects";
+import TestPage from "./pages/TestPage";
 
 //comment1
 function App() {
@@ -46,17 +47,17 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={!user ? <LandingPage /> : <Navigate to="/projects" />}
+            element={!user ? <LandingPage /> : <Navigate to="/explore-all" />}
           />
           <Route
             path="/login"
-            element={!user ? <LoginPage /> : <Navigate to="/projects" />}
+            element={!user ? <LoginPage /> : <Navigate to="/explore-all" />}
           />
           <Route
             path="/"
             element={user ? <Layout /> : <Navigate to="/login" />}
           >
-            <Route path="projects" element={<Projects />} />
+            <Route path="explore-all" element={<Projects />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="chat" element={<ChatPage />} />
             <Route path="resume" element={<Resumedemo />} />
@@ -65,6 +66,7 @@ function App() {
             <Route path="events" element={<EventsPage />} />
             <Route path="Manageproject" element={<ManageProjects />} />
           </Route>
+          <Route path="test" element={<TestPage/>} />
         </Routes>
       </Router>
     </Provider>

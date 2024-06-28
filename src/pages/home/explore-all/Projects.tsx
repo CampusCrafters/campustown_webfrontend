@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { fetchMyProjects, fetchProjects } from "../redux/projectsActions";
+import { RootState } from "../../../redux/store";
+import { fetchMyProjects, fetchProjects } from "../../../redux/projectsActions";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProjectCard from "@/components/ProjectCard";
 import MyProjectCard from "@/components/MyProjectCard";
