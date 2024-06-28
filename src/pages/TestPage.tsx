@@ -1,8 +1,4 @@
 import MemberCard from "@/components/MemberCard";
-import FilterButton from "@/components/custom-ui/filter-button";
-import MenuButton from "@/components/custom-ui/menu-button";
-import ProfileIcon from "@/components/custom-ui/profile-icon";
-import YearPill from "@/components/custom-ui/year-pill";
 
 const TestPage = () => {
   return (

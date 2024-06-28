@@ -18,7 +18,7 @@ const MemberCard: React.FC<MemberCardProps> = ({ src, name, batch, role }) => {
       </div>
       <div style={{display: 'flex', flexDirection: 'column', fontFamily: 'Raleway', color: 'white'}}>
         <p style={{fontSize: '11px', fontWeight: 400}}>role</p>
-
+        <p style={{fontSize: '11px', fontWeight: 700}}>{role}</p>
       </div>
     </div>
   );
