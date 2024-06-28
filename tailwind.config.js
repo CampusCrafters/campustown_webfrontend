@@ -57,6 +57,7 @@ module.exports = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        custom_1: '9px'
       },
       keyframes: {
         "accordion-down": {
@@ -71,6 +72,9 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      fontFamily: {
+        raleway: ['Raleway', 'sans-serif'],
       },
     },
   },

@@ -21,6 +21,7 @@ import MyApplications from "./pages/MyApplications";
 import { Toaster } from "@/components/ui/toaster";
 import ChatPage from "./pages/ChatPage";
 import ManageProjects from "./pages/ManageProjects";
+import TestPage from "./pages/TestPage";
 
 //comment1
 function App() {
@@ -65,6 +66,7 @@ function App() {
             <Route path="events" element={<EventsPage />} />
             <Route path="Manageproject" element={<ManageProjects />} />
           </Route>
+          <Route path="test" element={<TestPage/>} />
         </Routes>
       </Router>
     </Provider>
