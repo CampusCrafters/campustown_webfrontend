@@ -20,7 +20,7 @@ const BottomBar = ({
   return (
     <>
       <div
-        className="fixed flex items-center justify-between bottom-0 w-full text-white text-center h-[75px]"
+        className="fixed flex items-center justify-between bottom-0 w-full text-white text-center h-[60px]"
         style={bottomBarStyles}
       >
         <div onClick={() => handleTabClick("/explore-all", "Projects")}>
