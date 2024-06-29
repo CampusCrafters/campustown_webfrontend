@@ -86,7 +86,7 @@ const ProjectCard = ({ project }: any) => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+    <div className="rounded-2xl shadow-lg p-6 border border-gray-700" style={{backgroundColor: '#151515'}}>
       <div className="flex gap-2">
         <Sheet>
           <SheetTrigger>
@@ -103,7 +103,7 @@ const ProjectCard = ({ project }: any) => {
               )}
             </Avatar>
           </SheetTrigger>
-          <SheetContent side={"bottom"} className="w-full h-[80vh]">
+          <SheetContent side={"bottom"} className="w-full h-[80vh] bg-gray-900">
             <SheetHeader>
               <SheetTitle>
                 <div className="flex items-center mb-6">
@@ -113,10 +113,10 @@ const ProjectCard = ({ project }: any) => {
                     className="h-24 w-24 rounded-full mr-6 border-4 border-white shadow-lg"
                   />
                   <div>
-                    <h1 className="text-3xl font-semibold">
+                    <h1 className="text-3xl font-semibold text-white">
                       {userProfile?.name || "Name"}
                     </h1>
-                    <p className="text-gray-600">
+                    <p className="text-gray-400">
                       {userProfile?.email || "Email"}
                     </p>
                     <div className="flex gap-2">
@@ -135,19 +135,21 @@ const ProjectCard = ({ project }: any) => {
                   {Object.entries(filteredProfile || {}).map(([key, value]) => (
                     <div
                       key={key}
-                      className="border border-gray-200 p-4 rounded-lg shadow-md"
+                      className="border border-gray-700 p-4 rounded-lg shadow-md bg-gray-800"
                     >
-                      <h3 className="text-lg font-semibold mb-2">{key}</h3>
+                      <h3 className="text-lg font-semibold text-white mb-2">
+                        {key}
+                      </h3>
                       {Array.isArray(value) ? (
                         <ul>
                           {value.map((item, index) => (
-                            <li key={index} className="text-gray-700">
+                            <li key={index} className="text-gray-400">
                               {item}
                             </li>
                           ))}
                         </ul>
                       ) : (
-                        <p className="text-gray-700">{value}</p>
+                        <p className="text-gray-400">{value}</p>
                       )}
                     </div>
                   ))}
@@ -157,33 +159,35 @@ const ProjectCard = ({ project }: any) => {
           </SheetContent>
         </Sheet>
 
-        <h3 className="text-3xl font-semibold mb-2">{project.project_title}</h3>
+        <h3 className="text-3xl font-semibold text-white mb-2">
+          {project.project_title}
+        </h3>
       </div>
-      <p className="text-sm mb-2">{project.description}</p>
-      <p className="mb-2">
+      <p className="text-gray-400 mb-2">{project.description}</p>
+      <p className="text-gray-400 mb-2">
         <strong>Host:</strong> {project.name}
       </p>
-      <p className="mb-2">
+      <p className="text-gray-400 mb-2">
         <strong>Domain:</strong> {project.domain}
       </p>
-      <p className="mb-2">
+      <p className="text-gray-400 mb-2">
         <strong>Status:</strong> {project.status}
       </p>
-      <p className="mb-2">
+      <p className="text-gray-400 mb-2">
         <strong>Start Date:</strong> {formattedStartDate}
       </p>
-      <p className="mb-2">
+      <p className="text-gray-400 mb-2">
         <strong>End Date:</strong> {formattedEndDate}
       </p>
       <div className="mb-2">
-        <strong>Required Roles:</strong>
+        <strong className="text-white">Required Roles:</strong>
         <div className="grid grid-cols-2 gap-2 mt-2">
           {project.required_roles.map((role: any) => (
             <div
               key={role}
               className={`rounded-lg p-2 text-center cursor-pointer ${
-                selectedRole === role ? "bg-blue-400" : "bg-gray-200"
-              }`}
+                selectedRole === role ? "bg-blue-400" : "bg-gray-600"
+              } text-white`}
               onClick={() =>
                 setSelectedRole((prevRole) => (prevRole === role ? null : role))
               }
@@ -193,9 +197,9 @@ const ProjectCard = ({ project }: any) => {
           ))}
         </div>
       </div>
-      <p className="mb-2">
+      <p className="text-gray-400 mb-2">
         <strong>Link:</strong>{" "}
-        <a href={project.link} className="text-blue-600">
+        <a href={project.link} className="text-blue-400">
           {project.link}
         </a>
       </p>
@@ -215,15 +219,20 @@ const ProjectCard = ({ project }: any) => {
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                <AlertDialogDescription>
+                <AlertDialogTitle className="text-white">
+                  Are you sure?
+                </AlertDialogTitle>
+                <AlertDialogDescription className="text-gray-400">
                   This action cannot be removed from history. Your profile
                   details will be used to apply for this project.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel className="text-white">
+                  Cancel
+                </AlertDialogCancel>
                 <AlertDialogAction
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   onClick={() =>
                     handleApplication(
                       project.project_id,
@@ -238,7 +247,7 @@ const ProjectCard = ({ project }: any) => {
             </AlertDialogContent>
           </AlertDialog>
         )}
-        <div className="flex items-center cursor-pointer">
+        <div className="flex items-center cursor-pointer text-white">
           <span className="mr-2">View more</span>
           <img src={ViewMoreIcon} alt="View More" />
         </div>
