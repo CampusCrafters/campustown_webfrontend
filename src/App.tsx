@@ -22,6 +22,8 @@ import { Toaster } from "@/components/ui/toaster";
 import ChatPage from "./pages/ChatPage";
 import ManageProjects from "./pages/ManageProjects";
 import TestPage from "./pages/TestPage";
+import MyListings from "./pages/home/my-listings/MyListings";
+import HomeLayout from "./components/HomeLayout";
 
 //comment1
 function App() {
@@ -55,9 +57,15 @@ function App() {
           />
           <Route
             path="/"
-            element={user ? <Layout /> : <Navigate to="/login" />}
+            element={user ? <HomeLayout /> : <Navigate to="/login" />}
           >
             <Route path="explore-all" element={<Projects />} />
+            <Route path="my-listings" element={<MyListings />} />
+          </Route>
+          <Route
+            path="/"
+            element={user ? <Layout /> : <Navigate to="/login" />}
+          >
             <Route path="profile" element={<ProfilePage />} />
             <Route path="chat" element={<ChatPage />} />
             <Route path="resume" element={<Resumedemo />} />
@@ -66,7 +74,7 @@ function App() {
             <Route path="events" element={<EventsPage />} />
             <Route path="Manageproject" element={<ManageProjects />} />
           </Route>
-          <Route path="test" element={<TestPage/>} />
+          <Route path="test" element={<TestPage />} />
         </Routes>
       </Router>
     </Provider>
