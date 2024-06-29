@@ -117,7 +117,7 @@ export default TopBar;
 const headingStyles: React.CSSProperties = {
   color: "#2979FF",
   fontFamily: "Raleway",
-  fontSize: "36px",
+  fontSize: "1.6rem",
   fontStyle: "normal",
   fontWeight: 700,
   lineHeight: "normal",
