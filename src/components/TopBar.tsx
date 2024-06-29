@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import SearchIcon from "../assets/icons/SearchIcon.svg";
-import BellIcon from "../assets/icons/BellIcon.svg";
-import ChatIcon from "../assets/icons/ChatIcon.svg";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import SearchIcon from "../assets/icons/heroicons-outline/magnifying-glass.svg";
+import BellIcon from "../assets/icons/ph_bell.svg";
+import BackIcon from "../assets/icons/backicon.svg"; // Make sure to import the back icon
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchProfile } from "../redux/profileActions";
@@ -18,6 +17,7 @@ import {
 import Cookies from "js-cookie";
 import { useLocation } from "react-router-dom";
 import { setSearchQuery } from "@/redux/searchSlice";
+import ProfileIcon from "./custom-ui/profile-icon";
 
 const TopBar = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,8 @@ const TopBar = () => {
   const [clicked, setClicked] = useState(false);
   const location = useLocation();
   const showSearchIcon = [
-    "/projects",
+    "/explore-all",
+    "/test",
     "/myApplications",
     "/events",
     "/chat",
@@ -48,64 +49,79 @@ const TopBar = () => {
     dispatch({ type: "CLEAR_USER_STATE" });
     window.location.href = "/";
   };
+
   const handleSearch = (e: any) => {
     dispatch(setSearchQuery(e.target.value));
   };
 
   return (
-    <nav className="fixed w-full bg-black text-white flex items-center justify-between px-4 py-3 rounded-b-lg">
-      {showSearchIcon && (
-        <div className="flex gap-2 items-center">
-          <img
-            src={SearchIcon}
-            className="cursor-pointer"
-            onClick={() => setClicked(!clicked)}
-          />
-          <input
-            onChange={handleSearch}
-            type="text"
-            className={`${
-              clicked ? "opacity-100 w-96" : "opacity-0 w-0"
-            } text-black px-3 py-2 rounded-2xl transition-all duration-300 ease-in-out`}
-          />
-        </div>
-      )}
-      <div className="font-bold text-lg">{activeTab}</div>
-      <div className="flex gap-5">
-        <img
-          src={ChatIcon}
-          onClick={() => {
-            navigate("/chat");
-          }}
-          className="cursor-pointer"
-        ></img>
-        <img src={BellIcon} className="cursor-pointer"></img>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Avatar className="cursor-pointer">
+    <nav className="fixed mt-[23px] h-[55px] w-full bg-black text-white flex items-center justify-between px-[24px]">
+      <div
+        className={`flex items-center justify-between transition-all duration-300 ${
+          clicked ? 'w-0 opacity-0' : 'w-full opacity-100'
+        }`}
+      >
+        <div style={headingStyles}>{activeTab}</div>
+        <div className="flex gap-[16px] items-center">
+          {showSearchIcon && (
+            <img
+              src={SearchIcon}
+              className="cursor-pointer transform hover:scale-110 transition-transform duration-200"
+              onClick={() => setClicked(true)}
+            />
+          )}
+          <img src={BellIcon} className="cursor-pointer h-[24px] w-[24px] transform hover:scale-110 transition-transform duration-200" />
+          <DropdownMenu>
+            <DropdownMenuTrigger>
               {profile && profile.profile_picture ? (
-                <AvatarImage src={profile.profile_picture} />
+                <ProfileIcon src={profile.profile_picture} size={"large"} />
               ) : (
-                <AvatarFallback>CN</AvatarFallback>
+                <ProfileIcon src={defaultProfilePicture} size={"large"} />
               )}
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => {
-                navigate("/profile");
-              }}
-            >
-              View Profile
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate("/profile")}>
+                View Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
+
+      <div
+        className={`flex gap-2 items-center transition-all duration-300 ${
+          clicked ? 'w-full opacity-100' : 'w-0 opacity-0'
+        }`}
+      >
+        <img
+          src={BackIcon}
+          className="cursor-pointer transform hover:scale-110 transition-transform duration-200"
+          onClick={() => setClicked(false)}
+        />
+        <input
+          onChange={handleSearch}
+          placeholder="Search for projects, internships, events......"
+          type="text"
+          className="w-full bg-[#262626] text-white px-3 py-2 rounded-lg border border-gray-600 transition-all duration-300 ease-in-out focus:outline-none focus:border-blue-500"
+        />
       </div>
     </nav>
   );
 };
 
 export default TopBar;
+
+const headingStyles: React.CSSProperties = {
+  color: "#2979FF",
+  fontFamily: "Raleway",
+  fontSize: "36px",
+  fontStyle: "normal",
+  fontWeight: 700,
+  lineHeight: "normal",
+};
+
+const defaultProfilePicture =
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1024px-Default_pfp.svg.png";
