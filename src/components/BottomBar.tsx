@@ -1,8 +1,9 @@
 import { To, useNavigate } from "react-router-dom";
-import ProjectIcon from "../assets/icons/ProjectIcon.svg";
 import CalenderIcon from "../assets/icons/CalenderIcon.svg";
-import AddIcon from "../assets/icons/AddIcon.svg";
-import FolderIcon from "../assets/icons/FolderIcon.svg";
+import AddIcon from "../assets/icons/Menu 3.svg";
+import FolderIcon from "../assets/icons/Menu 6.svg";
+import HomeButtonActive from '../assets/icons/Menu 1.svg';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,15 +28,14 @@ const BottomBar = ({
 
   return (
     <>
-      <div className="fixed flex items-center justify-between bottom-0 w-full bg-black text-white px-5 py-4 text-center rounded-t-lg">
+      <div className="fixed flex items-center justify-between bottom-0 w-full text-white text-center h-[86px]" style={bottomBarStyles}>
         <div
           className={`flex flex-col items-center cursor-pointer ${
             activeTab === "Projects" ? "text-blue-500" : ""
           }`}
-          onClick={() => handleTabClick("/projects", "Projects")}
+          onClick={() => handleTabClick("/explore-all", "Projects")}
         >
-          <img src={ProjectIcon} className="w-6 h-6" alt="Project Icon" />
-          <span>Projects</span>
+          <img src={HomeButtonActive} className="w-[81px] h-[46px]" alt="Project Icon" />
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger>
@@ -44,8 +44,7 @@ const BottomBar = ({
                 activeTab === "Post a Project" ? "text-blue-500" : ""
               }`}
             >
-              <img src={AddIcon} className="w-6 h-6" alt="Add Icon" />
-              <span>Post</span>
+              <img src={AddIcon} className="w-[82px] h-[78px]" alt="Add Icon" />
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -70,8 +69,7 @@ const BottomBar = ({
           }`}
           onClick={() => handleTabClick("/myApplications", "My Applications")}
         >
-          <img src={FolderIcon} className="w-6 h-6" alt="Folder Icon" />
-          <span>My applications</span>
+          <img src={FolderIcon} className="w-[81px] h-[46px]" alt="Folder Icon" />
         </div>
         <div
           className={`flex flex-col items-center cursor-pointer ${
@@ -88,3 +86,9 @@ const BottomBar = ({
 };
 
 export default BottomBar;
+
+const bottomBarStyles: React.CSSProperties = { 
+  background: 'black',
+  boxShadow: '0px -4px 4px rgba(0, 0, 0, 0.25)',
+  padding: '0 12px',
+}
