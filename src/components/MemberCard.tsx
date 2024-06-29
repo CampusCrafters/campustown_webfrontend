@@ -1,6 +1,5 @@
 import ProfileIcon from "./custom-ui/profile-icon";
 import YearPill from "./custom-ui/year-pill";
-import line from '../assets/icons/line1.svg';
 import dropdownArrow from "../assets/icons/chevron-down.svg";
 
 const MemberCard: React.FC<MemberCardProps> = ({ src, name, batch, role }) => {
