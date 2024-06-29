@@ -8,25 +8,56 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col justify-between">
-      <div className="container mx-auto flex flex-col items-center justify-center px-4">
-        <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 text-gradient">Welcome to CampusTown</h1>
-          <p className="text-lg md:text-2xl mb-4 md:mb-8">Where Collaboration Thrives</p>
-          <p className="text-base md:text-lg mb-8">Join us to connect, collaborate, and create!</p>
-          <button
-            className="bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-gradient-to-r hover:from-blue-700 hover:to-blue-900 text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-full text-base md:text-lg"
-            onClick={handleSignInClick}
-          >
-            Sign In
-          </button>
+    <div style={containerStyles} className="ml-[30px] md:ml-[60px] lg:ml-[60px] mh-[100vh]">
+      <div className=" bg-black text-white flex flex-col">
+        <div className="text-[19px] md:text-[24px] lg:text-[24px]" style={logoStyles}>campusTown</div>
+        <div className="text-[32px] w-[239px] md:text-[46px] md:w-[352px] lg:text-[46px] lg:w-[352px]" style={headingStyles}>
+          its time, ready to start building together?
         </div>
+        <button className="w-[127px] h-[54px] text-[16px] md:w-[228px] md:h-[70px] md:text-[28px] lg:w-[228px] lg:h-[70px] lg:text-[28px]" onClick={handleSignInClick} style={buttonStyles}>
+          fck it
+        </button>
       </div>
-      <footer className="text-center text-gray-500 text-sm py-4">
-        <p>&copy; 2024 CampusTown. All rights reserved.</p>
-      </footer>
     </div>
   );
 };
 
 export default LandingPage;
+
+const logoStyles: React.CSSProperties = {
+  color: "#FFF",
+  fontFamily: "Inter",
+  fontStyle: "normal",
+  fontWeight: 600,
+};
+
+const headingStyles: React.CSSProperties = {
+  marginTop: '200px',
+  height: "276px",
+  color: "#FFF",
+  fontFamily: "Inter",
+  fontStyle: "normal",
+  fontWeight: 800,
+  lineHeight: "52px",
+  letterSpacing: "-0.3px",
+};
+
+const buttonStyles: React.CSSProperties = {
+  display: "flex",
+  marginTop: '80px',
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "999px",
+  border: "1px solid var(--primaryBtnOut-stroke, #1849D6)",
+  background: "var(--primaryBtnOut-default, #FFF)",
+  color: "#1849D6",
+  fontFamily: "Inter",
+  fontStyle: "normal",
+  fontWeight: 600,
+};
+
+const containerStyles: React.CSSProperties = { 
+  maxHeight: "100vh",
+  maxWidth: "100vw",
+  marginTop: '33px',
+}
