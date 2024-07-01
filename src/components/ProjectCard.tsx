@@ -1,28 +1,4 @@
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"; import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"; import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"; import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import default_pfp from "../assets/icons/Default_pfp.svg.png";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
@@ -33,11 +9,12 @@ import { fetchUserProfile } from "@/redux/users/profileActions";
 
 const ProjectCard = ({ project }: any) => {
   const dispatch = useDispatch();
+  const { toast } = useToast();
+  
   const userProfile = useSelector(
     (state: RootState) => state.profile.userProfile
   );
 
-  const { toast } = useToast();
   const formattedStartDate = new Date(project.start_date).toLocaleDateString();
   const formattedEndDate = new Date(project.end_date).toLocaleDateString();
   const [selectedRole, setSelectedRole] = useState(null);
@@ -131,13 +108,11 @@ const ProjectCard = ({ project }: any) => {
               </SheetTitle>
               <SheetDescription>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {Object.entries(filteredProfile || {}).map(([key, value]) => (
+                  {Object.entries(filteredProfile || {}).map(([value]) => (
                     <div
-                      key={key}
                       className="border border-gray-700 p-4 rounded-lg shadow-md bg-gray-800"
                     >
                       <h3 className="text-lg font-semibold text-white mb-2">
-                        {key}
                       </h3>
                       {Array.isArray(value) ? (
                         <ul>
@@ -183,7 +158,7 @@ const ProjectCard = ({ project }: any) => {
         <div className="grid grid-cols-2 gap-2 mt-2">
           {project.required_roles.map((role: any) => (
             <div
-              key={role}
+              key={project.project_id + role}
               className={`rounded-lg p-2 text-center cursor-pointer ${
                 selectedRole === role ? "bg-blue-400" : "bg-gray-600"
               } text-white`}
