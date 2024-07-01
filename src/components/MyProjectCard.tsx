@@ -13,7 +13,7 @@ import { useToast } from "@/components/ui/use-toast";
 
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import { deleteProject } from "../redux/projectsActions";
+import { deleteProject } from "../redux/projects/projectsActions";
 
 const MyProjectsCard = ({ project }: any) => {
   const dispatch = useDispatch();
@@ -75,7 +75,7 @@ const MyProjectsCard = ({ project }: any) => {
         </div>
       </div>
       <p className="mb-2">
-        <strong>Link: </strong>{" "}
+        <strong>Link: </strong>
         <a href={project.link} className="text-blue-600">
           {project.link}
         </a>

@@ -5,7 +5,6 @@ import {
   setRequiredRoles,
   setApplicants,
 } from "./applicationSlice";
-import { Applicant } from "./applicantTypes";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -150,3 +149,14 @@ export const shortlistApplicant =
       // Display a user-friendly error message to the user
     }
   };
+
+export interface Applicant {
+  application_id: number;
+  user_id: number;
+  applicant_name: string;
+  project_id: number;
+  role_name: string;
+  status: string;
+  applied_on: Date;
+  reviewed_on: Date | null;
+}

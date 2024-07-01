@@ -3,7 +3,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import ContactCard from "../components/ContactCard";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { fetchAllUsers } from "@/redux/usersActions";
+import { fetchAllUsers } from "@/redux/users/usersActions";
 import axios from "axios";
 
 const ChatPage = () => {

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { fetchProjects } from "../../../redux/projectsActions";
+import { fetchProjects } from "../../../redux/projects/projectsActions";
 import ProjectCard from "@/components/ProjectCard";
 
 const Projects = () => {

@@ -6,7 +6,7 @@ import {
   deleteApplication,
   fetchApplications,
   fetchRoles,
-} from "../redux/applicationActions";
+} from "../redux/applications/applicationActions";
 import {
   AlertDialog,
   AlertDialogAction,

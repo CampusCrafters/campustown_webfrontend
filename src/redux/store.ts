@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import projectsReducer from "./projectsSlice";
-import myProjectsReducer from "./myProjectsSlice";
-import profileReducer from "./profileSlice";
-import applicationsReducer from "./applicationSlice";
+import projectsReducer from "./projects/projectsSlice";
+import myProjectsReducer from "./projects/myProjectsSlice";
+import profileReducer from "./users/profileSlice";
+import applicationsReducer from "./applications/applicationSlice";
 import searchReducer from "./searchSlice";
-import usersReducer from "./usersSlice";
+import usersReducer from "./users/usersSlice";
 
 const store = configureStore({
   reducer: {

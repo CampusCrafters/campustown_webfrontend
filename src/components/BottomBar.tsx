@@ -1,44 +1,89 @@
-import { To, useNavigate } from "react-router-dom";
-import HomeButtonActive from "../assets/icons/home-icon.svg";
-import ChatIcon from "../assets/icons/chat-icon.svg";
-import ApplicationIcon from "../assets/icons/applications-icon.svg";
-import EventsIcon from "../assets/icons/events-icon.svg";
+import { useNavigate } from "react-router-dom";
+import HomeButton from "../assets/icons/bottom-bar/home.svg";
+import HomeButtonActive from "../assets/icons/bottom-bar/home-active.svg";
+import ApplicationIcon from "../assets/icons/bottom-bar/applications.svg";
+import ApplicationIconActive from "../assets/icons/bottom-bar/applications-active.svg";
+import ChatIcon from "../assets/icons/bottom-bar/chat.svg";
+import ChatIconActive from "../assets/icons/bottom-bar/chat-active.svg";
+import EventsIcon from "../assets/icons/bottom-bar/events.svg";
+import EventsIconActive from "../assets/icons/bottom-bar/events-active.svg";
+import { useState, useEffect } from "react";
 
-const BottomBar = ({
-  onTabClick,
-}: {
-  activeTab: string;
-  onTabClick: (tabName: string) => void;
-}) => {
+const BottomBar = () => {
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<string>(() => {
+    const path = location.pathname;
+    if (path === "/explore-all") return "explore-all";
+    if (path === "/my-listings") return "my-listings";
+    if (path === "/myApplications") return "myApplications";
+    if (path === "/events") return "events";
+    if (path === "/chat") return "chat";
+    return "explore-all";
+  });
 
-  const handleTabClick = (path: To, tabName: string) => {
-    onTabClick(tabName);
-    navigate(path);
-  };
+  useEffect(() => {
+    const path = location.pathname;
+    setActiveTab(path.substring(1)); // Remove leading '/' from the path
+  }, []);
 
   return (
-    <>
+    <div
+      className="fixed flex items-center justify-between bottom-0 w-full text-white text-center h-[60px]"
+      style={bottomBarStyles}
+    >
       <div
-        className="fixed flex items-center justify-between bottom-0 w-full text-white text-center h-[60px]"
-        style={bottomBarStyles}
+        className="cursor-pointer"
+        onClick={() => {
+          setActiveTab("explore-all");
+          navigate("/explore-all");
+        }}
       >
-        <div onClick={() => handleTabClick("/explore-all", "Projects")}>
+        {activeTab === "explore-all" ? (
           <img src={HomeButtonActive} alt="home icon" />
-        </div>
-        <div
-          onClick={() => handleTabClick("/myApplications", "My Applications")}
-        >
-          <img src={ApplicationIcon} alt="Folder Icon" />
-        </div>
-        <div onClick={() => handleTabClick("/chat", "chat")}>
-          <img src={ChatIcon} alt="Chat Icon" />
-        </div>
-        <div onClick={() => handleTabClick("/events", "Events")}>
-          <img src={EventsIcon} alt="Events Icon" />
-        </div>
+        ) : (
+          <img src={HomeButton} alt="home icon" />
+        )}
       </div>
-    </>
+      <div
+        className="cursor-pointer"
+        onClick={() => {
+          setActiveTab("myApplications");
+          navigate("/myApplications");
+        }}
+      >
+        {activeTab === "myApplications" ? (
+          <img src={ApplicationIconActive} alt="Folder Icon" />
+        ) : (
+          <img src={ApplicationIcon} alt="Folder Icon" />
+        )}
+      </div>
+      <div
+        className="cursor-pointer"
+        onClick={() => {
+          setActiveTab("chat");
+          navigate("/chat");
+        }}
+      >
+        {activeTab === "chat" ? (
+          <img src={ChatIconActive} alt="Chat Icon" />
+        ) : (
+          <img src={ChatIcon} alt="Chat Icon" />
+        )}
+      </div>
+      <div
+        className="cursor-pointer"
+        onClick={() => {
+          setActiveTab("events");
+          navigate("/events");
+        }}
+      >
+        {activeTab === "events" ? (
+          <img src={EventsIconActive} alt="Events Icon" />
+        ) : (
+          <img src={EventsIcon} alt="Events Icon" />
+        )}
+      </div>
+    </div>
   );
 };
 

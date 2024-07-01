@@ -23,14 +23,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import default_pfp from "../assets/images/default-pfp.jpg";
+import default_pfp from "../assets/icons/Default_pfp.svg.png";
 import { useToast } from "@/components/ui/use-toast";
-import ViewMoreIcon from "@/assets/icons/ViewMoreIcon.svg";
 import { useState } from "react";
-import { applyProject } from "../redux/projectsActions";
+import { applyProject } from "../redux/projects/projectsActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { fetchUserProfile } from "@/redux/profileActions";
+import { fetchUserProfile } from "@/redux/users/profileActions";
 
 const ProjectCard = ({ project }: any) => {
   const dispatch = useDispatch();
@@ -249,7 +248,6 @@ const ProjectCard = ({ project }: any) => {
         )}
         <div className="flex items-center cursor-pointer text-white">
           <span className="mr-2">View more</span>
-          <img src={ViewMoreIcon} alt="View More" />
         </div>
       </div>
     </div>
