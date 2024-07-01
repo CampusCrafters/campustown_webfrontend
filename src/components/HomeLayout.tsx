@@ -56,10 +56,7 @@ const HomeLayout = () => {
           <Outlet />
         </ScrollArea>
       </div>
-      <BottomBar
-        activeTab={activeTab}
-        onTabClick={(tabName) => setActiveTab(tabName)}
-      />
+      <BottomBar />
       <div className="fixed bottom-[80px] right-4 z-50">
         <DropdownMenu>
           <DropdownMenuTrigger>
@@ -69,9 +66,7 @@ const HomeLayout = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => navigate("/postProject")}
-            >
+            <DropdownMenuItem onClick={() => navigate("/postProject")}>
               Project
             </DropdownMenuItem>
             <DropdownMenuItem>Internship</DropdownMenuItem>
