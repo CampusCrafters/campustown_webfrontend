@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { postProject } from "@/redux/projectsActions";
+import { postProject } from "@/redux/projects/projectsActions";
 import { useToast } from "@/components/ui/use-toast";
 
 const ProjectForm = () => {

@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import SearchIcon from "../assets/icons/heroicons-outline/magnifying-glass.svg";
+import SearchIcon from "../assets/icons/magnifying-glass.svg";
 import BellIcon from "../assets/icons/ph_bell.svg";
 import BackIcon from "../assets/icons/backicon.svg"; // Make sure to import the back icon
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchProfile } from "../redux/profileActions";
+import { fetchProfile } from "../redux/users/profileActions";
 import { RootState } from "../redux/store";
 import {
   DropdownMenu,
@@ -18,6 +18,7 @@ import Cookies from "js-cookie";
 import { useLocation } from "react-router-dom";
 import { setSearchQuery } from "@/redux/searchSlice";
 import ProfileIcon from "./custom-ui/profile-icon";
+import defaultProfilePicture from "../assets/icons/Default_pfp.svg.png";
 
 const TopBar = () => {
   const dispatch = useDispatch();
@@ -123,5 +124,3 @@ const headingStyles: React.CSSProperties = {
   lineHeight: "normal",
 };
 
-const defaultProfilePicture =
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1024px-Default_pfp.svg.png";

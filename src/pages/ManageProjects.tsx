@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
-import { getProjectWithId, editProject } from "../redux/projectsActions";
-import { fetchUserProfile } from "../redux/profileActions";
+import { getProjectWithId, editProject } from "../redux/projects/projectsActions";
+import { fetchUserProfile } from "../redux/users/profileActions";
 import { useToast } from "@/components/ui/use-toast";
 import {
   AlertDialog,
@@ -21,7 +21,7 @@ import {
   rejectApplicant,
   acceptApplicant,
   shortlistApplicant,
-} from "../redux/applicationActions";
+} from "../redux/applications/applicationActions";
 
 interface FormValues {
   project_title: string;

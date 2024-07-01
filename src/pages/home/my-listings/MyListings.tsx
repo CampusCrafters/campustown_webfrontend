@@ -1,5 +1,5 @@
 import MyProjectCard from "@/components/MyProjectCard";
-import { fetchMyProjects } from "@/redux/projectsActions";
+import { fetchMyProjects } from "@/redux/projects/projectsActions";
 import { RootState } from "@/redux/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";

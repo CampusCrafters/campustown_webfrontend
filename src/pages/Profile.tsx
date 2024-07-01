@@ -4,9 +4,9 @@ import {
   fetchProfile,
   uploadProfilePicture,
   deleteProfilePicture,
-} from "../redux/profileActions";
+} from "../redux/users/profileActions";
 import { useEffect, useState } from "react";
-import default_pfp from "../assets/images/default-pfp.jpg";
+import default_pfp from "../assets/icons/Default_pfp.svg.png";
 import EditIcon from "../assets/icons/EditIcon.svg";
 import DeleteIcon from "../assets/icons/DeleteIcon.svg";
 import CloseIcon from "../assets/icons/CloseIcon.svg";

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import BottomBar from "./BottomBar";
 import TopBar from "./TopBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -12,16 +12,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import PostIcon from "../assets/icons/post-icon.svg";
 import MenuButton from "./custom-ui/menu-button";
-import { useNavigate } from "react-router-dom";
 
 const HomeLayout = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("explore-all");
+  const location = useLocation();
 
-  const handleTabClick = (path: string, title: string) => {
-    // Implement your navigation and tab click handling logic here
-    console.log(`Navigating to ${path} with title ${title}`);
-  };
+  const [activeTab, setActiveTab] = useState(() => {
+    const path = location.pathname;
+    if (path === "/explore-all") return "explore-all";
+    if (path === "/my-listings") return "my-listings";
+    return "explore-all"; // default tab
+  });
+
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === "/explore-all") setActiveTab("explore-all");
+    if (path === "/my-listings") setActiveTab("my-listings");
+  }, [location.pathname]);
 
   return (
     <div className="flex flex-col h-screen">
@@ -63,7 +70,7 @@ const HomeLayout = () => {
           <DropdownMenuContent>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => handleTabClick("/postProject", "Post a Project")}
+              onClick={() => navigate("/postProject")}
             >
               Project
             </DropdownMenuItem>
