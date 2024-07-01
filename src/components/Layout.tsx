@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import BottomBar from "./BottomBar";
 import TopBar from "./TopBar";
@@ -9,12 +8,10 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import PostIcon from '../assets/icons/post-icon.svg';
+} from "@/components/ui/dropdown-menu";
+import PostIcon from "../assets/icons/post-icon.svg";
 
 const Layout = () => {
-  const [activeTab, setActiveTab] = useState("Projects");
-
   const handleTabClick = (path: string, title: string) => {
     // Implement your navigation and tab click handling logic here
     console.log(`Navigating to ${path} with title ${title}`);
@@ -28,12 +25,9 @@ const Layout = () => {
           <Outlet />
         </ScrollArea>
       </div>
-      <BottomBar
-        activeTab={activeTab}
-        onTabClick={(tabName) => setActiveTab(tabName)}
-      />
+      <BottomBar />
       <div className="fixed bottom-[80px] right-4 z-50">
-      <DropdownMenu>
+        <DropdownMenu>
           <DropdownMenuTrigger>
             <div>
               <img src={PostIcon} alt="Add Icon" />
