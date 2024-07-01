@@ -116,6 +116,7 @@ const TopBar = () => {
 export default TopBar;
 
 const headingStyles: React.CSSProperties = {
+  cursor: "pointer",
   color: "#2979FF",
   fontFamily: "Raleway",
   fontSize: "1.6rem",

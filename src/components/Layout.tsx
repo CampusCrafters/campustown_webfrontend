@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import BottomBar from "./BottomBar";
 import TopBar from "./TopBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -12,11 +12,7 @@ import {
 import PostIcon from "../assets/icons/post-icon.svg";
 
 const Layout = () => {
-  const handleTabClick = (path: string, title: string) => {
-    // Implement your navigation and tab click handling logic here
-    console.log(`Navigating to ${path} with title ${title}`);
-  };
-
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col h-screen">
       <TopBar />
@@ -35,9 +31,7 @@ const Layout = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => handleTabClick("/postProject", "Post a Project")}
-            >
+            <DropdownMenuItem onClick={() => navigate("/postProject")}>
               Project
             </DropdownMenuItem>
             <DropdownMenuItem>Internship</DropdownMenuItem>

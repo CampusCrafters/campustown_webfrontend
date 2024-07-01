@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import PostIcon from "../assets/icons/post-icon.svg";
 import MenuButton from "./custom-ui/menu-button";
+import ListingTypePill from "./custom-ui/listing-type-pill";
 
 const HomeLayout = () => {
   const navigate = useNavigate();
@@ -51,6 +52,15 @@ const HomeLayout = () => {
               navigate("/my-listings");
             }}
           />
+        </div>
+        <div className="flex gap-5 mt-4 pl-5">
+          <ListingTypePill type="Projects"/>
+          <ListingTypePill type="Internships"/>
+          <ListingTypePill type="Ideas"/>
+          <ListingTypePill type="Hackathons"/>
+          <ListingTypePill type="Events"/>
+          <ListingTypePill type="Contests"/>
+          <ListingTypePill type="Startups"/>
         </div>
         <ScrollArea className="h-[80vh] w-full rounded-md pt-4">
           <Outlet />
