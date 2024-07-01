@@ -12,9 +12,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import PostIcon from "../assets/icons/post-icon.svg";
 import MenuButton from "./custom-ui/menu-button";
+import { useNavigate } from "react-router-dom";
 
 const HomeLayout = () => {
-  const [activeTab, setActiveTab] = useState("Projects");
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("explore-all");
 
   const handleTabClick = (path: string, title: string) => {
     // Implement your navigation and tab click handling logic here
@@ -26,8 +28,22 @@ const HomeLayout = () => {
       <TopBar />
       <div className="py-[5rem]">
         <div className="flex gap-2 justify-center mt-3">
-          <MenuButton title="explore all" active={true}/>
-          <MenuButton title="my listings" active={false}/>
+          <MenuButton
+            title="explore all"
+            active={activeTab === "explore-all"}
+            onClick={() => {
+              setActiveTab("explore-all");
+              navigate("/explore-all");
+            }}
+          />
+          <MenuButton
+            title="my listings"
+            active={activeTab === "my-listings"}
+            onClick={() => {
+              setActiveTab("my-listings");
+              navigate("/my-listings");
+            }}
+          />
         </div>
         <ScrollArea className="h-[80vh] w-full rounded-md pt-4">
           <Outlet />

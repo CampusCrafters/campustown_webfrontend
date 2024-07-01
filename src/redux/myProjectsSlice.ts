@@ -26,19 +26,16 @@ const initialState: ProjectsState = {
   projectDetails: null, // Initialize projectDetails
 };
 
-const projectsSlice = createSlice({
-  name: "projects",
+const myProjectsSlice = createSlice({
+  name: "myProjects",
   initialState,
   reducers: {
-    setProjects(state, action: PayloadAction<Project[]>) {
-      state.projects = action.payload;
-    },
-    setProjectDetails(state, action: PayloadAction<Project>) {
-      state.projectDetails = action.payload;
+    setMyProjects(state, action: PayloadAction<Project[]>) {
+      state.myProjects = action.payload;
     },
   },
 });
 
-export const { setProjects, setProjectDetails } =
-  projectsSlice.actions;
-export default projectsSlice.reducer;
+export const { setMyProjects } =
+  myProjectsSlice.actions;
+export default myProjectsSlice.reducer;

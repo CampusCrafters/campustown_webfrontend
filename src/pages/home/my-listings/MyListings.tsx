@@ -8,7 +8,7 @@ const MyListings = () => {
     const dispatch = useDispatch();
 
     const { myProjects } = useSelector(
-      (state: RootState) => state.projects
+      (state: RootState) => state.myProjects
     );
     const { searchQuery } = useSelector((state: RootState) => state.search);
   
