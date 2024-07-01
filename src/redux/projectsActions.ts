@@ -1,7 +1,8 @@
 // projectsActions.ts
 import { Dispatch } from "redux";
 import axios from "axios";
-import { setProjects, setMyProjects, setProjectDetails } from "./projectsSlice";
+import { setProjects, setProjectDetails } from "./projectsSlice";
+import { setMyProjects } from "./myProjectsSlice";
 import {
   DELETE_PROJECT_REQUEST,
   DELETE_PROJECT_SUCCESS,
