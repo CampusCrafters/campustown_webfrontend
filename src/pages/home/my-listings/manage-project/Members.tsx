@@ -39,11 +39,11 @@ function Members() {
               </div>
             </div>
           ) : (
-            <div>No members currently working on this project</div>
+            <div className="text-white">No members currently working on this project</div>
           )}
         </div>
       ) : (
-        <div>Loading project details...</div>
+        <div className="text-white">Loading project details...</div>
       )}
     </div>
   );
