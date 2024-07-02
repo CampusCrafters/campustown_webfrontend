@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import BottomBar from "./BottomBar";
-import TopBar from "./TopBar";
+import BottomBar from "../components/BottomBar";
+import TopBar from "../components/TopBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   DropdownMenu,
@@ -17,7 +17,7 @@ const Layout = () => {
     <div className="flex flex-col h-screen">
       <TopBar />
       <div className="py-[5rem]">
-        <ScrollArea className="h-[80vh] w-full rounded-md pt-4">
+        <ScrollArea className="h-[80vh] w-full rounded-md pt-4 bg-black">
           <Outlet />
         </ScrollArea>
       </div>

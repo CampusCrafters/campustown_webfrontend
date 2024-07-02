@@ -7,7 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import useTokenVerification from "./hooks/auth/useTokenVerification";
-import Layout from "./components/Layout";
+import Layout from "./layout/Layout";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/Login";
 import ProfilePage from "./pages/Profile";
@@ -22,9 +22,9 @@ import ChatPage from "./pages/ChatPage";
 import ManageProjects from "./pages/ManageProjects";
 import TestPage from "./pages/TestPage";
 import MyListings from "./pages/home/my-listings/MyListings";
-import HomeLayout from "./components/HomeLayout";
+import HomeLayout from "./layout/HomeLayout";
+import ManageProjectLayout from "./layout/ManageProjectLayout";
 
-//comment1
 function App() {
   const { user, loading } = useTokenVerification();
   const [authLoading, setAuthLoading] = useState(true);
@@ -60,6 +60,13 @@ function App() {
           >
             <Route path="explore-all" element={<Projects />} />
             <Route path="my-listings" element={<MyListings />} />
+          </Route>
+          <Route
+            path="/manageproject"
+            element={user ? <ManageProjectLayout /> : <Navigate to="/login" />}
+          >
+            <Route path="editProject" element={<Projects />} />
+            <Route path="members" element={<MyListings />} />
           </Route>
           <Route
             path="/"

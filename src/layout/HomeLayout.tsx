@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import BottomBar from "./BottomBar";
-import TopBar from "./TopBar";
+import BottomBar from "../components/BottomBar";
+import TopBar from "../components/TopBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   DropdownMenu,
@@ -11,8 +11,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import PostIcon from "../assets/icons/post-icon.svg";
-import MenuButton from "./custom-ui/menu-button";
-import ListingTypePill from "./custom-ui/listing-type-pill";
+import MenuButton from "../components/custom-ui/menu-button";
+import ListingTypePill from "../components/custom-ui/listing-type-pill";
 
 const HomeLayout = () => {
   const navigate = useNavigate();
@@ -68,7 +68,7 @@ const HomeLayout = () => {
           <ListingTypePill type="Events" />
           <ListingTypePill type="Contests" />
           <ListingTypePill type="Startups" />
-        </div>{" "}
+        </div>
         <ScrollArea className="h-[80vh] w-full rounded-md pt-4">
           <Outlet />
         </ScrollArea>
