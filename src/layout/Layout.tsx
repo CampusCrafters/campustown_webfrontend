@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import BottomBar from "../components/BottomBar";
-import TopBar from "../components/TopBar";
+import BottomBar from "./BottomBar";
+import TopBar from "./TopBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   DropdownMenu,

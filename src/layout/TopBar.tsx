@@ -17,7 +17,7 @@ import {
 import Cookies from "js-cookie";
 import { useLocation } from "react-router-dom";
 import { setSearchQuery } from "@/redux/searchSlice";
-import ProfileIcon from "./custom-ui/profile-icon";
+import ProfileIcon from "../components/custom-ui/profile-icon";
 import defaultProfilePicture from "../assets/icons/Default_pfp.svg.png";
 
 const TopBar = () => {

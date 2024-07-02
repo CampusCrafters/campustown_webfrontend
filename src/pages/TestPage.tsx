@@ -1,4 +1,4 @@
-import TopBar from "@/components/TopBar";
+import TopBar from "../layout/TopBar";
 
 const TestPage = () => {
   return (
