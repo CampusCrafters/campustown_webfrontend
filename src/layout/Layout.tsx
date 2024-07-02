@@ -17,7 +17,7 @@ const Layout = () => {
     <div className="flex flex-col h-screen">
       <TopBar />
       <div className="py-[5rem]">
-        <ScrollArea className="h-[80vh] w-full rounded-md pt-4">
+        <ScrollArea className="h-[80vh] w-full rounded-md pt-4 bg-black">
           <Outlet />
         </ScrollArea>
       </div>

@@ -3,6 +3,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Project {
   project_id: number;
+  host_id: number;
+  host_name: string;
+  host_profile_picture: string;
+  hsot_batch: number;
   project_title: string;
   description: string;
   domain: string;
@@ -11,7 +15,7 @@ interface Project {
   end_date: string;
   link: string;
   required_roles: string[];
-  members: { user_id: number; role: string }[];
+  members: { user_id: number; role: string, name: string, profile_picture: string, batch: number }[];
 }
 
 interface ProjectsState {

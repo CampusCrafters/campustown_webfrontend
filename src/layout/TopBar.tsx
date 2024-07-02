@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import SearchIcon from "../assets/icons/magnifying-glass.svg";
 import BellIcon from "../assets/icons/ph_bell.svg";
-import BackIcon from "../assets/icons/backicon.svg"; // Make sure to import the back icon
+import BackIcon from "../assets/icons/backicon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchProfile } from "../redux/users/profileActions";
@@ -17,7 +17,7 @@ import {
 import Cookies from "js-cookie";
 import { useLocation } from "react-router-dom";
 import { setSearchQuery } from "@/redux/searchSlice";
-import ProfileIcon from "./custom-ui/profile-icon";
+import ProfileIcon from "../components/custom-ui/profile-icon";
 import defaultProfilePicture from "../assets/icons/Default_pfp.svg.png";
 
 const TopBar = () => {
@@ -33,6 +33,9 @@ const TopBar = () => {
     "/events",
     "/chat",
   ].includes(location.pathname);
+
+  const showBackIcon = location.pathname.includes("/manageproject");
+
   const activeTab = location.pathname.split("/")[1];
   const navigate = useNavigate();
 
@@ -45,8 +48,7 @@ const TopBar = () => {
   }, [location.pathname, dispatch]);
 
   const handleLogout = () => {
-    Cookies.remove("jwt", { path: "/" }); // Specify the path if it was set while creating the cookie
-    // Clear any user state in Redux
+    Cookies.remove("jwt", { path: "/" });
     dispatch({ type: "CLEAR_USER_STATE" });
     window.location.href = "/";
   };
@@ -59,10 +61,19 @@ const TopBar = () => {
     <nav className="fixed mt-[23px] h-[55px] w-full bg-black text-white flex items-center justify-between px-[24px]">
       <div
         className={`flex items-center justify-between transition-all duration-300 ${
-          clicked ? 'w-0 opacity-0' : 'w-full opacity-100'
+          clicked ? "w-0 opacity-0" : "w-full opacity-100"
         }`}
       >
-        <div style={headingStyles}>{activeTab}</div>
+        <div className="flex gap-4">
+          {showBackIcon && (
+            <img
+              src={BackIcon}
+              className="cursor-pointer"
+              onClick={() => navigate("/my-listings")}
+            />
+          )}
+          <div style={headingStyles}>{activeTab}</div>
+        </div>
         <div className="flex gap-[16px] items-center">
           {showSearchIcon && (
             <img
@@ -71,7 +82,10 @@ const TopBar = () => {
               onClick={() => setClicked(true)}
             />
           )}
-          <img src={BellIcon} className="cursor-pointer h-[24px] w-[24px] transform hover:scale-110 transition-transform duration-200" />
+          <img
+            src={BellIcon}
+            className="cursor-pointer h-[24px] w-[24px] transform hover:scale-110 transition-transform duration-200"
+          />
           <DropdownMenu>
             <DropdownMenuTrigger>
               {profile && profile.profile_picture ? (
@@ -94,7 +108,7 @@ const TopBar = () => {
 
       <div
         className={`flex gap-2 items-center transition-all duration-300 ${
-          clicked ? 'w-full opacity-100' : 'w-0 opacity-0'
+          clicked ? "w-full opacity-100" : "w-0 opacity-0"
         }`}
       >
         <img
@@ -124,4 +138,3 @@ const headingStyles: React.CSSProperties = {
   fontWeight: 700,
   lineHeight: "normal",
 };
-

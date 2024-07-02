@@ -1,13 +1,8 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import useTokenVerification from "./hooks/auth/useTokenVerification";
-import Layout from "./components/Layout";
+import Layout from "./layout/Layout";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/Login";
 import ProfilePage from "./pages/Profile";
@@ -19,12 +14,14 @@ import PostProject from "./pages/PostProject";
 import MyApplications from "./pages/MyApplications";
 import { Toaster } from "@/components/ui/toaster";
 import ChatPage from "./pages/ChatPage";
-import ManageProjects from "./pages/ManageProjects";
 import TestPage from "./pages/TestPage";
 import MyListings from "./pages/home/my-listings/MyListings";
-import HomeLayout from "./components/HomeLayout";
+import HomeLayout from "./layout/HomeLayout";
+import ManageProjectLayout from "./layout/ManageProjectLayout";
+import EditProject from "./pages/home/my-listings/manage-project/EditProject";
+import Members from "./pages/home/my-listings/manage-project/Members";
+import Applicants from "./pages/home/my-listings/manage-project/Applicants";
 
-//comment1
 function App() {
   const { user, loading } = useTokenVerification();
   const [authLoading, setAuthLoading] = useState(true);
@@ -62,6 +59,14 @@ function App() {
             <Route path="my-listings" element={<MyListings />} />
           </Route>
           <Route
+            path="/manageproject"
+            element={user ? <ManageProjectLayout /> : <Navigate to="/login" />}
+          >
+            <Route path="editProject" element={<EditProject />} />
+            <Route path="members" element={<Members />} />
+            <Route path="applicants" element={<Applicants />} />
+          </Route>
+          <Route
             path="/"
             element={user ? <Layout /> : <Navigate to="/login" />}
           >
@@ -70,7 +75,6 @@ function App() {
             <Route path="postProject" element={<PostProject />} />
             <Route path="myApplications" element={<MyApplications />} />
             <Route path="events" element={<EventsPage />} />
-            <Route path="Manageproject" element={<ManageProjects />} />
           </Route>
           <Route path="test" element={<TestPage />} />
         </Routes>

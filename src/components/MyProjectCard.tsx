@@ -10,9 +10,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
-
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import { deleteProject } from "../redux/projects/projectsActions";
 
 const MyProjectsCard = ({ project }: any) => {
@@ -23,7 +22,7 @@ const MyProjectsCard = ({ project }: any) => {
   const formattedEndDate = new Date(project.end_date).toLocaleDateString();
 
   const handleManageProject = async () => {
-    navigate("/manageproject?project_id=" + project.project_id); // Navigate to the manageproject page
+    navigate("/manageproject/editProject?project_id=" + project.project_id);
   };
 
   const handleDelete = async (project_id: number) => {
@@ -44,28 +43,31 @@ const MyProjectsCard = ({ project }: any) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+    <div
+      className="rounded-2xl shadow-lg p-6 border border-gray-700"
+      style={{ backgroundColor: "#151515" }}
+    >
       <div className="flex gap-2">
-        <h3 className="text-3xl font-semibold mb-2">{project.project_title}</h3>
+        <h3 className="text-3xl font-semibold mb-2 text-gray-400">{project.project_title}</h3>
       </div>
-      <p className="text-sm mb-2">
+      <p className="text-sm mb-2 text-gray-400">
         <strong>Description: </strong>
         {project.description}
       </p>
-      <p className="mb-2">
+      <p className="mb-2 text-gray-400">
         <strong>Domain: </strong> {project.domain}
       </p>
-      <p className="mb-2">
+      <p className="mb-2 text-gray-400">
         <strong>Status: </strong> {project.status}
       </p>
-      <p className="mb-2">
+      <p className="mb-2 text-gray-400">
         <strong>Start Date: </strong> {formattedStartDate}
       </p>
-      <p className="mb-2">
+      <p className="mb-2 text-gray-400">
         <strong>End Date: </strong> {formattedEndDate}
       </p>
       <div className="mb-2">
-        <strong>Required Roles:</strong>
+        <strong className="text-gray-400">Required Roles:</strong>
         <div className="grid grid-cols-2 gap-2 mt-2">
           {project.required_roles.map((role: any) => (
             <div key={role} className="rounded-lg p-2 text-center bg-gray-200">
@@ -74,7 +76,7 @@ const MyProjectsCard = ({ project }: any) => {
           ))}
         </div>
       </div>
-      <p className="mb-2">
+      <p className="mb-2 text-gray-400">
         <strong>Link: </strong>
         <a href={project.link} className="text-blue-600">
           {project.link}
