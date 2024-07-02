@@ -1,6 +1,5 @@
 import ProfileIcon from "./custom-ui/profile-icon";
 import YearPill from "./custom-ui/year-pill";
-import dropdownArrow from "../assets/icons/heroicons-mini/chevron-down.svg";
 
 const MemberCard: React.FC<MemberCardProps> = ({ src, name, batch, role }) => {
   return (
@@ -17,7 +16,6 @@ const MemberCard: React.FC<MemberCardProps> = ({ src, name, batch, role }) => {
         <div style={nameStyles}>{name}</div>
         <YearPill batch={batch} />
       </div>
-      <img src={dropdownArrow} alt="dropdown arrow" />
       <div
         style={{
           display: "flex",
