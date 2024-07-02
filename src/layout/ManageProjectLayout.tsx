@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import BottomBar from "../components/BottomBar";
 import TopBar from "../components/TopBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -17,18 +17,25 @@ const ManageProjectLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [activeTab, setActiveTab] = useState(() => {
-    const path = location.pathname;
-    if (path === "/explore-all") return "explore-all";
-    if (path === "/my-listings") return "my-listings";
-    return "explore-all"; // default tab
-  });
+  const [searchParams] = useSearchParams();
+  const projectId = searchParams.get("project_id");
+  const projectID = parseInt(projectId || "", 10);
 
-  useEffect(() => {
+
+const [activeTab, setActiveTab] = useState(() => {
     const path = location.pathname;
-    if (path === "/explore-all") setActiveTab("explore-all");
-    if (path === "/my-listings") setActiveTab("my-listings");
-  }, [location.pathname]);
+    if (path.includes("/editProject")) return "edit project";
+    if (path.includes("/members")) return "members";
+    if (path.includes("/applicants")) return "applicants";
+    return "edit project"; 
+});
+
+useEffect(() => {
+    const path = location.pathname;
+    if (path.includes("/editProject")) setActiveTab("edit project");
+    if (path.includes("/members")) setActiveTab("members");
+    if (path.includes("/applicants")) setActiveTab("applicants");
+}, [location.pathname]);
 
   return (
     <div className="flex flex-col h-screen">
@@ -37,26 +44,26 @@ const ManageProjectLayout = () => {
         <div className="flex gap-2 justify-center mt-3">
           <MenuButton
             title="edit project"
-            active={activeTab === "explore-all"}
+            active={activeTab === "edit project"}
             onClick={() => {
-              setActiveTab("explore-all");
-              navigate("/explore-all");
+              setActiveTab("edit project");
+              navigate("/manageproject/editProject?project_id=" + projectID);
             }}
           />
           <MenuButton
             title="members"
-            active={activeTab === "my-listings"}
+            active={activeTab === "members"}
             onClick={() => {
-              setActiveTab("my-listings");
-              navigate("/my-listings");
+              setActiveTab("members");
+              navigate("/manageproject/members?project_id=" + projectID);
             }}
           />
           <MenuButton
             title="applicants"
-            active={activeTab === "my-listings"}
+            active={activeTab === "applicants"}
             onClick={() => {
-              setActiveTab("my-listings");
-              navigate("/my-listings");
+              setActiveTab("applicants");
+              navigate("/manageproject/applicants?project_id=" + projectID);
             }}
           />
         </div>
