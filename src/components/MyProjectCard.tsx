@@ -13,15 +13,15 @@ import { useToast } from "@/components/ui/use-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteProject } from "../redux/projects/projectsActions";
-import { Button, Tooltip, Badge, Flex, Avatar } from "@radix-ui/themes";
+import { Button, Badge, Flex, Avatar } from "@radix-ui/themes";
 import clockimg from "../assets/icons/clock-icon.svg";
 
 const MyProjectsCard = ({ project }: any) => {
   const dispatch = useDispatch();
   const { toast } = useToast();
   const navigate = useNavigate(); // Get the navigate function
-  const formattedStartDate = new Date(project.start_date).toLocaleDateString();
-  const formattedEndDate = new Date(project.end_date).toLocaleDateString();
+  // const formattedStartDate = new Date(project.start_date).toLocaleDateString();
+  // const formattedEndDate = new Date(project.end_date).toLocaleDateString();
 
   const handleManageProject = async () => {
     navigate("/manageproject/editProject?project_id=" + project.project_id);
@@ -97,34 +97,6 @@ const MyProjectsCard = ({ project }: any) => {
             {project.description}
           </p>
         </div>
-
-        {/* <p className="text-gray-400 mb-2">
-          <strong>Start Date:</strong> {formattedStartDate}
-        </p>
-        <p className="text-gray-400 mb-2">
-          <strong>End Date:</strong> {formattedEndDate}
-        </p> */}
-
-        <p className="mt-4 ml-[10px]">
-          <strong className="text-white">Members: </strong>
-          {project.members && project.members.length > 0 ? (
-            project.members.map((member: any, index: number) => (
-              <span key={member.user_id} className="mr-2 text-white">
-                {userProfiles[member.user_id] || "Loading Members..."}
-
-                {index !== project.members.length - 1 && ", "}
-              </span>
-            ))
-          ) : (
-            <span className="text-white">No members</span>
-          )}
-        </p>
-        {/* <p className="mb-2">
-        <strong>Start Date: </strong> {formattedStartDate}
-      </p>
-      <p className="mb-2">
-        <strong>End Date: </strong> {formattedEndDate}
-      </p> */}
         <div className="mt-[8px] ml-[10px]">
           <Flex gap="2" align="center">
             <strong className="text-white text-[15px]">Roles:</strong>
@@ -141,12 +113,6 @@ const MyProjectsCard = ({ project }: any) => {
             ))}
           </Flex>
         </div>
-        {/* <p className="mb-2">
-        <strong>Link: </strong>{" "}
-        <a href={project.link} className="text-blue-600">
-          {project.link}
-        </a>
-      </p> */}
         <div className="flex items-center justify-between mt-[20px] mr-[18px]">
           <Button
             className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white"
