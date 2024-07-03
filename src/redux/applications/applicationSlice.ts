@@ -35,6 +35,8 @@ interface Application {
   applied_on: Date;
   reviewed_on: Date;
   project_title: string;
+  profile_picture: string;
+  batch: number;
 }
 
 interface RequiredRoles {

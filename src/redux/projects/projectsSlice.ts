@@ -1,4 +1,3 @@
-// projectsSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Project {
@@ -21,13 +20,13 @@ interface Project {
 interface ProjectsState {
   projects: Project[];
   myProjects: Project[];
-  projectDetails: Project | null; // Add projectDetails to the state
+  projectDetails: Project | null; 
 }
 
 const initialState: ProjectsState = {
   projects: [],
   myProjects: [],
-  projectDetails: null, // Initialize projectDetails
+  projectDetails: null, 
 };
 
 const projectsSlice = createSlice({
