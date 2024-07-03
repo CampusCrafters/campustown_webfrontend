@@ -146,15 +146,17 @@ const MyProjectsCard = ({ project }: any) => {
           </AlertDialog>
         </div>
         <Flex direction="row" gap="3" className="mt-[14px]  mb-[20px]">
-          <Badge
-            radius="full"
-            size="3"
-            style={{ background: "#BEC5C8" }}
-            className="h-[21px]"
-            variant="solid"
-          >
-            <p className="text-black">{project.domain}</p>
-          </Badge>
+          {project.domain.split(",")?.map((domain: any) => (
+            <Badge
+              radius="full"
+              size="3"
+              style={{ background: "#BEC5C8" }}
+              className="h-[21px]"
+              variant="solid"
+            >
+              <p className="text-black">{domain}</p>
+            </Badge>
+          ))}
         </Flex>
       </div>
     </div>
