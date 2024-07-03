@@ -83,7 +83,7 @@ const ProjectCard = ({ project }: any) => {
   }
 
   return (
-    <div className="rounded-2xl shadow-lg bg-neutral-900 border border-gray-700 mb-[10px]">
+    <div className=" flex flex-col rounded-2xl shadow-lg bg-neutral-900 border border-gray-700 mb-[10px]">
       <Flex className="mb-[15px]" align="center">
         <Badge
           radius="full"
@@ -118,7 +118,7 @@ const ProjectCard = ({ project }: any) => {
                 />
               ) : (
                 <AvatarFallback onClick={() => getUserProfile(project.host_id)}>
-                  CC
+                  {project.name.charAt(0)}
                 </AvatarFallback>
               )}
             </Avatar>
@@ -207,10 +207,11 @@ const ProjectCard = ({ project }: any) => {
           <strong>End Date:</strong> {formattedEndDate}
         </p> */}
         </div>
+      </div>
+      <div className="ml-[16px] mt-auto">
         <div className="mt-[8px] ml-[10px]">
           <Flex gap="2" align="center">
             <strong className="text-white text-[15px]">Roles:</strong>
-            {/* <div className="grid grid-cols-2 gap-2 mt-2"> */}
             {project.required_roles.map((role: any) => (
               <Badge
                 variant={selectedRole === role ? "solid" : "outline"}
@@ -220,9 +221,6 @@ const ProjectCard = ({ project }: any) => {
                 className={`text-center !min-h-[30px] !w-auto !border-solid !border-blue-600 !border  ${
                   selectedRole ? "!text-white" : "!text-blue-600"
                 }`}
-                // className={`rounded-lg p-2 text-center cursor-pointer ${
-                //   selectedRole === role ? "bg-blue-400" : "bg-gray-600"
-                // } text-white`}
                 onClick={() =>
                   setSelectedRole((prevRole) =>
                     prevRole === role ? null : role
@@ -233,15 +231,7 @@ const ProjectCard = ({ project }: any) => {
               </Badge>
             ))}
           </Flex>
-          {/* </div> */}
         </div>
-
-        {/* <p className="text-gray-400 mb-2">
-        <strong>Link:</strong>{" "}
-        <a href={project.link} className="text-blue-400">
-          {project.link}
-        </a>
-      </p> */}
         <div className="flex items-center justify-between mt-[20px] mr-[18px]">
           <Button className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white">
             <span className="">More Details</span>

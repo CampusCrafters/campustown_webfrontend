@@ -13,7 +13,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteProject } from "../redux/projects/projectsActions";
-import { Button, Badge, Flex, Avatar } from "@radix-ui/themes";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button, Badge, Flex } from "@radix-ui/themes";
 import clockimg from "../assets/icons/clock-icon.svg";
 
 const MyProjectsCard = ({ project }: any) => {
@@ -45,7 +46,7 @@ const MyProjectsCard = ({ project }: any) => {
   };
 
   return (
-    <div className="rounded-2xl shadow-lg bg-neutral-900 border border-gray-700 mb-[10px]">
+    <div className=" flex flex-col rounded-2xl shadow-lg bg-neutral-900 border border-gray-700 mb-[10px]">
       <Flex className="mb-[15px]" align="center">
         <Badge
           radius="full"
@@ -69,11 +70,13 @@ const MyProjectsCard = ({ project }: any) => {
         </div>
       </Flex>
       <div className="flex gap-2 items-end">
-        <Avatar
-          className="cursor-pointer ml-[16px] rounded-[10px] h-[40px] w-[40px]"
-          src={project.profile_picture}
-          fallback="A"
-        ></Avatar>
+        <Avatar className="cursor-pointer ml-[16px] rounded-[10px] h-[40px] w-[40px]">
+          {project.profile_picture ? (
+            <AvatarImage src={project.profile_picture} className=" " />
+          ) : (
+            <AvatarFallback>{project.name.charAt(0)}</AvatarFallback>
+          )}
+        </Avatar>
 
         <p className="text-gray-400 mb-2">{project.name}</p>
       </div>
@@ -97,6 +100,8 @@ const MyProjectsCard = ({ project }: any) => {
             {project.description}
           </p>
         </div>
+      </div>
+      <div className="ml-[16px] mt-auto">
         <div className="mt-[8px] ml-[10px]">
           <Flex gap="2" align="center">
             <strong className="text-white text-[15px]">Roles:</strong>
