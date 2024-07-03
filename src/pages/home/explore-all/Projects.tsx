@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { fetchProjects } from "../../../redux/projects/projectsActions";
 import ProjectCard from "@/components/ProjectCard";
+import { Theme } from "@radix-ui/themes";
 
 const Projects = () => {
   const dispatch = useDispatch();
 
-  const { projects } = useSelector(
-    (state: RootState) => state.projects
-  );
+  const { projects } = useSelector((state: RootState) => state.projects);
   const { searchQuery } = useSelector((state: RootState) => state.search);
 
   useEffect(() => {
@@ -25,11 +24,13 @@ const Projects = () => {
 
   return (
     <div className="px-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {reversedProjects.map((project) => (
-              <ProjectCard key={project.project_id} project={project} />
-            ))}
-          </div>
+      <Theme className=" !bg-transparent">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {reversedProjects.map((project) => (
+            <ProjectCard key={project.project_id} project={project} />
+          ))}
+        </div>
+      </Theme>
     </div>
   );
 };

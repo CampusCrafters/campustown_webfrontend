@@ -13,6 +13,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteProject } from "../redux/projects/projectsActions";
+import { Button, Tooltip, Badge, Flex, Avatar } from "@radix-ui/themes";
+import clockimg from "../assets/icons/clock-icon.svg";
 
 const MyProjectsCard = ({ project }: any) => {
   const dispatch = useDispatch();
@@ -43,56 +45,120 @@ const MyProjectsCard = ({ project }: any) => {
   };
 
   return (
-    <div
-      className="rounded-2xl shadow-lg p-6 border border-gray-700"
-      style={{ backgroundColor: "#151515" }}
-    >
-      <div className="flex gap-2">
-        <h3 className="text-3xl font-semibold mb-2 text-gray-400">{project.project_title}</h3>
+    <div className="rounded-2xl shadow-lg bg-neutral-900 border border-gray-700 mb-[10px]">
+      <Flex className="mb-[15px]" align="center">
+        <Badge
+          radius="full"
+          variant="solid"
+          size="3"
+          className="w-[71px] max-h-[18px] mt-[5px] ml-[11px] justify-center"
+        >
+          <span className=" text-[10px]">Project</span>
+        </Badge>
+        <span className="text-slate-500 text-[10.14px] font-normal font-['Poppins'] leading-snug ml-[10px] mt-[5px]">
+          Edited
+        </span>
+        <div className="w-[98px] h-[27.75px] relative ml-auto">
+          <div className="w-[98px] h-[27.75px] left-0 top-0 absolute bg-lime-400 rounded-tr-[15px] rounded-bl-lg"></div>
+          <div className="w-5 h-[20.56px] left-[8px] top-[3.03px] absolute">
+            <img src={clockimg}></img>
+          </div>
+          <div className="w-[60px] h-[19.53px] left-[29px] top-[3.03px] absolute text-center text-black text-[10px] font-medium font-['Roboto Flex'] leading-snug flex items-center justify-center">
+            1 Hour ago
+          </div>
+        </div>
+      </Flex>
+      <div className="flex gap-2 items-end">
+        <Avatar
+          className="cursor-pointer ml-[16px] rounded-[10px] h-[40px] w-[40px]"
+          src={project.profile_picture}
+          fallback="A"
+        ></Avatar>
+
+        <p className="text-gray-400 mb-2">{project.name}</p>
       </div>
-      <p className="text-sm mb-2 text-gray-400">
-        <strong>Description: </strong>
-        {project.description}
-      </p>
-      <p className="mb-2 text-gray-400">
-        <strong>Domain: </strong> {project.domain}
-      </p>
-      <p className="mb-2 text-gray-400">
-        <strong>Status: </strong> {project.status}
-      </p>
-      <p className="mb-2 text-gray-400">
+
+      <div className="ml-[16px]">
+        <div className="mt-4 ">
+          <div className="flex gap-4 justify-between items-center">
+            <span className="text-2xl font-bold text-white mb-2">
+              {project.project_title}
+            </span>
+
+            <Badge
+              radius="full"
+              size="3"
+              className="h-[18px] mr-[18px] !bg-white !text-black"
+            >
+              {project.status}
+            </Badge>
+          </div>
+          <p className="text-white mb-2 ml-[10px] mr-[65px] text-[15px]">
+            {project.description}
+          </p>
+        </div>
+
+        {/* <p className="text-gray-400 mb-2">
+          <strong>Start Date:</strong> {formattedStartDate}
+        </p>
+        <p className="text-gray-400 mb-2">
+          <strong>End Date:</strong> {formattedEndDate}
+        </p> */}
+
+        <p className="mt-4 ml-[10px]">
+          <strong className="text-white">Members: </strong>
+          {project.members && project.members.length > 0 ? (
+            project.members.map((member: any, index: number) => (
+              <span key={member.user_id} className="mr-2 text-white">
+                {userProfiles[member.user_id] || "Loading Members..."}
+
+                {index !== project.members.length - 1 && ", "}
+              </span>
+            ))
+          ) : (
+            <span className="text-white">No members</span>
+          )}
+        </p>
+        {/* <p className="mb-2">
         <strong>Start Date: </strong> {formattedStartDate}
       </p>
-      <p className="mb-2 text-gray-400">
+      <p className="mb-2">
         <strong>End Date: </strong> {formattedEndDate}
-      </p>
-      <div className="mb-2">
-        <strong className="text-gray-400">Required Roles:</strong>
-        <div className="grid grid-cols-2 gap-2 mt-2">
-          {project.required_roles.map((role: any) => (
-            <div key={role} className="rounded-lg p-2 text-center bg-gray-200">
-              {role}
-            </div>
-          ))}
+      </p> */}
+        <div className="mt-[8px] ml-[10px]">
+          <Flex gap="2" align="center">
+            <strong className="text-white text-[15px]">Roles:</strong>
+            {project.required_roles.map((role: any) => (
+              <Badge
+                variant="outline"
+                size="3"
+                radius="full"
+                key={role}
+                className="text-center !min-h-[30px] !w-auto !border-solid !border-blue-600 !border !text-blue-600"
+              >
+                {role}
+              </Badge>
+            ))}
+          </Flex>
         </div>
-      </div>
-      <p className="mb-2 text-gray-400">
-        <strong>Link: </strong>
+        {/* <p className="mb-2">
+        <strong>Link: </strong>{" "}
         <a href={project.link} className="text-blue-600">
           {project.link}
         </a>
-      </p>
-      <div className="flex items-center justify-between">
-        <div className="flex gap-4">
-          <button
-            onClick={() => handleManageProject()}
-            className="bg-black  text-white font-bold py-2 px-4 rounded mt-4"
+      </p> */}
+        <div className="flex items-center justify-between mt-[20px] mr-[18px]">
+          <Button
+            className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white"
+            onClick={handleManageProject}
           >
             Manage Project
-          </button>
+          </Button>
           <AlertDialog>
-            <AlertDialogTrigger className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4">
-              Delete Project
+            <AlertDialogTrigger className="">
+              <Button className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white">
+                Delete Project
+              </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
@@ -113,6 +179,17 @@ const MyProjectsCard = ({ project }: any) => {
             </AlertDialogContent>
           </AlertDialog>
         </div>
+        <Flex direction="row" gap="3" className="mt-[14px]  mb-[20px]">
+          <Badge
+            radius="full"
+            size="3"
+            style={{ background: "#BEC5C8" }}
+            className="h-[21px]"
+            variant="solid"
+          >
+            <p className="text-black">{project.domain}</p>
+          </Badge>
+        </Flex>
       </div>
     </div>
   );
