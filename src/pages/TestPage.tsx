@@ -6,6 +6,7 @@ const TestPage = () => {
       <div className="flex"></div>
 
       <TopBar />
+      <BottomBar />
     </div>
   );
 };
