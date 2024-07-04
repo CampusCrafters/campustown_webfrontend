@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import BottomBar from "./BottomBar";
 import TopBar from "./TopBar";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -69,9 +68,9 @@ const HomeLayout = () => {
           <ListingTypePill type="Contests" />
           <ListingTypePill type="Startups" />
         </div>
-        <ScrollArea className="h-[80vh] w-full rounded-md pt-4">
+        <div className="h-[68vh] w-full rounded-md mt-4 overflow-scroll">
           <Outlet />
-        </ScrollArea>
+        </div>
       </div>
       <BottomBar />
       <div className="fixed bottom-[80px] right-4 z-50">
