@@ -28,6 +28,9 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { fetchRoles } from "@/redux/applications/applicationActions";
+import { fetchApplications } from "@/redux/applications/applicationActions";
+import { useEffect } from "react";
+import { getProjectWithId } from "@/redux/projects/projectsActions";
 
 interface ApplicationCardProps {
   id: number;
@@ -36,7 +39,6 @@ interface ApplicationCardProps {
   projectName: string;
   status: string;
   role: string;
-  deleteFunction: number;
   children?: React.ReactNode;
 }
 
@@ -47,15 +49,15 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
   projectName,
   status,
   role,
-  deleteFunction,
 }) => {
   const { toast } = useToast();
   const dispatch = useDispatch();
   const { required_roles } = useSelector(
     (state: RootState) => state.applications
   );
-
-  console.log(required_roles);
+  useEffect(() => {
+    dispatch(fetchApplications() as any);
+  }, [dispatch]);
 
   const handleDelete = async (applicationId: number) => {
     try {
@@ -74,25 +76,12 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
     }
   };
 
-  const getRoles = async (project_id: number) => {
-    try {
-      await dispatch(fetchRoles(project_id) as any);
-    } catch (err) {
-      console.error("Error fetching roles:", err);
-    }
-  };
-
-  const [selectedOption, setSelectedOption] = useState("");
-
-  const handleSelectChange = (event: any) => {
-    setSelectedOption(event.target.value);
-  };
-
   const handleSubmit = async (
     project_id: number,
     role: string,
     selectedOption: string
   ) => {
+    //Edit Application
     try {
       await dispatch(editApplication(project_id, role, selectedOption) as any);
       toast({
@@ -109,6 +98,20 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
     }
   };
 
+  const getRoles = async (project_id: number) => {
+    try {
+      await dispatch(fetchRoles(project_id) as any);
+    } catch (err) {
+      console.error("Error fetching roles:", err);
+    }
+  };
+
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handleSelectChange = (event: any) => {
+    setSelectedOption(event.target.value);
+  };
+
   return (
     <article style={articleStyles}>
       <div style={leftContainerStyles}>
@@ -121,7 +124,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
       </div>
       <div style={rightContainerStyles}>
         <ApplicationStatus status={status} />
-        <p style={roleStyles}>{role} Role</p>
+        <p style={roleStyles}>Role - {role}</p>
         <div
           style={{
             display: "flex",
@@ -151,7 +154,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={() => handleDelete(deleteFunction)}>
+                <AlertDialogAction onClick={() => handleDelete(id)}>
                   Yes
                 </AlertDialogAction>
               </AlertDialogFooter>
