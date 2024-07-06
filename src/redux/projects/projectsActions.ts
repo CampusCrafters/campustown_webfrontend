@@ -44,6 +44,8 @@ export const getProjectWithId =
         }
       );
       dispatch(setProjectDetails(res.data));
+      console.log("Project details:", res.data);
+      return res.data;
     } catch (err: any) {
       console.error("Error fetching project with id:", err);
       return err.response;

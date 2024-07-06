@@ -23,12 +23,12 @@ const BottomBar = () => {
 
   useEffect(() => {
     const path = location.pathname;
-    setActiveTab(path.substring(1)); // Remove leading '/' from the path
+    setActiveTab(path.substring(1)); 
   }, []);
 
   return (
     <div
-      className="fixed flex items-center justify-between bottom-0 w-full text-white text-center h-[60px]"
+      className="fixed flex items-center justify-between bottom-0 w-full text-white text-center h-[5vh]"
       style={bottomBarStyles}
     >
       <div

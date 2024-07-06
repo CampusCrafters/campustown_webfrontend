@@ -10,13 +10,13 @@ const ApplicationStatus: React.FC<ApplicationStatusProps> = ({ status }) => {
     let backgroundColor = "#A3E635"; // Default color (lime)
 
     switch (status) {
-      case "accepted":
+      case "Accepted":
         backgroundColor = "rgba(156, 228, 83, 1)";
         break;
-      case "pending":
+      case "Pending":
         backgroundColor = "rgba(210, 131, 45, 1)";
         break;
-      case "rejected":
+      case "Rejected":
         backgroundColor = "rgba(211, 70, 95, 1)";
         break;
       default:
@@ -31,6 +31,7 @@ const ApplicationStatus: React.FC<ApplicationStatusProps> = ({ status }) => {
       textAlign: "center",
       marginBottom: "14px",
       borderRadius: "0px 14px 0px 16px",
+      alignSelf: "flex-end",
     };
   };
 
