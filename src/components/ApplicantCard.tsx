@@ -3,11 +3,21 @@ import ProfileIcon from "./custom-ui/profile-icon";
 import YearPill from "./custom-ui/year-pill";
 import dropdownArrow from "../assets/icons/chevron-down.svg";
 
-const ApplicantCard: React.FC<MemberCardProps & {
-  onActionSelect: (action: string) => void;
-  selectedAction: string;
-  isDropdownOpen: boolean;
-}> = ({ src, name, batch, role, onActionSelect, selectedAction, isDropdownOpen }) => {
+const ApplicantCard: React.FC<
+  MemberCardProps & {
+    onActionSelect: (action: string) => void;
+    selectedAction: string;
+    isDropdownOpen: boolean;
+  }
+> = ({
+  src,
+  name,
+  batch,
+  role,
+  onActionSelect,
+  selectedAction,
+  isDropdownOpen,
+}) => {
   return (
     <div style={applicantCardStyles}>
       <div
@@ -36,7 +46,7 @@ const ApplicantCard: React.FC<MemberCardProps & {
         <p style={{ fontSize: "13px", fontWeight: 700 }}>{role}</p>
         <div className="relative">
           <button
-            onClick={() => onActionSelect("")}
+            onClick={() => onActionSelect(selectedAction ? "" : "Expand")}
             type="button"
             className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
             id="options-menu"
@@ -54,6 +64,7 @@ const ApplicantCard: React.FC<MemberCardProps & {
               {/* Icon */}
             </svg>
           </button>
+
           {isDropdownOpen && selectedAction && (
             <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
               <div

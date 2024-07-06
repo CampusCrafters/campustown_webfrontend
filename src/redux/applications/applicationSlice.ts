@@ -37,6 +37,7 @@ interface Application {
   project_title: string;
   profile_picture: string;
   batch: number;
+  host_name: string;
 }
 
 interface RequiredRoles {

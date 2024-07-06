@@ -81,6 +81,7 @@ function Applicants() {
   };
 
   const handleActionSelect = (action: string, applicant: any) => {
+    console.log("Action selected:", action, applicant);
     switch (action) {
       case "Select":
         handleSelectApplicant(applicant);
@@ -95,8 +96,8 @@ function Applicants() {
         break;
     }
 
-    if (selectedAction === action) {
-      setIsDropdownOpen(!isDropdownOpen);
+    if (selectedAction === action && isDropdownOpen) {
+      setIsDropdownOpen(false);
       setSelectedAction("");
     } else {
       setSelectedAction(action);

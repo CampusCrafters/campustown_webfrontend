@@ -28,11 +28,8 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { fetchRoles } from "@/redux/applications/applicationActions";
-import { fetchApplications } from "@/redux/applications/applicationActions";
-import { useEffect } from "react";
-import { getProjectWithId } from "@/redux/projects/projectsActions";
-
 interface ApplicationCardProps {
+  project_id: number;
   id: number;
   date: string;
   name: string;
@@ -43,6 +40,7 @@ interface ApplicationCardProps {
 }
 
 const ApplicationCard: React.FC<ApplicationCardProps> = ({
+  project_id,
   id,
   date,
   name,
@@ -55,9 +53,6 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
   const { required_roles } = useSelector(
     (state: RootState) => state.applications
   );
-  useEffect(() => {
-    dispatch(fetchApplications() as any);
-  }, [dispatch]);
 
   const handleDelete = async (applicationId: number) => {
     try {
@@ -162,7 +157,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
           </AlertDialog>
 
           <Sheet>
-            <SheetTrigger onClick={() => getRoles(id)}>
+            <SheetTrigger onClick={() => getRoles(project_id)}>
               <div style={editButtonStyles}>Edit Application</div>
             </SheetTrigger>
             <SheetContent>
@@ -204,7 +199,9 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
                       <AlertDialogAction
-                        onClick={() => handleSubmit(id, role, selectedOption)}
+                        onClick={() =>
+                          handleSubmit(project_id, role, selectedOption)
+                        }
                       >
                         Yes
                       </AlertDialogAction>
@@ -255,9 +252,9 @@ const nameStyles: React.CSSProperties = {
 };
 
 const projectNameStyles: React.CSSProperties = {
-  fontSize: "24px",
+  fontSize: "20px",
   fontWeight: "bold",
-  textAlign: "center",
+  textAlign: "left",
 };
 
 const viewProjectButtonStyles: React.CSSProperties = {
