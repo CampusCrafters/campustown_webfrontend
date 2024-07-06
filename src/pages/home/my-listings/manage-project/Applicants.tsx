@@ -106,7 +106,7 @@ function Applicants() {
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-2">
       {applications && applications.length > 0 ? (
         applications.map((application: any, index: any) => (
           <ApplicantCard
@@ -123,9 +123,11 @@ function Applicants() {
           />
         ))
       ) : (
-        <div>No applicants currently for this project</div>
+        <div className=" text-white self-center">
+          <p>No applicants currently for this project</p>
+        </div>
       )}
-    </>
+    </div>
   );
 }
 
