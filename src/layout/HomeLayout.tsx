@@ -68,7 +68,7 @@ const HomeLayout = () => {
           <ListingTypePill type="Contests" />
           <ListingTypePill type="Startups" />
         </div>
-        <div className="h-[68vh] w-full rounded-md mt-4 overflow-scroll">
+        <div className="h-[73vh] w-full rounded-md mt-4 overflow-scroll">
           <Outlet />
         </div>
       </div>
