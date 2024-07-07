@@ -182,7 +182,7 @@ const ProjectCard = ({ project }: any) => {
       <div className="ml-[16px]">
         <div className="mt-4 ">
           <div className="flex gap-4 justify-between items-center">
-            <span className="text-2xl font-bold text-white mb-2">
+            <span className="text-2xl font-bold text-white mb-2" style={{fontFamily: "Raleway"}}>
               {project.project_title}
             </span>
 
@@ -194,7 +194,7 @@ const ProjectCard = ({ project }: any) => {
               {project.status}
             </Badge>
           </div>
-          <p className="text-white mb-2 ml-[10px] mr-[65px] text-[15px]">
+          <p className="text-white mb-2 ml-[10px] mr-[65px] text-[15px]" style={{fontFamily: 'Roboto Flex'}}>
             {project.description}
           </p>
         </div>
