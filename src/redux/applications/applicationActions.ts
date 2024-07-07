@@ -71,7 +71,6 @@ export const fetchAplicants =
         `${backendURL}/api/v1/project/projectApplicants?project_id=${project_id}`,
         { withCredentials: true }
       );
-      console.log("response.data", response.data);
       dispatch(setApplicants(response.data));
       return response.data;
     } catch (error) {

@@ -27,6 +27,7 @@ import { RootState } from "../redux/store";
 import { fetchUserProfile } from "@/redux/users/profileActions";
 import { Button, Tooltip, Badge, Flex } from "@radix-ui/themes";
 import clockimg from "../assets/icons/clock-icon.svg";
+import TimeAgoPill from "./custom-ui/TimeAgoPill";
 
 const ProjectCard = ({ project }: any) => {
   const dispatch = useDispatch();
@@ -35,9 +36,6 @@ const ProjectCard = ({ project }: any) => {
   const userProfile = useSelector(
     (state: RootState) => state.profile.userProfile
   );
-
-  // const formattedStartDate = new Date(project.start_date).toLocaleDateString();
-  // const formattedEndDate = new Date(project.end_date).toLocaleDateString();
   const [selectedRole, setSelectedRole] = useState(null);
 
   const handleApplication = async (
@@ -97,12 +95,12 @@ const ProjectCard = ({ project }: any) => {
           Edited
         </span>
         <div className="w-[98px] h-[27.75px] relative ml-auto">
-          <div className="w-[98px] h-[27.75px] left-0 top-0 absolute bg-lime-400 rounded-tr-[15px] rounded-bl-lg"></div>
+          <div className="w-[98px] h-[27.75px] left-0 top-0 absolute rounded-tr-[15px] rounded-bl-lg" style={{backgroundColor: '#1DB954'}}></div>
           <div className="w-5 h-[20.56px] left-[8px] top-[3.03px] absolute">
             <img src={clockimg}></img>
           </div>
-          <div className="w-[60px] h-[19.53px] left-[29px] top-[3.03px] absolute text-center text-black text-[10px] font-medium font-['Roboto Flex'] leading-snug flex items-center justify-center">
-            1 Hour ago
+          <div className="w-[67px] h-[19.53px] left-[29px] top-[3.03px] absolute text-center text-black text-[10px] font-medium font-['Roboto Flex'] leading-snug flex items-center justify-center">
+            <TimeAgoPill startTime={project.posted_on}/>
           </div>
         </div>
       </Flex>
@@ -199,19 +197,11 @@ const ProjectCard = ({ project }: any) => {
           <p className="text-white mb-2 ml-[10px] mr-[65px] text-[15px]">
             {project.description}
           </p>
-
-          {/* <p className="text-gray-400 mb-2">
-          <strong>Start Date:</strong> {formattedStartDate}
-        </p>
-        <p className="text-gray-400 mb-2">
-          <strong>End Date:</strong> {formattedEndDate}
-        </p> */}
         </div>
       </div>
       <div className="ml-[16px] mt-auto">
         <div className="mt-[8px] ml-[10px]">
-          <Flex gap="2" align="center">
-            <strong className="text-white text-[15px]">Roles:</strong>
+            <strong className="text-white text-[15px] mr-[5px]">Roles:</strong>
             {project.required_roles.map((role: any) => (
               <Badge
                 variant={selectedRole === role ? "solid" : "outline"}
@@ -220,7 +210,7 @@ const ProjectCard = ({ project }: any) => {
                 key={role}
                 className={`text-center !min-h-[30px] !w-auto !border-solid !border-blue-600 !border  ${
                   selectedRole ? "!text-white" : "!text-blue-600"
-                }`}
+                } mr-[5px] mb-[8px]`}
                 onClick={() =>
                   setSelectedRole((prevRole) =>
                     prevRole === role ? null : role
@@ -230,12 +220,10 @@ const ProjectCard = ({ project }: any) => {
                 {role}
               </Badge>
             ))}
-          </Flex>
         </div>
         <div className="flex items-center justify-between mt-[20px] mr-[18px]">
           <Button className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white">
             <span className="">More Details</span>
-            {/* <img className="text-white" src={ViewMoreIcon} alt="View More" /> */}
           </Button>
           {!selectedRole && (
             <div>

@@ -13,27 +13,23 @@ import { useToast } from "@/components/ui/use-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteProject } from "../redux/projects/projectsActions";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, Badge, Flex } from "@radix-ui/themes";
 import clockimg from "../assets/icons/clock-icon.svg";
 
 const MyProjectsCard = ({ project }: any) => {
   const dispatch = useDispatch();
   const { toast } = useToast();
-  const navigate = useNavigate(); // Get the navigate function
-  // const formattedStartDate = new Date(project.start_date).toLocaleDateString();
-  // const formattedEndDate = new Date(project.end_date).toLocaleDateString();
-
+  const navigate = useNavigate(); 
   const handleManageProject = async () => {
     navigate("/manageproject/editProject?project_id=" + project.project_id);
   };
 
-  const handleDelete = async (project_id: number) => {
+  const handleDelete = async (project_name: string, project_id: number) => {
     try {
       await dispatch(deleteProject(project_id) as any);
       toast({
-        title: "Application deleted successfully",
-        description: "You can no longer view this application.",
+        title: `Project ${project_name} successfully deleted`,
+        description: "This post will no longer be visible to others.",
       });
     } catch (err) {
       console.error("Error deleting application:", err);
@@ -69,18 +65,6 @@ const MyProjectsCard = ({ project }: any) => {
           </div>
         </div>
       </Flex>
-      <div className="flex gap-2 items-end">
-        <Avatar className="cursor-pointer ml-[16px] rounded-[10px] h-[40px] w-[40px]">
-          {project.profile_picture ? (
-            <AvatarImage src={project.profile_picture} className=" " />
-          ) : (
-            <AvatarFallback>{project.name.charAt(0)}</AvatarFallback>
-          )}
-        </Avatar>
-
-        <p className="text-gray-400 mb-2">{project.name}</p>
-      </div>
-
       <div className="ml-[16px]">
         <div className="mt-4 ">
           <div className="flex gap-4 justify-between items-center">
@@ -142,7 +126,7 @@ const MyProjectsCard = ({ project }: any) => {
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction
-                  onClick={() => handleDelete(project.project_id)}
+                  onClick={() => handleDelete(project.name, project.project_id)}
                 >
                   Delete Project
                 </AlertDialogAction>
