@@ -201,8 +201,7 @@ const ProjectCard = ({ project }: any) => {
       </div>
       <div className="ml-[16px] mt-auto">
         <div className="mt-[8px] ml-[10px]">
-          <Flex gap="2" align="center">
-            <strong className="text-white text-[15px]">Roles:</strong>
+            <strong className="text-white text-[15px] mr-[5px]">Roles:</strong>
             {project.required_roles.map((role: any) => (
               <Badge
                 variant={selectedRole === role ? "solid" : "outline"}
@@ -211,7 +210,7 @@ const ProjectCard = ({ project }: any) => {
                 key={role}
                 className={`text-center !min-h-[30px] !w-auto !border-solid !border-blue-600 !border  ${
                   selectedRole ? "!text-white" : "!text-blue-600"
-                }`}
+                } mr-[5px] mb-[8px]`}
                 onClick={() =>
                   setSelectedRole((prevRole) =>
                     prevRole === role ? null : role
@@ -221,12 +220,10 @@ const ProjectCard = ({ project }: any) => {
                 {role}
               </Badge>
             ))}
-          </Flex>
         </div>
         <div className="flex items-center justify-between mt-[20px] mr-[18px]">
           <Button className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white">
             <span className="">More Details</span>
-            {/* <img className="text-white" src={ViewMoreIcon} alt="View More" /> */}
           </Button>
           {!selectedRole && (
             <div>
