@@ -27,7 +27,7 @@ const ChatPage = () => {
     const getCookie = (name: string) => {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop()?.split(';').shift(); // Add null check using '?'
+      if (parts.length === 2) return parts.pop()?.split(';').shift();
       return null;
     };
     const token = getCookie("jwt");
@@ -138,7 +138,7 @@ const ChatPage = () => {
 
   return (
     <div className="flex gap-5">
-      <ScrollArea className="h-[100vh] w-[20%] rounded-md border p-4">
+      <div className="h-[100vh] w-[20%] overflow-scroll">
         <input
           type="text"
           placeholder="Search for users"
@@ -153,10 +153,10 @@ const ChatPage = () => {
             onClick={() => handleSelect(user.name)}
           />
         ))}
-      </ScrollArea>
-      <ScrollArea className="h-[100vh] w-[80%] rounded-md border p-4 flex flex-col-reverse overflow-y-auto">
-        <div className="h-screen w-4/5 rounded-md border p-4 flex flex-col overflow-y-auto">
-          <div className="flex-1 flex flex-col-reverse overflow-y-auto">
+      </div>
+      <ScrollArea className="h-[100vh] max-h-[100vh] w-[80vw] px-4 flex flex-col-reverse overflow-y-auto">
+        <div className="h-screen w-full px-4 flex flex-col overflow-y-auto">
+          <div className="flex flex-col-reverse overflow-y-auto">
             {selectedUser === "" ? (
               <p className="text-center text-gray-500">
                 Select a user to start chatting
@@ -203,7 +203,7 @@ const ChatPage = () => {
             )}
           </div>
           {selectedUser && (
-            <div className="mt-4 flex gap-2">
+            <div className="flex gap-2">
               <input
                 type="text"
                 placeholder="Type a message"
