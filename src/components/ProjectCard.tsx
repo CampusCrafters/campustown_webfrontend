@@ -95,7 +95,7 @@ const ProjectCard = ({ project }: any) => {
           Edited
         </span>
         <div className="w-[98px] h-[27.75px] relative ml-auto">
-          <div className="w-[98px] h-[27.75px] left-0 top-0 absolute bg-lime-400 rounded-tr-[15px] rounded-bl-lg"></div>
+          <div className="w-[98px] h-[27.75px] left-0 top-0 absolute rounded-tr-[15px] rounded-bl-lg" style={{backgroundColor: '#1DB954'}}></div>
           <div className="w-5 h-[20.56px] left-[8px] top-[3.03px] absolute">
             <img src={clockimg}></img>
           </div>
