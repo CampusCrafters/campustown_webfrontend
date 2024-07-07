@@ -27,12 +27,10 @@ const ChatPage = () => {
     const getCookie = (name: string) => {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop()?.split(';').shift();
+      if (parts.length === 2) return parts.pop()?.split(';').shift(); // Add null check using '?'
       return null;
     };
     const token = getCookie("jwt");
-    console.log(token);    
-    console.log(token);
     const socket = new WebSocket(`${chat_server_ws}?token=${token}`);
     socket.onopen = () => {
       console.log("Connected to web-socket server");
@@ -137,8 +135,8 @@ const ChatPage = () => {
   }
 
   return (
-    <div className="flex gap-5">
-      <div className="h-[100vh] w-[20%] overflow-scroll">
+    <div className="flex flex-col md:flex-row gap-5">
+      <div className="h-[100vh] w-full md:w-[20%] overflow-scroll">
         <input
           type="text"
           placeholder="Search for users"
@@ -154,73 +152,76 @@ const ChatPage = () => {
           />
         ))}
       </div>
-      <ScrollArea className="h-[100vh] max-h-[100vh] w-[80vw] px-4 flex flex-col-reverse overflow-y-auto">
-        <div className="h-screen w-full px-4 flex flex-col overflow-y-auto">
-          <div className="flex flex-col-reverse overflow-y-auto">
-            {selectedUser === "" ? (
-              <p className="text-center text-gray-500">
-                Select a user to start chatting
-              </p>
-            ) : (
-              <div>
-                <p className="text-center font-bold text-lg mb-4">
-                  {selectedUser}
+      {/* Conditionally render the chat area only on medium and larger screens */}
+      <div className="hidden md:block h-[100vh] w-full md:w-[80%]">
+        <ScrollArea className="h-[100vh] max-h-[100vh] px-4 flex flex-col-reverse overflow-y-auto">
+          <div className="h-screen w-full px-4 flex flex-col overflow-y-auto">
+            <div className="flex flex-col-reverse overflow-y-auto">
+              {selectedUser === "" ? (
+                <p className="text-center text-gray-500">
+                  Select a user to start chatting
                 </p>
-                {(selectedUserConversations || []).length > 0 ? (
-                  (selectedUserConversations || []).map(
-                    (conversation: conversation, index) => (
-                      <div
-                        key={index}
-                        className={`mb-4 p-3 rounded-lg border shadow-sm max-w-[70%] ${
-                          conversation.from === selectedUser
-                            ? "bg-white self-start text-left"
-                            : "bg-blue-100 self-end text-right"
-                        }`}
-                      >
-                        <p className="text-base my-2">{conversation.message}</p>
-                        <p className="text-xs text-gray-400">
-                          {new Date(conversation.timestamp).toLocaleString(
-                            "en-US",
-                            {
-                              month: "long",
-                              day: "numeric",
-                              hour: "numeric",
-                              minute: "numeric",
-                              second: "numeric",
-                              hour12: true,
-                            }
-                          )}
-                        </p>
-                      </div>
+              ) : (
+                <div>
+                  <p className="text-center font-bold text-lg mb-4">
+                    {selectedUser}
+                  </p>
+                  {(selectedUserConversations || []).length > 0 ? (
+                    (selectedUserConversations || []).map(
+                      (conversation: conversation, index) => (
+                        <div
+                          key={index}
+                          className={`mb-4 p-3 rounded-lg border shadow-sm max-w-[70%] ${
+                            conversation.from === selectedUser
+                              ? "bg-white self-start text-left"
+                              : "bg-blue-100 self-end text-right"
+                          }`}
+                        >
+                          <p className="text-base my-2">{conversation.message}</p>
+                          <p className="text-xs text-gray-400">
+                            {new Date(conversation.timestamp).toLocaleString(
+                              "en-US",
+                              {
+                                month: "long",
+                                day: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                second: "numeric",
+                                hour12: true,
+                              }
+                            )}
+                          </p>
+                        </div>
+                      )
                     )
-                  )
-                ) : (
-                  <div className="flex-1 flex items-center justify-center text-gray-500">
-                    <p>No conversations yet. Start chatting!</p>
-                  </div>
-                )}
+                  ) : (
+                    <div className="flex-1 flex items-center justify-center text-gray-500">
+                      <p>No conversations yet. Start chatting!</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+            {selectedUser && (
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Type a message"
+                  value={newMessage}
+                  onChange={(e) => handleOnChange(e)}
+                  className="flex-grow px-4 py-2 rounded-md border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                  onClick={handleSend}
+                  className="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600"
+                >
+                  Send
+                </button>
               </div>
             )}
           </div>
-          {selectedUser && (
-            <div className="flex gap-2">
-              <input
-                type="text"
-                placeholder="Type a message"
-                value={newMessage}
-                onChange={(e) => handleOnChange(e)}
-                className="flex-grow px-4 py-2 rounded-md border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                onClick={handleSend}
-                className="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600"
-              >
-                Send
-              </button>
-            </div>
-          )}
-        </div>
-      </ScrollArea>
+        </ScrollArea>
+      </div>
     </div>
   );
 };

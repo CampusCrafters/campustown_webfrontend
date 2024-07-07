@@ -1,3 +1,5 @@
+import DefaultPfp from '../assets/icons/Default_pfp.svg.png';
+
 const ContactCard = ({ user, onClick }: any) => {
   return (
     <div 
@@ -6,7 +8,7 @@ const ContactCard = ({ user, onClick }: any) => {
     >
       <img 
         className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center mr-3" 
-        src={user.profile_picture} 
+        src={user.profile_picture ? user.profile_picture : DefaultPfp} 
         alt={`${user.name}'s profile`}
       />
       <div>
