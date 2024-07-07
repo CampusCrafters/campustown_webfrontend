@@ -27,6 +27,7 @@ import { RootState } from "../redux/store";
 import { fetchUserProfile } from "@/redux/users/profileActions";
 import { Button, Tooltip, Badge, Flex } from "@radix-ui/themes";
 import clockimg from "../assets/icons/clock-icon.svg";
+import TimeAgoPill from "./custom-ui/TimeAgoPill";
 
 const ProjectCard = ({ project }: any) => {
   const dispatch = useDispatch();
@@ -35,9 +36,6 @@ const ProjectCard = ({ project }: any) => {
   const userProfile = useSelector(
     (state: RootState) => state.profile.userProfile
   );
-
-  // const formattedStartDate = new Date(project.start_date).toLocaleDateString();
-  // const formattedEndDate = new Date(project.end_date).toLocaleDateString();
   const [selectedRole, setSelectedRole] = useState(null);
 
   const handleApplication = async (
@@ -101,8 +99,8 @@ const ProjectCard = ({ project }: any) => {
           <div className="w-5 h-[20.56px] left-[8px] top-[3.03px] absolute">
             <img src={clockimg}></img>
           </div>
-          <div className="w-[60px] h-[19.53px] left-[29px] top-[3.03px] absolute text-center text-black text-[10px] font-medium font-['Roboto Flex'] leading-snug flex items-center justify-center">
-            1 Hour ago
+          <div className="w-[67px] h-[19.53px] left-[29px] top-[3.03px] absolute text-center text-black text-[10px] font-medium font-['Roboto Flex'] leading-snug flex items-center justify-center">
+            <TimeAgoPill startTime={project.posted_on}/>
           </div>
         </div>
       </Flex>
@@ -199,13 +197,6 @@ const ProjectCard = ({ project }: any) => {
           <p className="text-white mb-2 ml-[10px] mr-[65px] text-[15px]">
             {project.description}
           </p>
-
-          {/* <p className="text-gray-400 mb-2">
-          <strong>Start Date:</strong> {formattedStartDate}
-        </p>
-        <p className="text-gray-400 mb-2">
-          <strong>End Date:</strong> {formattedEndDate}
-        </p> */}
         </div>
       </div>
       <div className="ml-[16px] mt-auto">
