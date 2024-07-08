@@ -27,15 +27,18 @@ import { RootState } from "../redux/store";
 import { fetchUserProfile } from "@/redux/users/profileActions";
 import { Button, Tooltip, Badge, Flex } from "@radix-ui/themes";
 import clockimg from "../assets/icons/clock-icon.svg";
+import { useNavigate } from "react-router-dom";
 import TimeAgoPill from "./custom-ui/TimeAgoPill";
 
 const ProjectCard = ({ project }: any) => {
   const dispatch = useDispatch();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const userProfile = useSelector(
     (state: RootState) => state.profile.userProfile
   );
+
   const [selectedRole, setSelectedRole] = useState(null);
 
   const handleApplication = async (
@@ -95,12 +98,15 @@ const ProjectCard = ({ project }: any) => {
           Edited
         </span>
         <div className="w-[98px] h-[27.75px] relative ml-auto">
-          <div className="w-[98px] h-[27.75px] left-0 top-0 absolute rounded-tr-[15px] rounded-bl-lg" style={{backgroundColor: '#1DB954'}}></div>
+          <div
+            className="w-[98px] h-[27.75px] left-0 top-0 absolute rounded-tr-[15px] rounded-bl-lg"
+            style={{ backgroundColor: "#1DB954" }}
+          ></div>
           <div className="w-5 h-[20.56px] left-[8px] top-[3.03px] absolute">
             <img src={clockimg}></img>
           </div>
           <div className="w-[67px] h-[19.53px] left-[29px] top-[3.03px] absolute text-center text-black text-[10px] font-medium font-['Roboto Flex'] leading-snug flex items-center justify-center">
-            <TimeAgoPill startTime={project.posted_on}/>
+            <TimeAgoPill startTime={project.posted_on} />
           </div>
         </div>
       </Flex>
@@ -182,7 +188,10 @@ const ProjectCard = ({ project }: any) => {
       <div className="ml-[16px]">
         <div className="mt-4 ">
           <div className="flex gap-4 justify-between items-center">
-            <span className="text-2xl font-bold text-white mb-2" style={{fontFamily: "Raleway"}}>
+            <span
+              className="text-2xl font-bold text-white mb-2 break-word"
+              style={{ fontFamily: "Raleway" }}
+            >
               {project.project_title}
             </span>
 
@@ -194,35 +203,39 @@ const ProjectCard = ({ project }: any) => {
               {project.status}
             </Badge>
           </div>
-          <p className="text-white mb-2 ml-[10px] mr-[65px] text-[15px]" style={{fontFamily: 'Roboto Flex'}}>
+          <p
+            className="text-white mb-2 ml-[10px] mr-[65px] text-[15px]"
+            style={{ fontFamily: "Roboto Flex" }}
+          >
             {project.description}
           </p>
         </div>
       </div>
       <div className="ml-[16px] mt-auto">
         <div className="mt-[8px] ml-[10px]">
-            <strong className="text-white text-[15px] mr-[5px]">Roles:</strong>
-            {project.required_roles.map((role: any) => (
-              <Badge
-                variant={selectedRole === role ? "solid" : "outline"}
-                size="3"
-                radius="full"
-                key={role}
-                className={`text-center !min-h-[30px] !w-auto !border-solid !border-blue-600 !border  ${
-                  selectedRole ? "!text-white" : "!text-blue-600"
-                } mr-[5px] mb-[8px]`}
-                onClick={() =>
-                  setSelectedRole((prevRole) =>
-                    prevRole === role ? null : role
-                  )
-                }
-              >
-                {role}
-              </Badge>
-            ))}
+          <strong className="text-white text-[15px] mr-[5px]">Roles:</strong>
+          {project.required_roles.map((role: any) => (
+            <Badge
+              variant={selectedRole === role ? "solid" : "outline"}
+              size="3"
+              radius="full"
+              key={role}
+              className={`text-center !min-h-[30px] !w-auto !border-solid !border-blue-600 !border  ${
+                selectedRole ? "!text-white" : "!text-blue-600"
+              } mr-[5px] mb-[8px]`}
+              onClick={() =>
+                setSelectedRole((prevRole) => (prevRole === role ? null : role))
+              }
+            >
+              {role}
+            </Badge>
+          ))}
         </div>
         <div className="flex items-center justify-between mt-[20px] mr-[18px]">
-          <Button className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white">
+          <Button
+            className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white"
+            onClick={() => navigate(`/details?id=${project.project_id}`)}
+          >
             <span className="">More Details</span>
           </Button>
           {!selectedRole && (
@@ -275,7 +288,11 @@ const ProjectCard = ({ project }: any) => {
             </AlertDialog>
           )}
         </div>
-        <Flex direction="row" gap="3" className="mt-[14px]  mb-[20px]">
+        <Flex
+          direction="row"
+          gap="3"
+          className="mt-[14px]  mb-[20px] overflow-x-auto"
+        >
           {project.domain.split(",")?.map((domain: any) => (
             <Badge
               radius="full"

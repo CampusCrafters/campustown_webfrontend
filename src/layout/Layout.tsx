@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import BottomBar from "./BottomBar";
 import TopBar from "./TopBar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -13,6 +13,11 @@ import PostIcon from "../assets/icons/post-icon.svg";
 
 const Layout = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const showPostIcon = ["/myApplications", "/events", "/profile"].includes(
+    location.pathname
+  );
+
   return (
     <div className="flex flex-col h-screen">
       <TopBar />
@@ -23,26 +28,28 @@ const Layout = () => {
       </div>
       <BottomBar />
       <div className="fixed bottom-[80px] right-4 z-50">
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <div>
-              <img src={PostIcon} alt="Add Icon" />
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate("/postProject")}>
-              Project
-            </DropdownMenuItem>
-            <DropdownMenuItem>Internship</DropdownMenuItem>
-            <DropdownMenuItem>Startup Idea</DropdownMenuItem>
-            <DropdownMenuItem>Event</DropdownMenuItem>
-            <DropdownMenuItem>Workshop</DropdownMenuItem>
-            <DropdownMenuItem>Hackathon</DropdownMenuItem>
-            <DropdownMenuItem>Contest</DropdownMenuItem>
-            <DropdownMenuItem>CTF</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {showPostIcon && (
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <div>
+                <img src={PostIcon} alt="Add Icon" />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate("/postProject")}>
+                Project
+              </DropdownMenuItem>
+              <DropdownMenuItem>Internship</DropdownMenuItem>
+              <DropdownMenuItem>Startup Idea</DropdownMenuItem>
+              <DropdownMenuItem>Event</DropdownMenuItem>
+              <DropdownMenuItem>Workshop</DropdownMenuItem>
+              <DropdownMenuItem>Hackathon</DropdownMenuItem>
+              <DropdownMenuItem>Contest</DropdownMenuItem>
+              <DropdownMenuItem>CTF</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </div>
     </div>
   );

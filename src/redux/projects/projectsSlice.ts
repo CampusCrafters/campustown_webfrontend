@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Project {
+  posted_on: string | Date;
   project_id: number;
   host_id: number;
   host_name: string;
@@ -14,19 +15,25 @@ interface Project {
   end_date: string;
   link: string;
   required_roles: string[];
-  members: { user_id: number; role: string, name: string, profile_picture: string, batch: number }[];
+  members: {
+    user_id: number;
+    role: string;
+    name: string;
+    profile_picture: string;
+    batch: number;
+  }[];
 }
 
 interface ProjectsState {
   projects: Project[];
   myProjects: Project[];
-  projectDetails: Project | null; 
+  projectDetails: Project | null;
 }
 
 const initialState: ProjectsState = {
   projects: [],
   myProjects: [],
-  projectDetails: null, 
+  projectDetails: null,
 };
 
 const projectsSlice = createSlice({
@@ -42,6 +49,5 @@ const projectsSlice = createSlice({
   },
 });
 
-export const { setProjects, setProjectDetails } =
-  projectsSlice.actions;
+export const { setProjects, setProjectDetails } = projectsSlice.actions;
 export default projectsSlice.reducer;

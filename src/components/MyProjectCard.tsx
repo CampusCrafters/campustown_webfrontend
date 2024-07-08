@@ -56,7 +56,7 @@ const MyProjectsCard = ({ project }: any) => {
           Edited
         </span>
         <div className="w-[98px] h-[27.75px] relative ml-auto">
-          <div className="w-[98px] h-[27.75px] left-0 top-0 absolute bg-lime-400 rounded-tr-[15px] rounded-bl-lg"></div>
+          <div className="w-[98px] h-[27.75px] left-0 top-0 absolute bg-[#86CE91] rounded-tr-[15px] rounded-bl-lg"></div>
           <div className="w-5 h-[20.56px] left-[8px] top-[3.03px] absolute">
             <img src={clockimg}></img>
           </div>
@@ -68,7 +68,7 @@ const MyProjectsCard = ({ project }: any) => {
       <div className="ml-[16px]">
         <div className="mt-4 ">
           <div className="flex gap-4 justify-between items-center">
-            <span className="text-2xl font-bold text-white mb-2">
+            <span className="text-2xl font-bold text-white mb-2 break-words">
               {project.project_title}
             </span>
 
@@ -89,17 +89,19 @@ const MyProjectsCard = ({ project }: any) => {
         <div className="mt-[8px] ml-[10px]">
           <Flex gap="2" align="center">
             <strong className="text-white text-[15px]">Roles:</strong>
-            {project.required_roles.map((role: any) => (
-              <Badge
-                variant="outline"
-                size="3"
-                radius="full"
-                key={role}
-                className="text-center !min-h-[30px] !w-auto !border-solid !border-blue-600 !border !text-blue-600"
-              >
-                {role}
-              </Badge>
-            ))}
+            <div className=" flex flex-wrap gap-[10px]">
+              {project.required_roles.map((role: any) => (
+                <Badge
+                  variant="outline"
+                  size="3"
+                  radius="full"
+                  key={role}
+                  className="text-center !min-h-[30px] !w-auto !border-solid !border-blue-600 !border !text-blue-600"
+                >
+                  {role}
+                </Badge>
+              ))}
+            </div>
           </Flex>
         </div>
         <div className="flex items-center justify-between mt-[20px] mr-[18px]">
@@ -134,7 +136,11 @@ const MyProjectsCard = ({ project }: any) => {
             </AlertDialogContent>
           </AlertDialog>
         </div>
-        <Flex direction="row" gap="3" className="mt-[14px]  mb-[20px]">
+        <Flex
+          direction="row"
+          gap="3"
+          className="mt-[14px] mb-[20px] overflow-x-auto"
+        >
           {project.domain.split(",")?.map((domain: any) => (
             <Badge
               radius="full"

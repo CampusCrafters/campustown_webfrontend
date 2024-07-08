@@ -1,23 +1,48 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { postProject } from "@/redux/projects/projectsActions";
 import { useToast } from "@/components/ui/use-toast";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+import { Dayjs } from "dayjs";
+
+// Define the type for formData
+interface FormData {
+  project_title: string;
+  domain: string;
+  description: string;
+  link: string;
+  required_roles: string[];
+  start_date: Dayjs | null;
+  end_date: Dayjs | null;
+  status: string;
+}
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 const ProjectForm = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     project_title: "",
     domain: "",
     description: "",
     link: "",
     required_roles: [],
-    start_date: "",
-    end_date: "",
+    start_date: null,
+    end_date: null,
     status: "",
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  //function to confirm all the fields are filled
+  // Function to confirm all fields are filled
   const validateForm = () => {
     return (
       formData.project_title &&
@@ -30,24 +55,35 @@ const ProjectForm = () => {
     );
   };
 
-  const handleChange = (e: any) => {
+  // Handle change function to update form data
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "required_roles") {
-      const rolesArray = value.split(",").map((role: string) => role.trim());
-      setFormData({
-        ...formData,
+      // Ensure the type of required_roles is string[]
+      const rolesArray = value.split(",").map((role) => role.trim());
+      setFormData((prevFormData) => ({
+        ...prevFormData,
         [name]: rolesArray,
-      });
+      }));
     } else {
-      setFormData({
-        ...formData,
+      setFormData((prevFormData) => ({
+        ...prevFormData,
         [name]: value,
-      });
+      }));
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // Handle date change for start_date and end_date
+  const handleDateChange = (name: keyof FormData) => (date: Dayjs | null) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: date,
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateForm()) {
       setIsModalOpen(true);
@@ -59,35 +95,37 @@ const ProjectForm = () => {
     }
   };
 
+  // Confirm submission handler
   const handleConfirmSubmit = async () => {
     setIsSubmitting(true);
     try {
-      const res = await postProject(formData);
+      const res = await postProject({
+        ...formData,
+        start_date: formData.start_date?.toISOString() || "",
+        end_date: formData.end_date?.toISOString() || "",
+      });
       toast({
-        title: `${res}`,
-        description: `successfully posted project.`,
-        //add button to redirect to the project page
+        title: `${formData.project_title}`,
+        description: `Successfully posted project.`,
       });
       setIsModalOpen(false);
-      //refresh the page
+      navigate("/explore-all");
     } catch (error) {
       console.error(
         `Error applying for the ${formData.project_title} project:`,
         error
       );
       toast({
-        title: "Error posting for the project",
+        title: "Error posting the project",
         description:
           "An error occurred while applying for the project. Please try again later.",
       });
       setIsModalOpen(false);
     }
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
-    setIsSubmitting(false);
+    // redirect to the project page
   };
 
+  // Close modal handler
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -95,132 +133,134 @@ const ProjectForm = () => {
   return (
     <div>
       <form
-        className="max-w-md mx-auto p-4 bg-white shadow-md rounded"
+        className="flex flex-col py-6 rounded-2xl bg-neutral-900 max-w-[400px]"
         onSubmit={handleSubmit}
       >
-        <div className="mb-4">
-          <label htmlFor="project_title" className="block mb-2 font-semibold">
-            Project Title:
-          </label>
-          <input
-            placeholder="Project Title"
-            type="text"
-            id="project_title"
-            name="project_title"
-            value={formData.project_title}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          />
-        </div>
+        <header className="self-center text-3xl font-bold text-blue-500 lowercase">
+          Project
+        </header>
+        <main className="flex flex-col px-6 w-full">
+          <div className="mt-12">
+            <label className="text-base font-semibold tracking-tight leading-6 text-center text-white">
+              Project Title:
+            </label>
+            <input
+              name="project_title"
+              type="text"
+              className="shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700 text-white px-4 py-2 " // Custom padding for horizontal and vertical
+              aria-label="Project Title"
+              placeholder="Project Title"
+              value={formData.project_title}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div className="mb-4">
-          <label htmlFor="domain" className="block mb-2 font-semibold">
-            Domain:
-          </label>
-          <input
-            placeholder="Web Development, Machine Learning, etc."
-            type="text"
-            id="domain"
-            name="domain"
-            value={formData.domain}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="description" className="block mb-2 font-semibold">
-            Description:
-          </label>
-          <textarea
-            placeholder="Project Description"
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          ></textarea>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="link" className="block mb-2 font-semibold">
-            Link:
-          </label>
-          <input
-            placeholder="https://example.com (Optional)"
-            type="text"
-            id="link"
-            name="link"
-            value={formData.link}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="required_roles" className="block mb-2 font-semibold">
-            Required Roles (comma-separated):
-          </label>
-          <input
-            placeholder="Role1, Role2, Role3"
-            type="text"
-            id="required_roles"
-            name="required_roles"
-            value={formData.required_roles.join(", ")}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="start_date" className="block mb-2 font-semibold">
-            Start Date:
-          </label>
-          <input
-            type="date"
-            id="start_date"
-            name="start_date"
-            value={formData.start_date}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="end_date" className="block mb-2 font-semibold">
-            End Date:
-          </label>
-          <input
-            type="date"
-            id="end_date"
-            name="end_date"
-            value={formData.end_date}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="status" className="block mb-2 font-semibold">
-            Status:
-          </label>
-          <input
-            placeholder="Open, Closed, In Progress"
-            type="text"
-            id="status"
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-black hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded"
-        >
-          Submit
-        </button>
+          <div className="mt-12">
+            <label className="text-base font-semibold tracking-tight leading-6 text-center text-white  ">
+              Project Description:
+            </label>
+            <input
+              name="description"
+              type="text"
+              className="shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700  text-white px-4 py-2"
+              aria-label="Project Description"
+              placeholder="Describe your project here"
+              value={formData.description}
+              onChange={handleChange}
+            />
+          </div>
+          <section className="flex gap-5 mt-11">
+            <ThemeProvider theme={darkTheme}>
+              <div className="flex flex-col flex-1">
+                <label className="text-base mb-3 font-semibold tracking-tight leading-6 text-center text-white">
+                  Start Date:
+                </label>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    value={formData.start_date}
+                    onChange={handleDateChange("start_date")}
+                  />
+                </LocalizationProvider>
+              </div>
+              <div className="flex flex-col flex-1">
+                <label className="text-base mb-3 font-semibold tracking-tight leading-6 text-center text-white">
+                  End Date:
+                </label>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    value={formData.end_date}
+                    onChange={handleDateChange("end_date")}
+                  />
+                </LocalizationProvider>
+              </div>
+            </ThemeProvider>
+          </section>
+          <div className="mt-12">
+            <label className="text-base font-semibold tracking-tight leading-6 text-center text-white">
+              Project Link:
+            </label>
+            <input
+              name="link"
+              type="text"
+              className="shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700  text-white px-4 py-2"
+              aria-label="Project Link"
+              placeholder="hhtps://example.com"
+              value={formData.link}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mt-10">
+            <label className="text-base font-semibold tracking-tight leading-6 text-center text-white">
+              Project Status:
+            </label>
+            <input
+              name="status"
+              type="text"
+              className="shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700  text-white px-4 py-2"
+              aria-label="Project Status"
+              placeholder="Open, Closed, In Progress"
+              value={formData.status}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mt-12">
+            <label className="text-base font-semibold tracking-tight leading-6 text-center text-white">
+              Project Domain:
+            </label>
+            <input
+              name="domain"
+              type="text"
+              className="shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700  text-white px-4 py-2"
+              aria-label="Project Domain"
+              placeholder="Web Development, Machine Learning, etc."
+              value={formData.domain}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mt-10">
+            <label className="text-base font-semibold tracking-tight leading-6 text-center text-white">
+              Required Roles:
+            </label>
+            <input
+              name="required_roles"
+              type="text"
+              className="shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700  text-white px-4 py-2"
+              aria-label="Required Roles"
+              placeholder="Role1, Role2, Role3"
+              value={formData.required_roles.join(", ")}
+              onChange={handleChange}
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-[70%] self-center hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded mt-8"
+            style={{
+              backgroundColor: "rgba(30, 106, 255, 1)",
+            }}
+          >
+            Submit
+          </button>
+        </main>
       </form>
       {/* Confirmation modal */}
       {isModalOpen && (
@@ -228,9 +268,8 @@ const ProjectForm = () => {
           <div className="bg-white p-4 rounded-md shadow-md">
             <p className="text-lg font-semibold mb-4">Confirm Submission</p>
             <p className="mb-4">
-              This action cannot be removed from history. Your profile details
-              <br></br>
-              will be used to apply for this project.
+              This action cannot be undone. Your profile details will be used to
+              apply for this project.
             </p>
             <div className="flex justify-end">
               <button
