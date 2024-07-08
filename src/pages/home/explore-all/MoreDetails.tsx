@@ -32,6 +32,7 @@ import {
 import { fetchUserProfile } from "@/redux/users/profileActions";
 import { useToast } from "@/components/ui/use-toast";
 import { Theme } from "@radix-ui/themes";
+import TimeAgoPill from "@/components/custom-ui/TimeAgoPill";
 
 const MoreDetails = () => {
   const [params] = useSearchParams();
@@ -173,12 +174,15 @@ const MoreDetails = () => {
                     Edited
                   </span>
                   <div className="w-[98px] h-[27.75px] relative ml-auto">
-                    <div className="w-[98px] h-[27.75px] left-0 top-0 absolute bg-[#86CE91] rounded-tr-[15px] rounded-bl-lg"></div>
+                    <div
+                      className="w-[98px] h-[27.75px] left-0 top-0 absolute rounded-tr-[15px] rounded-bl-lg"
+                      style={{ backgroundColor: "#1DB954" }}
+                    ></div>
                     <div className="w-5 h-[20.56px] left-[8px] top-[3.03px] absolute">
                       <img src={clockimg}></img>
                     </div>
-                    <div className="w-[60px] h-[19.53px] left-[29px] top-[3.03px] absolute text-center text-black text-[10px] font-medium font-['Roboto Flex'] leading-snug flex items-center justify-center">
-                      1 Hour ago
+                    <div className="w-[67px] h-[19.53px] left-[29px] top-[3.03px] absolute text-center text-black text-[10px] font-medium font-['Roboto Flex'] leading-snug flex items-center justify-center">
+                      <TimeAgoPill startTime={project.posted_on} />
                     </div>
                   </div>
                 </Flex>
