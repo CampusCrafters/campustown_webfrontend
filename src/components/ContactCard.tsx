@@ -1,8 +1,16 @@
+import DefaultPfp from '../assets/icons/Default_pfp.svg.png';
+
 const ContactCard = ({ user, onClick }: any) => {
   return (
-    <div onClick={onClick} className="cursor-pointer contact-card flex items-center p-3 border-b transition duration-300 ease-in-out hover:bg-gray-100">
-      <img className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center mr-3" src={user.profile_picture}>
-      </img>
+    <div 
+      onClick={onClick} 
+      className="text-white cursor-pointer contact-card flex items-center p-3 border-b transition duration-300 ease-in-out hover:bg-gray-800"
+    >
+      <img 
+        className="rounded-full h-10 w-10 bg-gray-300 flex items-center justify-center mr-3" 
+        src={user.profile_picture ? user.profile_picture : DefaultPfp} 
+        alt={`${user.name}'s profile`}
+      />
       <div>
         <div className="font-bold">{user.name}</div>
         <div className="text-gray-500">Online</div>

@@ -20,13 +20,13 @@ const MyListings = () => {
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
   });
-  const reversedMyProjects = [...filteredMyProjects].reverse();
+  const sortedMyProjects = [...filteredMyProjects].sort((a, b) => b.project_id - a.project_id);
 
   return (
     <div className="px-4">
       <Theme className=" !bg-transparent">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {reversedMyProjects.map((project) => (
+          {sortedMyProjects.map((project) => (
             <MyProjectCard key={`my-${project.project_id}`} project={project} />
           ))}
         </div>

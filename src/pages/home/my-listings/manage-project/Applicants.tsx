@@ -27,6 +27,7 @@ function Applicants() {
   useEffect(() => {
     if (projectID) {
       const applicants = dispatch(fetchAplicants(projectID) as any);
+      console.log("applicants", applicants);
       if (applicants) {
       }
     }
