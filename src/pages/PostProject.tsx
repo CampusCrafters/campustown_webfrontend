@@ -99,7 +99,7 @@ const ProjectForm = () => {
   const handleConfirmSubmit = async () => {
     setIsSubmitting(true);
     try {
-      const res = await postProject({
+      await postProject({
         ...formData,
         start_date: formData.start_date?.toISOString() || "",
         end_date: formData.end_date?.toISOString() || "",
