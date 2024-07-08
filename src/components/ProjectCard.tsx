@@ -27,17 +27,17 @@ import { RootState } from "../redux/store";
 import { fetchUserProfile } from "@/redux/users/profileActions";
 import { Button, Tooltip, Badge, Flex } from "@radix-ui/themes";
 import clockimg from "../assets/icons/clock-icon.svg";
+import { useNavigate } from "react-router-dom";
 
 const ProjectCard = ({ project }: any) => {
   const dispatch = useDispatch();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const userProfile = useSelector(
     (state: RootState) => state.profile.userProfile
   );
 
-  // const formattedStartDate = new Date(project.start_date).toLocaleDateString();
-  // const formattedEndDate = new Date(project.end_date).toLocaleDateString();
   const [selectedRole, setSelectedRole] = useState(null);
 
   const handleApplication = async (
@@ -97,7 +97,7 @@ const ProjectCard = ({ project }: any) => {
           Edited
         </span>
         <div className="w-[98px] h-[27.75px] relative ml-auto">
-          <div className="w-[98px] h-[27.75px] left-0 top-0 absolute bg-lime-400 rounded-tr-[15px] rounded-bl-lg"></div>
+          <div className="w-[98px] h-[27.75px] left-0 top-0 absolute bg-[#86CE91] rounded-tr-[15px] rounded-bl-lg"></div>
           <div className="w-5 h-[20.56px] left-[8px] top-[3.03px] absolute">
             <img src={clockimg}></img>
           </div>
@@ -184,7 +184,7 @@ const ProjectCard = ({ project }: any) => {
       <div className="ml-[16px]">
         <div className="mt-4 ">
           <div className="flex gap-4 justify-between items-center">
-            <span className="text-2xl font-bold text-white mb-2">
+            <span className="text-2xl font-bold text-white mb-2 break-word">
               {project.project_title}
             </span>
 
@@ -212,28 +212,33 @@ const ProjectCard = ({ project }: any) => {
         <div className="mt-[8px] ml-[10px]">
           <Flex gap="2" align="center">
             <strong className="text-white text-[15px]">Roles:</strong>
-            {project.required_roles.map((role: any) => (
-              <Badge
-                variant={selectedRole === role ? "solid" : "outline"}
-                size="3"
-                radius="full"
-                key={role}
-                className={`text-center !min-h-[30px] !w-auto !border-solid !border-blue-600 !border  ${
-                  selectedRole ? "!text-white" : "!text-blue-600"
-                }`}
-                onClick={() =>
-                  setSelectedRole((prevRole) =>
-                    prevRole === role ? null : role
-                  )
-                }
-              >
-                {role}
-              </Badge>
-            ))}
+            <div className=" flex flex-wrap gap-[10px]">
+              {project.required_roles.map((role: any) => (
+                <Badge
+                  variant={selectedRole === role ? "solid" : "outline"}
+                  size="3"
+                  radius="full"
+                  key={role}
+                  className={`text-center !min-h-[30px] !w-auto !border-solid !border-blue-600 !border  ${
+                    selectedRole ? "!text-white" : "!text-blue-600"
+                  }`}
+                  onClick={() =>
+                    setSelectedRole((prevRole) =>
+                      prevRole === role ? null : role
+                    )
+                  }
+                >
+                  {role}
+                </Badge>
+              ))}
+            </div>
           </Flex>
         </div>
         <div className="flex items-center justify-between mt-[20px] mr-[18px]">
-          <Button className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white">
+          <Button
+            className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white"
+            onClick={() => navigate(`/details?id=${project.project_id}`)}
+          >
             <span className="">More Details</span>
             {/* <img className="text-white" src={ViewMoreIcon} alt="View More" /> */}
           </Button>
@@ -287,7 +292,11 @@ const ProjectCard = ({ project }: any) => {
             </AlertDialog>
           )}
         </div>
-        <Flex direction="row" gap="3" className="mt-[14px]  mb-[20px]">
+        <Flex
+          direction="row"
+          gap="3"
+          className="mt-[14px]  mb-[20px] overflow-x-auto"
+        >
           {project.domain.split(",")?.map((domain: any) => (
             <Badge
               radius="full"

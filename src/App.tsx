@@ -1,6 +1,11 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import useTokenVerification from "./hooks/auth/useTokenVerification";
 import Layout from "./layout/Layout";
 import LandingPage from "./pages/LandingPage";
@@ -21,6 +26,7 @@ import ManageProjectLayout from "./layout/ManageProjectLayout";
 import EditProject from "./pages/home/my-listings/manage-project/EditProject";
 import Members from "./pages/home/my-listings/manage-project/Members";
 import Applicants from "./pages/home/my-listings/manage-project/Applicants";
+import MoreDetails from "./pages/home/explore-all/MoreDetails";
 
 function App() {
   const { user, loading } = useTokenVerification();
@@ -58,6 +64,7 @@ function App() {
             <Route path="explore-all" element={<Projects />} />
             <Route path="my-listings" element={<MyListings />} />
           </Route>
+          <Route path="details" element={<MoreDetails />} />
           <Route
             path="/manageproject"
             element={user ? <ManageProjectLayout /> : <Navigate to="/login" />}
