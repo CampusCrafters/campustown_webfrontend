@@ -64,9 +64,7 @@ const HomeLayout = () => {
           <ListingTypePill type="Internships" />
           <ListingTypePill type="Ideas" />
           <ListingTypePill type="Hackathons" />
-          <ListingTypePill type="Events" />
           <ListingTypePill type="Contests" />
-          <ListingTypePill type="Startups" />
         </div>
         <div className="h-[73vh] w-full rounded-md mt-4 overflow-scroll">
           <Outlet />
@@ -85,13 +83,9 @@ const HomeLayout = () => {
             <DropdownMenuItem onClick={() => navigate("/postProject")}>
               Project
             </DropdownMenuItem>
-            <DropdownMenuItem>Internship</DropdownMenuItem>
             <DropdownMenuItem>Startup Idea</DropdownMenuItem>
             <DropdownMenuItem>Event</DropdownMenuItem>
             <DropdownMenuItem>Workshop</DropdownMenuItem>
-            <DropdownMenuItem>Hackathon</DropdownMenuItem>
-            <DropdownMenuItem>Contest</DropdownMenuItem>
-            <DropdownMenuItem>CTF</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
