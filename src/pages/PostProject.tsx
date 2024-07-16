@@ -56,7 +56,9 @@ const ProjectForm = () => {
   };
 
   // Handle change function to update form data
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
 
     if (name === "required_roles") {
@@ -139,19 +141,18 @@ const ProjectForm = () => {
         <main className="flex flex-col py-6 px-6 w-full">
           <div className="mt-2">
             <label className="text-base font-semibold tracking-tight text-center text-white">
-              Project Title:
+              Project Name:
             </label>
             <input
               name="project_title"
               type="text"
               className="shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700 text-white px-4 py-2 " // Custom padding for horizontal and vertical
               aria-label="Project Title"
-              placeholder="Project Title"
+              placeholder="Project Name"
               value={formData.project_title}
               onChange={handleChange}
             />
           </div>
-
           <div className="mt-12">
             <label className="text-base font-semibold tracking-tight leading-6 text-center text-white  ">
               Project Description:
@@ -210,19 +211,27 @@ const ProjectForm = () => {
             <label className="text-base font-semibold tracking-tight leading-6 text-center text-white">
               Project Status:
             </label>
-            <input
+            <select
               name="status"
-              type="text"
-              className="shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700  text-white px-4 py-2"
+              className="shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700 text-white px-4 py-2"
               aria-label="Project Status"
-              placeholder="Open, Closed, In Progress"
               value={formData.status}
               onChange={handleChange}
-            />
+            >
+              <option value="" disabled>
+                Select a project status
+              </option>
+              <option value="Open">Open</option>
+              <option value="Closed">Closed</option>
+              <option value="In Progress">In Progress</option>
+            </select>
           </div>
           <div className="mt-12">
             <label className="text-base font-semibold tracking-tight leading-6 text-center text-white">
-              Project Domain:
+              <span className="mr-2"> Project Domain:</span>
+              <span className="text-sm text-gray-400">
+                (Can choose multiple domains)
+              </span>
             </label>
             <input
               name="domain"

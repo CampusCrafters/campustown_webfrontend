@@ -133,16 +133,16 @@ const ProjectCard = ({ project }: any) => {
               )}
             </Avatar>
           </SheetTrigger>
-          <SheetContent side={"bottom"} className="w-full h-[80vh] bg-gray-900">
+          <SheetContent side={"bottom"} className="mw-full h-[80vh] overflow-x-auto border-none" style={{backgroundColor: '#151515'}}>
             <SheetHeader>
               <SheetTitle>
                 <div className="flex items-center mb-6">
                   <img
                     src={userProfile?.profile_picture || default_pfp}
                     alt="Profile Picture"
-                    className="h-24 w-24 rounded-full mr-6 border-4 border-white shadow-lg"
+                    className="h-16 w-16 rounded-full mr-5 border-4 border-white shadow-lg"
                   />
-                  <div>
+                  <div className="flex flex-col justify-start">
                     <h1 className="text-3xl font-semibold text-white">
                       {userProfile?.name || "Name"}
                     </h1>
