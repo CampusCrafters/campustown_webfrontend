@@ -62,6 +62,12 @@ const ProjectCard = ({ project }: any) => {
     }
   };
 
+  const handleInvalidJoin = () => {
+    toast({
+      title: 'Select a role to join this project'
+    })
+  }
+
   const getUserProfile = async (user_id: number) => {
     try {
       await dispatch(fetchUserProfile(user_id) as any);
@@ -222,7 +228,7 @@ const ProjectCard = ({ project }: any) => {
               key={role}
               className={`text-center !min-h-[30px] !w-auto !border-solid !border-blue-600 !border  ${
                 selectedRole ? "!text-white" : "!text-blue-600"
-              } mr-[5px] mb-[8px]`}
+              } mr-[5px] mb-[8px] cursor-pointer`}
               onClick={() =>
                 setSelectedRole((prevRole) => (prevRole === role ? null : role))
               }
@@ -233,17 +239,17 @@ const ProjectCard = ({ project }: any) => {
         </div>
         <div className="flex items-center justify-between mt-[20px] mr-[18px]">
           <Button
-            className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white"
+            className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white cursor-pointer"
             onClick={() => navigate(`/details?id=${project.project_id}`)}
           >
-            <span className="">More Details</span>
+            <span className="cursor-pointer">More Details</span>
           </Button>
           {!selectedRole && (
             <div>
-              <Tooltip content="Select a role to apply">
+              <Tooltip content="Select a role to apply" className="cursor-pointer">
                 <Button
-                  className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white"
-                  disabled
+                  className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white cursor-pointer"
+                  onClick={handleInvalidJoin}
                 >
                   Join
                 </Button>
@@ -253,13 +259,13 @@ const ProjectCard = ({ project }: any) => {
           {selectedRole && (
             <AlertDialog>
               <AlertDialogTrigger>
-                <Button className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white">
+                <Button className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white cursor-pointer">
                   Join
                 </Button>
               </AlertDialogTrigger>
-              <AlertDialogContent>
+              <AlertDialogContent className="rounded-2xl w-[90vw]">
                 <AlertDialogHeader>
-                  <AlertDialogTitle className="text-white">
+                  <AlertDialogTitle className="text-black">
                     Are you sure?
                   </AlertDialogTitle>
                   <AlertDialogDescription className="text-gray-400">
@@ -268,7 +274,7 @@ const ProjectCard = ({ project }: any) => {
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel className="text-white">
+                  <AlertDialogCancel className="text-black">
                     Cancel
                   </AlertDialogCancel>
                   <AlertDialogAction

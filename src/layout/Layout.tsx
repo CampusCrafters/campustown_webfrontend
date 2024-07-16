@@ -30,7 +30,7 @@ const Layout = () => {
       <div className="fixed bottom-[80px] right-4 z-50">
         {showPostIcon && (
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger className="focus:outline-none">
               <div>
                 <img src={PostIcon} alt="Add Icon" />
               </div>

@@ -133,15 +133,12 @@ const ProjectForm = () => {
   return (
     <div>
       <form
-        className="flex flex-col py-6 rounded-2xl bg-neutral-900 max-w-[400px]"
+        className="flex flex-col rounded-2xl bg-neutral-900 max-w-full"
         onSubmit={handleSubmit}
       >
-        <header className="self-center text-3xl font-bold text-blue-500 lowercase">
-          Project
-        </header>
-        <main className="flex flex-col px-6 w-full">
-          <div className="mt-12">
-            <label className="text-base font-semibold tracking-tight leading-6 text-center text-white">
+        <main className="flex flex-col py-6 px-6 w-full">
+          <div className="mt-2">
+            <label className="text-base font-semibold tracking-tight text-center text-white">
               Project Title:
             </label>
             <input
@@ -253,7 +250,7 @@ const ProjectForm = () => {
           </div>
           <button
             type="submit"
-            className="w-[70%] self-center hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded mt-8"
+            className="w-[70%] self-center hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-xl mt-8"
             style={{
               backgroundColor: "rgba(30, 106, 255, 1)",
             }}

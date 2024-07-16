@@ -28,7 +28,7 @@ const BottomBar = () => {
 
   return (
     <div
-      className="fixed flex items-center justify-between bottom-0 w-full text-white text-center h-[5vh]"
+      className="fixed flex items-center justify-between bottom-0 w-full text-white text-center h-[7vh]"
       style={bottomBarStyles}
     >
       <div
