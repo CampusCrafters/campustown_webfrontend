@@ -5,10 +5,12 @@ import profileReducer from "./users/profileSlice";
 import applicationsReducer from "./applications/applicationSlice";
 import searchReducer from "./searchSlice";
 import usersReducer from "./users/usersSlice";
+import eventsReducer from "./campusevents/eventSlice";
 
 const store = configureStore({
   reducer: {
     projects: projectsReducer,
+    events: eventsReducer,
     myProjects: myProjectsReducer,
     profile: profileReducer,
     applications: applicationsReducer,
