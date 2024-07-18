@@ -1,6 +1,11 @@
-import DefaultPfp from '../assets/icons/Default_pfp.svg.png';
+import { useState } from 'react';
+import DefaultPfp from '../assets/icons/Default_pfp.png';
+import Heart from '../assets/icons/bottom-bar/heart-active.svg'
+import HeartRed from '../assets/icons/bottom-bar/heart-red.svg'
 
 const ContactCard = ({ user, onClick }: any) => {
+  const [like, setLike] = useState(false);
+
   return (
     <div 
       onClick={onClick} 
@@ -11,9 +16,9 @@ const ContactCard = ({ user, onClick }: any) => {
         src={user.profile_picture ? user.profile_picture : DefaultPfp} 
         alt={`${user.name}'s profile`}
       />
-      <div>
-        <div className="font-bold">{user.name}</div>
-        <div className="text-gray-500">Online</div>
+      <div className='flex justify-between w-[80vw] md:w-[93vw]'>
+        <div>{user.name}</div>
+        <div onClick={() => setLike(true)}>{like ? <img src={HeartRed}></img> : <img src={Heart}></img>}</div>
       </div>
     </div>
   );
