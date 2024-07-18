@@ -41,7 +41,7 @@ const Layout = () => {
                 Project
               </DropdownMenuItem>
               <DropdownMenuItem>Startup Idea</DropdownMenuItem>
-              <DropdownMenuItem>Event</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/postEvent')}>Event</DropdownMenuItem>
               <DropdownMenuItem>Workshop</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
