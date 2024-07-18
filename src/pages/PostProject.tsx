@@ -124,10 +124,8 @@ const ProjectForm = () => {
       });
       setIsModalOpen(false);
     }
-    // redirect to the project page
   };
 
-  // Close modal handler
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };

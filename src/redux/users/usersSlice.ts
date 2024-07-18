@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: UserState = {
     users: [],
+    likedUsers: [],
+    matchedUsers: []
 }
 
 const usersSlice = createSlice({
@@ -10,11 +12,17 @@ const usersSlice = createSlice({
     reducers: {
         setUsers(state, action: PayloadAction<User[]>){
             state.users = action.payload;
+        },
+        setLikedUsers(state, action: PayloadAction<User[]>){    
+            state.likedUsers = action.payload;
+        },
+        setMatchedUsers(state, action: PayloadAction<User[]>){
+            state.matchedUsers = action.payload;
         }
     }
 })  
 
-export const { setUsers } = usersSlice.actions;
+export const { setUsers, setLikedUsers, setMatchedUsers } = usersSlice.actions;
 export default usersSlice.reducer;
 
 interface User {
@@ -25,4 +33,6 @@ interface User {
 
 interface UserState {
     users: User[];
+    likedUsers: User[];
+    matchedUsers: User[];
 }

@@ -40,13 +40,9 @@ const Layout = () => {
               <DropdownMenuItem onClick={() => navigate("/postProject")}>
                 Project
               </DropdownMenuItem>
-              <DropdownMenuItem>Internship</DropdownMenuItem>
               <DropdownMenuItem>Startup Idea</DropdownMenuItem>
-              <DropdownMenuItem>Event</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/postEvent')}>Event</DropdownMenuItem>
               <DropdownMenuItem>Workshop</DropdownMenuItem>
-              <DropdownMenuItem>Hackathon</DropdownMenuItem>
-              <DropdownMenuItem>Contest</DropdownMenuItem>
-              <DropdownMenuItem>CTF</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )}

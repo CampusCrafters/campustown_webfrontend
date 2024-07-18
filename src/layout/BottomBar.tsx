@@ -3,8 +3,8 @@ import HomeButton from "../assets/icons/bottom-bar/home.svg";
 import HomeButtonActive from "../assets/icons/bottom-bar/home-active.svg";
 import ApplicationIcon from "../assets/icons/bottom-bar/applications.svg";
 import ApplicationIconActive from "../assets/icons/bottom-bar/applications-active.svg";
-import ChatIcon from "../assets/icons/bottom-bar/chat.svg";
-import ChatIconActive from "../assets/icons/bottom-bar/chat-active.svg";
+import Heart from "../assets/icons/bottom-bar/heart.svg";
+import HeartActive from "../assets/icons/bottom-bar/heart-active.svg";
 import EventsIcon from "../assets/icons/bottom-bar/events.svg";
 import EventsIconActive from "../assets/icons/bottom-bar/events-active.svg";
 import { useState, useEffect } from "react";
@@ -23,7 +23,7 @@ const BottomBar = () => {
 
   useEffect(() => {
     const path = location.pathname;
-    setActiveTab(path.substring(1)); 
+    setActiveTab(path.substring(1));
   }, []);
 
   return (
@@ -57,7 +57,7 @@ const BottomBar = () => {
           <img src={ApplicationIcon} alt="Folder Icon" />
         )}
       </div>
-      <div
+      {/* <div
         className="cursor-pointer"
         onClick={() => {
           setActiveTab("chat");
@@ -68,6 +68,19 @@ const BottomBar = () => {
           <img src={ChatIconActive} alt="Chat Icon" />
         ) : (
           <img src={ChatIcon} alt="Chat Icon" />
+        )}
+      </div> */}
+      <div
+        className="cursor-pointer"
+        onClick={() => {
+          setActiveTab("findAMatch");
+          navigate("/findAMatch");
+        }}
+      >
+        {activeTab === "findAMatch" ? (
+          <img src={HeartActive} alt="heart icon" />
+        ) : (
+          <img src={Heart} alt="heart icon" />
         )}
       </div>
       <div

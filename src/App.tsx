@@ -27,6 +27,8 @@ import EditProject from "./pages/home/my-listings/manage-project/EditProject";
 import Members from "./pages/home/my-listings/manage-project/Members";
 import Applicants from "./pages/home/my-listings/manage-project/Applicants";
 import MoreDetails from "./pages/home/explore-all/MoreDetails";
+import PostEvent from "./pages/PostEvent";
+import FindAMatch from "./pages/FindAMatch";
 
 function App() {
   const { user, loading } = useTokenVerification();
@@ -79,7 +81,9 @@ function App() {
           >
             <Route path="profile" element={<ProfilePage />} />
             <Route path="chat" element={<ChatPage />} />
+            <Route path="findAMatch" element={<FindAMatch />} />
             <Route path="postProject" element={<PostProject />} />
+            <Route path="postEvent" element={<PostEvent />} />
             <Route path="myApplications" element={<MyApplications />} />
             <Route path="events" element={<EventsPage />} />
           </Route>
