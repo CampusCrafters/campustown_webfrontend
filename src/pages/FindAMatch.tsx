@@ -18,24 +18,28 @@ const FindAMatch = () => {
   );
   const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
-    dispatch(fetchAllUsers() as any);
-  }, []);
+    const fetchData = async () => {
+      try {
+        await dispatch(fetchAllUsers() as any);
+        await dispatch(fetchLikedUsers() as any);
+        await dispatch(fetchMatchedUsers() as any);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  const filteredUsers = users.filter((user) => {
-    return user.name.toLowerCase().includes(searchQuery.toLowerCase());
-  });
-
-  const getLikedUsers = () => {
-    dispatch(fetchLikedUsers() as any);
-  }
-
-    const getMatchedUsers = () => {
-        dispatch(fetchMatchedUsers() as any);
-    }
-
+    fetchData();
+  }, [dispatch]);
+  
   function handleSelect(name: string) {
     console.log(name);
   }
+
+  const allUsers = users.filter((user) => !likedUsers.includes(user) && !matchedUsers.includes(user));
+
+  const filteredUsers = allUsers.filter((user) => {
+    return user.name.toLowerCase().includes(searchQuery.toLowerCase());
+  });
 
   return (
     <Tabs defaultValue="all-users" className="w-full">
@@ -43,10 +47,16 @@ const FindAMatch = () => {
         <TabsTrigger className="w-[33%]" value="all-users">
           All Users
         </TabsTrigger>
-        <TabsTrigger className="w-[33%]" value="liked-users" onClick={getLikedUsers}>
+        <TabsTrigger
+          className="w-[33%]"
+          value="liked-users"
+        >
           Liked Users
         </TabsTrigger>
-        <TabsTrigger className="w-[33%]" value="matches" onClick={getMatchedUsers}>
+        <TabsTrigger
+          className="w-[33%]"
+          value="matches"
+        >
           Matches
         </TabsTrigger>
       </TabsList>
@@ -70,6 +80,7 @@ const FindAMatch = () => {
       </TabsContent>
       <TabsContent value="liked-users">
         <div className="h-[100vh] w-full overflow-scroll">
+          {likedUsers.length === 0 && <h2>Don't be shy and start liking and find a match.</h2>}
           {likedUsers.map((user) => (
             <ContactCard
               key={user.user_id}
@@ -81,6 +92,7 @@ const FindAMatch = () => {
       </TabsContent>
       <TabsContent value="matches">
         <div className="h-[100vh] w-full overflow-scroll">
+          {matchedUsers.length === 0 && <h2 className="text-white text-center">You have no matches at the moment.</h2>}
           {matchedUsers.map((user) => (
             <ContactCard
               key={user.user_id}
