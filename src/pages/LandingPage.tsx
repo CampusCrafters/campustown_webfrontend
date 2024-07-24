@@ -15,7 +15,7 @@ const LandingPage = () => {
           its time, ready to start building together?
         </div>
         <button className="w-[127px] h-[54px] text-[16px] md:w-[228px] md:h-[70px] md:text-[28px] lg:w-[228px] lg:h-[70px] lg:text-[28px]" onClick={handleSignInClick} style={buttonStyles}>
-          fck it
+          get started
         </button>
       </div>
     </div>
