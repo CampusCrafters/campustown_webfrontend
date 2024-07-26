@@ -19,9 +19,9 @@ const FindAMatch = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await dispatch(fetchAllUsers() as any);
         await dispatch(fetchLikedUsers() as any);
         await dispatch(fetchMatchedUsers() as any);
+        await dispatch(fetchAllUsers() as any);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -34,7 +34,12 @@ const FindAMatch = () => {
     console.log(name);
   }
 
-  const allUsers = users.filter((user) => !likedUsers?.includes(user) && !matchedUsers?.includes(user)) || [];
+  const likedAndMatchedUserIds = new Set([
+    ...likedUsers.map((user) => user.user_id),
+    ...matchedUsers.map((user) => user.user_id),
+  ]);
+
+  const allUsers = users.filter((user) => !likedAndMatchedUserIds.has(user.user_id)) || [];
   const filteredUsers = allUsers?.filter((user) => user.name.toLowerCase().includes(searchQuery.toLowerCase())) || [];
 
   const renderContent = () => {
