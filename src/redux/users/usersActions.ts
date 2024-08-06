@@ -40,15 +40,17 @@ export const fetchMatchedUsers =
     }
   };
 
-  export const likeUser = (user_id: number) => async () => {
-    try {
-      const response = await axios.get(`${matchingServerURL}/like/${user_id}`, { withCredentials: true });
-      return response.data.message;
-    } catch (error: any) {
-      if (error.response && error.response.data.message) {
-        throw new Error(error.response.data.message); // Throw an error with the message
-      } else {
-        throw new Error('An unexpected error occurred');
-      }
+export const likeUser = (user_id: number) => async () => {
+  try {
+    const response = await axios.get(`${matchingServerURL}/like/${user_id}`, {
+      withCredentials: true,
+    });
+    return response.data.message;
+  } catch (error: any) {
+    if (error.response && error.response.data.message) {
+      throw new Error(error.response.data.message); // Throw an error with the message
+    } else {
+      throw new Error("An unexpected error occurred");
     }
   }
+};
