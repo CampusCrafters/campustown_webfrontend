@@ -15,15 +15,19 @@ const FindAMatch = () => {
   const matchedUsers = useSelector((state: RootState) => state.users.matchedUsers);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTab, setSelectedTab] = useState("all-users");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         await dispatch(fetchLikedUsers() as any);
         await dispatch(fetchMatchedUsers() as any);
         await dispatch(fetchAllUsers() as any);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -115,7 +119,13 @@ const FindAMatch = () => {
         </button>
       </div>
       <div className="h-[100vh] w-full overflow-scroll">
-        {renderContent()}
+        {loading ? (
+          <div className="flex justify-center items-center h-full">
+            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent border-solid rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          renderContent()
+        )}
       </div>
     </div>
   );
