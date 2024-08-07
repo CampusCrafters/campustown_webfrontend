@@ -28,6 +28,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { fetchRoles } from "@/redux/applications/applicationActions";
+import { useNavigate } from "react-router-dom";
 interface ApplicationCardProps {
   project_id: number;
   id: number;
@@ -53,6 +54,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
   const { required_roles } = useSelector(
     (state: RootState) => state.applications
   );
+  const navigate = useNavigate();
 
   const handleDelete = async (applicationId: number) => {
     try {
@@ -108,18 +110,52 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
   };
 
   return (
-    <article style={articleStyles}>
+    <article
+      style={{
+        ...articleStyles,
+        backgroundColor:
+          status === "Accepted"
+            ? "#151515"
+            : status === "Rejected"
+            ? "#151515"
+            : "#151515",
+      }}
+    >
       <div style={leftContainerStyles}>
         <time style={dateStyles}>Applied on {date}</time>
-        <p style={nameStyles}>{name}'s</p>
-        <h2 style={projectNameStyles}>{projectName}</h2>
-        <a href="#" style={viewProjectButtonStyles}>
+        <p
+          style={{
+            ...nameStyles,
+            opacity: status === "Rejected" ? 0.5 : 1,
+          }}
+        >
+          {name}'s
+        </p>
+        <h2
+          style={{
+            ...projectNameStyles,
+            opacity: status === "Rejected" ? 0.5 : 1,
+          }}
+        >
+          {projectName}
+        </h2>
+        <a
+          onClick={() => navigate(`/details?id=${project_id}`)}
+          style={viewProjectButtonStyles}
+        >
           View Project
         </a>
       </div>
       <div style={rightContainerStyles}>
         <ApplicationStatus status={status} />
-        <p style={roleStyles}>Role - {role}</p>
+        <p
+          style={{
+            ...roleStyles,
+            opacity: status === "Rejected" ? 0.5 : 1,
+          }}
+        >
+          Role - {role}
+        </p>
         <div
           style={{
             display: "flex",
@@ -128,14 +164,21 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
           }}
         >
           <AlertDialog>
-            <AlertDialogTrigger>
+            <AlertDialogTrigger
+              disabled={status === "Rejected" || status === "Accepted"}
+            >
               <img
                 src={bin}
-                alt="Edit Icon"
+                alt="Delete Icon"
                 style={{
                   marginRight: "20px",
                   marginTop: "10px",
-                  cursor: "pointer",
+                  cursor:
+                    status === "Rejected" || status === "Accepted"
+                      ? "not-allowed"
+                      : "pointer",
+                  opacity:
+                    status === "Rejected" || status === "Accepted" ? 0.5 : 1,
                 }}
               />
             </AlertDialogTrigger>
@@ -157,8 +200,23 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
           </AlertDialog>
 
           <Sheet>
-            <SheetTrigger onClick={() => getRoles(project_id)}>
-              <div style={editButtonStyles}>Edit Application</div>
+            <SheetTrigger
+              onClick={() => getRoles(project_id)}
+              disabled={status === "Rejected" || status === "Accepted"}
+            >
+              <div
+                style={{
+                  ...editButtonStyles,
+                  cursor:
+                    status === "Rejected" || status === "Accepted"
+                      ? "not-allowed"
+                      : "pointer",
+                  opacity:
+                    status === "Rejected" || status === "Accepted" ? 0.5 : 1,
+                }}
+              >
+                Edit Application
+              </div>
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
@@ -179,6 +237,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
                     value={selectedOption}
                     onChange={handleSelectChange}
                     className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:border-gray-500 focus:ring"
+                    disabled={status === "Rejected" || status === "Accepted"}
                   >
                     <option value="">New Role</option>
                     {required_roles.map((role) => (
@@ -189,7 +248,10 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
                   </select>
                 </div>
                 <AlertDialog>
-                  <AlertDialogTrigger className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 mt-3 rounded-2xl focus:outline-none focus:shadow-outline">
+                  <AlertDialogTrigger
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 mt-3 rounded-2xl focus:outline-none focus:shadow-outline"
+                    disabled={status === "Rejected" || status === "Accepted"}
+                  >
                     Submit
                   </AlertDialogTrigger>
                   <AlertDialogContent>
@@ -268,7 +330,7 @@ const viewProjectButtonStyles: React.CSSProperties = {
   border: "1px solid white",
   textDecoration: "none",
   color: "white",
-  marginTop: "10px",
+  marginTop: "15px",
 };
 
 const rightContainerStyles: React.CSSProperties = {
