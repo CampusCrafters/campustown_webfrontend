@@ -21,12 +21,6 @@ const LandingPage = () => {
           words={"campusTown"}
         />
         <div
-          className="text-[19px] md:text-[24px] lg:text-[24px]"
-          style={logoStyles}
-        >
-          campusTown
-        </div>
-        <div
           className="text-[32px] w-[239px] md:text-[46px] md:w-[352px] lg:text-[46px] lg:w-[352px]"
           style={headingStyles}
         >
@@ -45,13 +39,6 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
-const logoStyles: React.CSSProperties = {
-  color: "#FFF",
-  fontFamily: "Inter",
-  fontStyle: "normal",
-  fontWeight: 600,
-};
 
 const headingStyles: React.CSSProperties = {
   marginTop: "200px",
