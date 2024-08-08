@@ -140,7 +140,7 @@ function Applicants() {
           {/* Rejected Applications */}
           <div
             style={{
-              backgroundColor: "#D2832D",
+              backgroundColor: "#2979FF",
             }}
             className=" rounded-xl mt-4 p-4 text-center"
           >
@@ -148,10 +148,12 @@ function Applicants() {
               Shortlisted Applicants
             </p>
             {applications.filter(
-              (application: any) => application.status === "Accepted"
+              (application: any) => application.status === "Shortlisted"
             ).length > 0 ? (
               applications
-                .filter((application: any) => application.status === "Accepted")
+                .filter(
+                  (application: any) => application.status === "Shortlisted"
+                )
                 .map((application: any, index: any) => (
                   <ApplicantCard
                     key={index}
