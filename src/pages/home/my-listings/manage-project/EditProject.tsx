@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/redux/store";
-import { getProjectWithId, editProject } from "@/redux/projects/projectsActions";
+import {
+  getProjectWithId,
+  editProject,
+} from "@/redux/projects/projectsActions";
 import { useToast } from "@/components/ui/use-toast";
 import {
   AlertDialog,
@@ -80,7 +83,6 @@ function EditProject() {
     }
   }, [dispatch, projectId]);
 
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -114,121 +116,137 @@ function EditProject() {
   };
 
   return (
-    <div className="text-blue-700">
+    <div className=" flex flex-col rounded-2xl bg-neutral-900 py-6 px-6">
       <div style={{ marginBottom: "20px" }}>
-        <label>
-          <span className="font-bold">Project Title:</span>
+        <div>
+          <label className="text-base font-semibold tracking-tight text-center text-white">
+            Project Name:
+          </label>
           <input
             type="text"
             name="project_title"
-            className={`p-2 rounded-md mt-2 w-full ${
+            className={`shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700 text-white px-4 py-2  ${
               editMode
-                ? "border border-black bg-white"
+                ? "border-2 border-blue-500"
                 : "border border-transparent bg-gray-100"
             }`}
             value={formValues.project_title}
             onChange={handleChange}
             disabled={!editMode}
           />
-        </label>
-        <label>
-          <span className="font-bold">Project Description:</span>
+        </div>
+        <div className="mt-5">
+          <label className="text-base font-semibold tracking-tight text-center text-white">
+            Project Description:
+          </label>
           <textarea
             name="description"
-            className={`p-2 rounded-md mt-2 w-full ${
+            className={`shrink-0 mt-3.5 w-full rounded-lg bg-neutral-700  text-white px-4 py-2 ${
               editMode
-                ? "border border-black bg-white"
+                ? "border-2 border-blue-500"
                 : "border border-transparent bg-gray-100"
             }`}
             value={formValues.description}
             onChange={handleChange}
             disabled={!editMode}
           />
-        </label>
-        <label>
-          <span className="font-bold">Project Domain:</span>
+        </div>
+        <div className="mt-5">
+          <label className="text-base font-semibold tracking-tight leading-6 text-center text-white">
+            Project Domain:
+          </label>
           <input
             type="text"
             name="domain"
-            className={`p-2 rounded-md mt-2 w-full ${
+            className={`shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700  text-white px-4 py-2" ${
               editMode
-                ? "border border-black bg-white"
+                ? "border-2 border-blue-500"
                 : "border border-transparent bg-gray-100"
             }`}
             value={formValues.domain}
             onChange={handleChange}
             disabled={!editMode}
           />
-        </label>
-        <label>
-          <span className="font-bold">Project Status:</span>
+        </div>
+        <div className="mt-5">
+          <label className="text-base font-semibold tracking-tight leading-6 text-center text-white">
+            Project Status:
+          </label>
           <input
             type="text"
             name="status"
-            className={`p-2 rounded-md mt-2 w-full ${
+            className={`shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700 text-white px-4 py-2 ${
               editMode
-                ? "border border-black bg-white"
+                ? "border-2 border-blue-500"
                 : "border border-transparent bg-gray-100"
             }`}
             value={formValues.status}
             onChange={handleChange}
             disabled={!editMode}
           />
-        </label>
-        <label>
-          <span className="font-bold">Project Start Date:</span>
+        </div>
+        <div className="mt-5">
+          <label className="text-base mb-3 font-semibold tracking-tight leading-6 text-center text-white">
+            Start Date:
+          </label>
           <input
             type="date"
             name="start_date"
-            className={`p-2 rounded-md mt-2 w-full ${
+            className={`shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700 text-white px-4 py-2 ${
               editMode
-                ? "border border-black bg-white"
+                ? "border-2 border-blue-500"
                 : "border border-transparent bg-gray-100"
             }`}
             value={formatDate(formValues.start_date)}
             onChange={handleChange}
             disabled={!editMode}
           />
-        </label>
+        </div>
 
-        <label>
-          <span className="font-bold">Project End Date:</span>
+        <div className="mt-5">
+          <label className="text-base mb-3 font-semibold tracking-tight leading-6 text-center text-white">
+            End Date:
+          </label>
           <input
             type="date"
             name="end_date"
-            className={`p-2 rounded-md mt-2 w-full ${
+            className={`shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700 text-white px-4 py-2 ${
               editMode
-                ? "border border-black bg-white"
+                ? "border-2 border-blue-500"
                 : "border border-transparent bg-gray-100"
             }`}
             value={formatDate(formValues.end_date)}
             onChange={handleChange}
             disabled={!editMode}
           />
-        </label>
-        <label>
-          <span className="font-bold">Project Link:</span>
+        </div>
+        <div className="mt-5">
+          <label className="text-base mb-3 font-semibold tracking-tight leading-6 text-center text-white">
+            Project Link:
+          </label>
           <input
             type="url"
             name="link"
-            className={`p-2 rounded-md mt-2 w-full ${
+            className={`shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700  text-white px-4 py-2 ${
               editMode
-                ? "border border-black bg-white"
+                ? "border-2 border-blue-500"
                 : "border border-transparent bg-gray-100"
             }`}
             value={formValues.link}
             onChange={handleChange}
             disabled={!editMode}
           />
-        </label>
-        <label>
-          <span className="font-bold">Required Roles:</span>
+        </div>
+        <div className="mt-5">
+          <label className="text-base font-semibold tracking-tight leading-6 text-center text-white">
+            Required Roles:
+          </label>
           <input
             type="text"
             name="required_roles"
-            className={`p-2 rounded-md mt-2 w-full ${
+            className={`shrink-0 mt-3.5 h-11 w-full rounded-lg bg-neutral-700  text-white px-4 py-2 ${
               editMode
-                ? "border border-black bg-white"
+                ? " border-2 border-blue-500 "
                 : "border border-transparent bg-gray-100"
             }`}
             value={formValues.required_roles.join(", ")}
@@ -241,14 +259,19 @@ function EditProject() {
             }}
             disabled={!editMode}
           />
-        </label>
+        </div>
       </div>
 
       <div>
         {editMode ? (
           <div>
             <AlertDialog>
-              <AlertDialogTrigger className="bg-black text-white font-bold py-2 px-4 rounded mr-2">
+              <AlertDialogTrigger
+                style={{
+                  backgroundColor: "rgba(30, 106, 255, 1)",
+                }}
+                className=" text-white font-bold py-2 px-6   rounded-xl mr-2"
+              >
                 Save Changes
               </AlertDialogTrigger>
               <AlertDialogContent>
@@ -269,7 +292,7 @@ function EditProject() {
               </AlertDialogContent>
             </AlertDialog>
             <button
-              className="bg-red-400 text-white font-bold py-2 px-4 rounded"
+              className="bg-red-500 text-white font-bold py-2 px-4 rounded-xl"
               onClick={() => setEditMode(false)}
             >
               Cancel
@@ -277,7 +300,10 @@ function EditProject() {
           </div>
         ) : (
           <button
-            className="bg-black text-white font-bold py-2 px-4 rounded mr-2"
+            style={{
+              backgroundColor: "rgba(30, 106, 255, 1)",
+            }}
+            className="w-[50%] self-center hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-xl"
             onClick={handleEdit}
           >
             Edit
@@ -286,6 +312,6 @@ function EditProject() {
       </div>
     </div>
   );
-};
+}
 
 export default EditProject;
