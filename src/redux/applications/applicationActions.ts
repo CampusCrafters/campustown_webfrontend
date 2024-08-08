@@ -72,6 +72,7 @@ export const fetchAplicants =
         { withCredentials: true }
       );
       dispatch(setApplicants(response.data));
+      console.log("applicants", response.data[0].status);
       return response.data;
     } catch (error) {
       console.error("Error fetching applicants:", error);

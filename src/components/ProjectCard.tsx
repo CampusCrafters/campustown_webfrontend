@@ -64,9 +64,9 @@ const ProjectCard = ({ project }: any) => {
 
   const handleInvalidJoin = () => {
     toast({
-      title: 'Select a role to join this project'
-    })
-  }
+      title: "Select a role to join this project",
+    });
+  };
 
   const getUserProfile = async (user_id: number) => {
     try {
@@ -133,7 +133,11 @@ const ProjectCard = ({ project }: any) => {
               )}
             </Avatar>
           </SheetTrigger>
-          <SheetContent side={"bottom"} className="mw-full h-[80vh] overflow-x-auto border-none" style={{backgroundColor: '#151515'}}>
+          <SheetContent
+            side={"bottom"}
+            className="mw-full h-[80vh] overflow-x-auto border-none"
+            style={{ backgroundColor: "#151515" }}
+          >
             <SheetHeader>
               <SheetTitle>
                 <div className="flex items-center mb-6">
@@ -239,16 +243,19 @@ const ProjectCard = ({ project }: any) => {
         </div>
         <div className="flex items-center justify-between mt-[20px] mr-[18px]">
           <Button
-            className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white cursor-pointer"
+            className="!h-[38px] !bg-transparent !text-white !border-solid !border !rounded-lg  !border-white cursor-pointer"
             onClick={() => navigate(`/details?id=${project.project_id}`)}
           >
             <span className="cursor-pointer">More Details</span>
           </Button>
           {!selectedRole && (
             <div>
-              <Tooltip content="Select a role to apply" className="cursor-pointer">
+              <Tooltip
+                content="Select a role to apply"
+                className="cursor-pointer"
+              >
                 <Button
-                  className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white cursor-pointer"
+                  className="!h-[38px] !bg-transparent !text-white !border-solid !border !rounded-lg  !border-white cursor-pointer"
                   onClick={handleInvalidJoin}
                 >
                   Join
@@ -297,8 +304,9 @@ const ProjectCard = ({ project }: any) => {
         <Flex
           direction="row"
           gap="3"
-          className="mt-[14px]  mb-[20px] overflow-x-auto"
+          className="mt-[14px] ml-3  mb-[20px] overflow-x-auto text-white"
         >
+          #tags{" "}
           {project.domain.split(",")?.map((domain: any) => (
             <Badge
               radius="full"

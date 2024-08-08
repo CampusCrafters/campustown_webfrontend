@@ -15,11 +15,12 @@ import { useNavigate } from "react-router-dom";
 import { deleteProject } from "../redux/projects/projectsActions";
 import { Button, Badge, Flex } from "@radix-ui/themes";
 import clockimg from "../assets/icons/clock-icon.svg";
+import TimeAgoPill from "./custom-ui/TimeAgoPill";
 
 const MyProjectsCard = ({ project }: any) => {
   const dispatch = useDispatch();
   const { toast } = useToast();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const handleManageProject = async () => {
     navigate("/manageproject/editProject?project_id=" + project.project_id);
   };
@@ -56,12 +57,15 @@ const MyProjectsCard = ({ project }: any) => {
           Edited
         </span>
         <div className="w-[98px] h-[27.75px] relative ml-auto">
-          <div className="w-[98px] h-[27.75px] left-0 top-0 absolute bg-[#86CE91] rounded-tr-[15px] rounded-bl-lg"></div>
+          <div
+            style={{ backgroundColor: "#1DB954" }}
+            className="w-[98px] h-[27.75px] left-0 top-0 absolute  rounded-tr-[15px] rounded-bl-lg"
+          ></div>
           <div className="w-5 h-[20.56px] left-[8px] top-[3.03px] absolute">
             <img src={clockimg}></img>
           </div>
-          <div className="w-[60px] h-[19.53px] left-[29px] top-[3.03px] absolute text-center text-black text-[10px] font-medium font-['Roboto Flex'] leading-snug flex items-center justify-center">
-            1 Hour ago
+          <div className="w-[67px] h-[19.53px] left-[29px] top-[3.03px] absolute text-center text-black text-[10px] font-medium font-['Roboto Flex'] leading-snug flex items-center justify-center">
+            <TimeAgoPill startTime={project.posted_on} />
           </div>
         </div>
       </Flex>
@@ -106,14 +110,14 @@ const MyProjectsCard = ({ project }: any) => {
         </div>
         <div className="flex items-center justify-between mt-[20px] mr-[18px]">
           <Button
-            className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white"
+            className="!h-[38px] !rounded-lg !bg-transparent !text-white !border-solid !border !border-white"
             onClick={handleManageProject}
           >
             Manage Project
           </Button>
           <AlertDialog>
             <AlertDialogTrigger className="">
-              <Button className="!h-[38px] !bg-transparent !text-white !border-solid !border !border-white">
+              <Button className="!h-[38px] !rounded-lg !bg-transparent !text-white !border-solid !border !border-white">
                 Delete Project
               </Button>
             </AlertDialogTrigger>
@@ -139,8 +143,9 @@ const MyProjectsCard = ({ project }: any) => {
         <Flex
           direction="row"
           gap="3"
-          className="mt-[14px] mb-[20px] overflow-x-auto"
+          className="mt-[14px] ml-3 mb-[20px] overflow-x-auto text-white"
         >
+          #tags{" "}
           {project.domain.split(",")?.map((domain: any) => (
             <Badge
               radius="full"

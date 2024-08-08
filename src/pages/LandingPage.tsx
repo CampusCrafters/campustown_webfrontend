@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { TextGenerateEffect } from "../components/ui/text-generate-effect";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -8,13 +9,28 @@ const LandingPage = () => {
   };
 
   return (
-    <div style={containerStyles} className="ml-[30px] md:ml-[60px] lg:ml-[60px] mh-[100vh]">
+    <div
+      style={containerStyles}
+      className="ml-[30px] md:ml-[60px] lg:ml-[60px] mh-[100vh]"
+    >
       <div className=" bg-black text-white flex flex-col">
-        <div className="text-[19px] md:text-[24px] lg:text-[24px]" style={logoStyles}>campusTown</div>
-        <div className="text-[32px] w-[239px] md:text-[46px] md:w-[352px] lg:text-[46px] lg:w-[352px]" style={headingStyles}>
+        <TextGenerateEffect
+          className="text-[19px] md:text-[24px] lg:text-[24px]"
+          duration={2}
+          filter={false}
+          words={"campusTown"}
+        />
+        <div
+          className="text-[32px] w-[239px] md:text-[46px] md:w-[352px] lg:text-[46px] lg:w-[352px]"
+          style={headingStyles}
+        >
           its time, ready to start building together?
         </div>
-        <button className="w-[127px] h-[54px] text-[16px] md:w-[228px] md:h-[70px] md:text-[28px] lg:w-[228px] lg:h-[70px] lg:text-[28px]" onClick={handleSignInClick} style={buttonStyles}>
+        <button
+          className="w-[127px] h-[54px] text-[16px] md:w-[228px] md:h-[70px] md:text-[28px] lg:w-[180px] lg:h-[60px] lg:text-[24px]"
+          onClick={handleSignInClick}
+          style={buttonStyles}
+        >
           get started
         </button>
       </div>
@@ -24,15 +40,8 @@ const LandingPage = () => {
 
 export default LandingPage;
 
-const logoStyles: React.CSSProperties = {
-  color: "#FFF",
-  fontFamily: "Inter",
-  fontStyle: "normal",
-  fontWeight: 600,
-};
-
 const headingStyles: React.CSSProperties = {
-  marginTop: '200px',
+  marginTop: "200px",
   height: "276px",
   color: "#FFF",
   fontFamily: "Inter",
@@ -44,7 +53,7 @@ const headingStyles: React.CSSProperties = {
 
 const buttonStyles: React.CSSProperties = {
   display: "flex",
-  marginTop: '80px',
+  marginTop: "80px",
   justifyContent: "center",
   alignItems: "center",
   borderRadius: "999px",
@@ -56,8 +65,8 @@ const buttonStyles: React.CSSProperties = {
   fontWeight: 600,
 };
 
-const containerStyles: React.CSSProperties = { 
+const containerStyles: React.CSSProperties = {
   maxHeight: "100vh",
   maxWidth: "100vw",
-  marginTop: '33px',
-}
+  marginTop: "33px",
+};

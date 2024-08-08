@@ -9,8 +9,9 @@ const ApplicantCard: React.FC<
     onActionSelect: (action: string) => void;
     selectedAction: string;
     isDropdownOpen: boolean;
+    status: string;
   }
-> = ({ src, name, batch, role, onActionSelect }) => {
+> = ({ src, name, batch, role, onActionSelect, status }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleToggleExpand = () => {
@@ -87,13 +88,15 @@ const ApplicantCard: React.FC<
             >
               Select
             </button>
-            <button
-              onClick={() => onActionSelect("Shortlist")}
-              style={shortlistButtonStyles}
-              role="menuitem"
-            >
-              Shortlist
-            </button>
+            {status !== "Shortlisted" && (
+              <button
+                onClick={() => onActionSelect("Shortlist")}
+                style={shortlistButtonStyles}
+                role="menuitem"
+              >
+                Shortlist
+              </button>
+            )}
             <button
               onClick={() => onActionSelect("Reject")}
               style={rejectButtonStyles}

@@ -109,22 +109,75 @@ function Applicants() {
   return (
     <div className="flex flex-col gap-2">
       {applications && applications.length > 0 ? (
-        applications.map((application: any, index: any) => (
-          <ApplicantCard
-            key={index}
-            src={application.profile_picture}
-            name={application.applicant_name}
-            batch={application.batch}
-            role={application.role_name}
-            onActionSelect={(action: string) =>
-              handleActionSelect(action, application)
-            }
-            selectedAction={selectedAction}
-            isDropdownOpen={isDropdownOpen}
-          />
-        ))
+        <>
+          {/* Pending Applications */}
+          {applications.filter(
+            (application: any) => application.status === "Pending"
+          ).length > 0 ? (
+            applications
+              .filter((application: any) => application.status === "Pending")
+              .map((application: any, index: any) => (
+                <ApplicantCard
+                  key={index}
+                  src={application.profile_picture}
+                  name={application.applicant_name}
+                  batch={application.batch}
+                  role={application.role_name}
+                  onActionSelect={(action: string) =>
+                    handleActionSelect(action, application)
+                  }
+                  selectedAction={selectedAction}
+                  isDropdownOpen={isDropdownOpen}
+                  status={application.status}
+                />
+              ))
+          ) : (
+            <div className="text-white self-center">
+              <p>No pending applicants for this project</p>
+            </div>
+          )}
+
+          {/* Rejected Applications */}
+          <div
+            style={{
+              backgroundColor: "#2979FF",
+            }}
+            className=" rounded-xl mt-4 p-4 text-center"
+          >
+            <p className="text-white text-lg font-bold mb-2">
+              Shortlisted Applicants
+            </p>
+            {applications.filter(
+              (application: any) => application.status === "Shortlisted"
+            ).length > 0 ? (
+              applications
+                .filter(
+                  (application: any) => application.status === "Shortlisted"
+                )
+                .map((application: any, index: any) => (
+                  <ApplicantCard
+                    key={index}
+                    src={application.profile_picture}
+                    name={application.applicant_name}
+                    batch={application.batch}
+                    role={application.role_name}
+                    onActionSelect={(action: string) =>
+                      handleActionSelect(action, application)
+                    }
+                    selectedAction={selectedAction}
+                    isDropdownOpen={isDropdownOpen}
+                    status={application.status}
+                  />
+                ))
+            ) : (
+              <div className=" text-white self-center">
+                <p>No Shortlisted applicants for this project</p>
+              </div>
+            )}
+          </div>
+        </>
       ) : (
-        <div className=" text-white self-center">
+        <div className="text-white self-center">
           <p>No applicants currently for this project</p>
         </div>
       )}
