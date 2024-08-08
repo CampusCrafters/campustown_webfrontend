@@ -88,7 +88,7 @@ const ApplicantCard: React.FC<
             >
               Select
             </button>
-            {status === "shortlisted" && (
+            {status !== "shortlisted" && (
               <button
                 onClick={() => onActionSelect("shortlist")}
                 style={shortlistButtonStyles}
