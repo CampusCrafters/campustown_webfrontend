@@ -126,7 +126,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
         <p
           style={{
             ...nameStyles,
-            opacity: status === "Rejected" ? 0.5 : 1,
+            opacity: status === "Rejected" ? 0.3 : 1,
           }}
         >
           {name}'s
@@ -134,7 +134,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
         <h2
           style={{
             ...projectNameStyles,
-            opacity: status === "Rejected" ? 0.5 : 1,
+            opacity: status === "Rejected" ? 0.3 : 1,
           }}
         >
           {projectName}
@@ -151,7 +151,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
         <p
           style={{
             ...roleStyles,
-            opacity: status === "Rejected" ? 0.5 : 1,
+            opacity: status === "Rejected" ? 0.3 : 1,
           }}
         >
           Role - {role}
@@ -178,7 +178,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
                       ? "not-allowed"
                       : "pointer",
                   opacity:
-                    status === "Rejected" || status === "Accepted" ? 0.5 : 1,
+                    status === "Rejected" || status === "Accepted" ? 0.3 : 1,
                 }}
               />
             </AlertDialogTrigger>
@@ -212,7 +212,7 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({
                       ? "not-allowed"
                       : "pointer",
                   opacity:
-                    status === "Rejected" || status === "Accepted" ? 0.5 : 1,
+                    status === "Rejected" || status === "Accepted" ? 0.3 : 1,
                 }}
               >
                 Edit Application

@@ -142,7 +142,7 @@ function Applicants() {
             style={{
               backgroundColor: "#2979FF",
             }}
-            className=" rounded-xl mt-4 p-4 text-center"
+            className=" rounded-xl mt-4 py-4 px-2 text-center"
           >
             <p className="text-white text-lg font-bold mb-2">
               Shortlisted Applicants
