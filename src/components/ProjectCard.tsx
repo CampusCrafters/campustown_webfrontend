@@ -217,7 +217,8 @@ const ProjectCard = ({ project }: any) => {
             className="text-white mb-2 ml-[10px] mr-[65px] text-[15px]"
             style={{ fontFamily: "Roboto Flex" }}
           >
-            {project.description}
+            {project.description.split(" ").slice(0, 10).join(" ") +
+              (project.description.split(" ").length > 10 ? "..." : "")}
           </p>
         </div>
       </div>
@@ -241,6 +242,7 @@ const ProjectCard = ({ project }: any) => {
             </Badge>
           ))}
         </div>
+
         <div className="flex items-center justify-between mt-[20px] mr-[18px]">
           <Button
             className="!h-[38px] !bg-transparent !text-white !border-solid !border !rounded-lg  !border-white cursor-pointer"
